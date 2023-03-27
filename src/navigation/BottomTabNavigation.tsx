@@ -17,7 +17,9 @@ const BottomTab = createBottomTabNavigator<BottomTabParams>()
 
 export const BottomTabNavigation = () => {
   return (
-    <BottomTab.Navigator screenOptions={{
+    <BottomTab.Navigator sceneContainerStyle={{
+      backgroundColor: 'rgba(23, 24, 27, 1)'
+    }} screenOptions={{
       headerShown: false,
     }} initialRouteName={'HomeScreen'} tabBar={(props) => <BottomTabBar {...props} />}>
       <BottomTab.Screen name='HomeScreen' component={HomeScreen} />
