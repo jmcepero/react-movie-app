@@ -9,6 +9,7 @@ import { CustomToolbar } from '../components/home/CustomToolbar';
 import { SearchBar } from '../components/home/SearchBar';
 import { MainCarousel } from '../components/home/MainCarousel';
 import { GenresFeed } from '../components/home/GenresFeed';
+import LoadingView from '../components/base/LoadingView';
 
 export const HomeScreen = () => {
 
@@ -20,15 +21,13 @@ export const HomeScreen = () => {
             flex: 1,
             justifyContent: 'center'
         }}>
-            <ActivityIndicator size={80} />
+            <LoadingView />
         </View>
     }
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={{
-                backgroundColor: 'rgba(23, 24, 27, 1)'
-            }}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 32, backgroundColor: 'rgba(23, 24, 27, 1)' }}>
+            <View>
                 {/* Toolbar Section */}
                 <CustomToolbar />
 
