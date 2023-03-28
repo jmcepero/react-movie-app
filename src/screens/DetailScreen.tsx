@@ -53,7 +53,7 @@ export const DetailScreen = ({ route }: Props) => {
               height: '100%',
               position: 'absolute',
             }}
-            colors={['rgba(255, 255, 255, 0)', 'rgba(33, 25, 32, 1)']}
+            colors={['transparent', 'rgba(33, 25, 32, 1)']}
             locations={[0.5, 0.9]}
           />
           <TouchableOpacity
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   title: {
-    fontFamily: 'ArchivoMedium',
+    fontFamily: 'Archivo-Medium',
     fontSize: 34,
     color: '#fbf6f8',
     width: '70%',
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16
   },
   valorationTitle: {
-    fontFamily: 'ArchivoRegular',
+    fontFamily: 'Archivo-Regular',
     fontSize: 22,
     color: 'white',
     marginEnd: 4
@@ -177,12 +177,12 @@ const styles = StyleSheet.create({
     borderRadius: 6
   },
   genreChipTitle: {
-    fontFamily: 'ArchivoThin',
+    fontFamily: 'Archivo-Thin',
     fontSize: 14,
     color: '#988396'
   },
   overviewText: {
-    fontFamily: 'ArchivoRegular',
+    fontFamily: 'Archivo-Regular',
     fontSize: 18,
     color: '#9b959c',
     paddingHorizontal: 16,

@@ -15,10 +15,11 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         padding: 16,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginTop: 8
     },
     title: {
-        fontFamily: 'ArchivoRegular',
+        fontFamily: 'Archivo-Regular',
         fontSize: 36,
         color: 'white',
     },

@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     },
     caption: {
         width: '100%',
-        fontFamily: 'ArchivoThin',
+        fontFamily: 'Archivo-Thin',
         fontSize: 14,
         color: '#988396',
         paddingHorizontal: 6,

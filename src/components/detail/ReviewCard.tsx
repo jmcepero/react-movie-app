@@ -68,15 +68,15 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         width: 50,
         height: 50,
-        resizeMode: 'contain'
+        resizeMode: 'cover'
     },
     title: {
-        fontFamily: 'ArchivoMedium',
+        fontFamily: 'Archivo-Medium',
         fontSize: 16,
         color: '#988396',
     },
     caption: {
-        fontFamily: 'ArchivoThin',
+        fontFamily: 'Archivo-Thin',
         fontSize: 14,
         color: '#988396',
     },
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     },
     description: {
         marginTop: 8,
-        fontFamily: 'ArchivoRegular',
+        fontFamily: 'Archivo-Regular',
         fontSize: 18,
         color: '#988396',
     },

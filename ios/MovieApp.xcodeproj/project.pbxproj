@@ -12,13 +12,13 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		42A2F17AF713421993AD14C9 /* ArchivoMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 315DCA76FAD54CE0AD324281 /* ArchivoMedium.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-MovieApp-MovieAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-MovieApp-MovieAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		ECAA5171ADCA4C4396E7DA0D /* ArchivoBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D31BC9BFC8B84237985E3A23 /* ArchivoBlack.ttf */; };
 		B44FC720217248AA8ADAD2E1 /* ArchivoLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5059B9C0C6B34578AD111F64 /* ArchivoLight.ttf */; };
-		42A2F17AF713421993AD14C9 /* ArchivoMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 315DCA76FAD54CE0AD324281 /* ArchivoMedium.ttf */; };
 		C9A1271DDDC74167B2875038 /* ArchivoRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CBCBAFCB36CF4204A46362E8 /* ArchivoRegular.ttf */; };
 		E0D9B7F6373E44908E5109B5 /* ArchivoThin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 077443A4E5994140AAB0332C /* ArchivoThin.ttf */; };
+		ECAA5171ADCA4C4396E7DA0D /* ArchivoBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D31BC9BFC8B84237985E3A23 /* ArchivoBlack.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +35,7 @@
 		00E356EE1AD99517003FC87E /* MovieAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* MovieAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MovieAppTests.m; sourceTree = "<group>"; };
+		077443A4E5994140AAB0332C /* ArchivoThin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ArchivoThin.ttf; path = ../assets/fonts/ArchivoThin.ttf; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* MovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MovieApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = MovieApp/AppDelegate.mm; sourceTree = "<group>"; };
@@ -42,18 +43,18 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MovieApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MovieApp/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-MovieApp-MovieAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MovieApp-MovieAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		315DCA76FAD54CE0AD324281 /* ArchivoMedium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ArchivoMedium.ttf; path = ../assets/fonts/ArchivoMedium.ttf; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-MovieApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieApp.debug.xcconfig"; path = "Target Support Files/Pods-MovieApp/Pods-MovieApp.debug.xcconfig"; sourceTree = "<group>"; };
+		5059B9C0C6B34578AD111F64 /* ArchivoLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ArchivoLight.ttf; path = ../assets/fonts/ArchivoLight.ttf; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-MovieApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieApp.release.xcconfig"; path = "Target Support Files/Pods-MovieApp/Pods-MovieApp.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-MovieApp-MovieAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieApp-MovieAppTests.debug.xcconfig"; path = "Target Support Files/Pods-MovieApp-MovieAppTests/Pods-MovieApp-MovieAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-MovieApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MovieApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MovieApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-MovieApp-MovieAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieApp-MovieAppTests.release.xcconfig"; path = "Target Support Files/Pods-MovieApp-MovieAppTests/Pods-MovieApp-MovieAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		BC0E7E2D29D289A3002225A9 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		CBCBAFCB36CF4204A46362E8 /* ArchivoRegular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ArchivoRegular.ttf; path = ../assets/fonts/ArchivoRegular.ttf; sourceTree = "<group>"; };
+		D31BC9BFC8B84237985E3A23 /* ArchivoBlack.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ArchivoBlack.ttf; path = ../assets/fonts/ArchivoBlack.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		D31BC9BFC8B84237985E3A23 /* ArchivoBlack.ttf */ = {isa = PBXFileReference; name = "ArchivoBlack.ttf"; path = "../assets/fonts/ArchivoBlack.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		5059B9C0C6B34578AD111F64 /* ArchivoLight.ttf */ = {isa = PBXFileReference; name = "ArchivoLight.ttf"; path = "../assets/fonts/ArchivoLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		315DCA76FAD54CE0AD324281 /* ArchivoMedium.ttf */ = {isa = PBXFileReference; name = "ArchivoMedium.ttf"; path = "../assets/fonts/ArchivoMedium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		CBCBAFCB36CF4204A46362E8 /* ArchivoRegular.ttf */ = {isa = PBXFileReference; name = "ArchivoRegular.ttf"; path = "../assets/fonts/ArchivoRegular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		077443A4E5994140AAB0332C /* ArchivoThin.ttf */ = {isa = PBXFileReference; name = "ArchivoThin.ttf"; path = "../assets/fonts/ArchivoThin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +127,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				BC0E7E2C29D28981002225A9 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* MovieApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* MovieAppTests */,
@@ -159,8 +161,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		BC0E7E2C29D28981002225A9 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				BC0E7E2D29D289A3002225A9 /* Ionicons.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		C2CD98F0912B4F119B6F66F9 /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 				D31BC9BFC8B84237985E3A23 /* ArchivoBlack.ttf */,
 				5059B9C0C6B34578AD111F64 /* ArchivoLight.ttf */,
@@ -170,7 +180,6 @@
 			);
 			name = Resources;
 			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -593,7 +602,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -627,6 +636,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -664,7 +674,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -690,6 +700,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

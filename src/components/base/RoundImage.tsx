@@ -31,12 +31,12 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         width: 40,
         height: 40,
-        resizeMode: 'contain'
+        resizeMode: 'cover'
     },
     image: {
         borderRadius: 100,
         width: 40,
         height: 40,
-        resizeMode: 'contain'
+        resizeMode: 'cover'
     },
 });

@@ -26,7 +26,7 @@ export const HomeScreen = () => {
     }
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 32, backgroundColor: 'rgba(23, 24, 27, 1)' }}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 80, backgroundColor: 'rgba(23, 24, 27, 1)' }}>
             <View>
                 {/* Toolbar Section */}
                 <CustomToolbar />

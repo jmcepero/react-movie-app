@@ -25,7 +25,7 @@ export const MainCarousel = ({ movies, onMovieClicked }: Props) => {
                 mode="parallax"
                 modeConfig={{
                     parallaxScrollingScale: 0.9,
-                    parallaxScrollingOffset: 50,
+                    parallaxScrollingOffset: 45,
                     parallaxAdjacentItemScale: 0.80
                 }}
                 data={movies}
@@ -49,10 +49,10 @@ export const MainCarousel = ({ movies, onMovieClicked }: Props) => {
 const styles = StyleSheet.create({
     title: {
         marginTop: 16,
-        fontFamily: 'ArchivoRegular',
+        fontFamily: 'Archivo-Regular',
         fontSize: 18,
         color: 'rgba(251,246,248,0.7)',
         marginHorizontal: 18,
-        top: 8
+        top: 4
     }
 });

@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         marginVertical: 8
     },
     headerText: {
-        fontFamily: 'ArchivoMedium',
+        fontFamily: 'Archivo-Medium',
         fontSize: 20,
         color: 'white',
         marginTop: 8

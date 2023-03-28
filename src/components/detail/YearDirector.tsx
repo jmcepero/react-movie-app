@@ -18,7 +18,7 @@ export const YearDirector = ({year, director}: Props) => {
 const styles = StyleSheet.create({
     text: {
         paddingHorizontal: 16,
-        fontFamily: 'ArchivoThin',
+        fontFamily: 'Archivo-Thin',
         fontSize: 14,
         color: '#988396'
     }

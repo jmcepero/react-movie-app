@@ -37,7 +37,7 @@ export const CastFeed = ({ width, casts }: Props) => {
 const styles = StyleSheet.create({
     headerText: {
         paddingHorizontal: 16,
-        fontFamily: 'ArchivoMedium',
+        fontFamily: 'Archivo-Medium',
         fontSize: 20,
         color: '#fbf6f8',
         marginTop: 8

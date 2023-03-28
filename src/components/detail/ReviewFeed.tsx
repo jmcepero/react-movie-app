@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
         paddingHorizontal: 16,
-        fontFamily: 'ArchivoMedium',
+        fontFamily: 'Archivo-Medium',
         fontSize: 20,
         color: 'white',
         marginTop: 8
