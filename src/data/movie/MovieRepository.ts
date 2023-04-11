@@ -14,8 +14,8 @@ export class MovieRepository {
         return moviesResponseToDomain(resp)
     }
 
-    async getPopular() : Promise<Movies> {
-        const resp = await this.remoteDataSource.getMoviesByClasification('popular');
+    async getPopular(page?: number) : Promise<Movies> {
+        const resp = await this.remoteDataSource.getMoviesByClasification('popular', page);
         return moviesResponseToDomain(resp)
     }
 

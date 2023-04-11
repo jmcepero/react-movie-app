@@ -21,7 +21,7 @@ export const BottomTabNavigation = () => {
       backgroundColor: 'rgba(23, 24, 27, 1)'
     }} screenOptions={{
       headerShown: false,
-    }} initialRouteName={'TvShowScreen'} tabBar={(props) => <BottomTabBar {...props} />}>
+    }} initialRouteName={'HomeScreen'} tabBar={(props) => <BottomTabBar {...props} />}>
       <BottomTab.Screen name='HomeScreen' component={HomeScreen} />
       <BottomTab.Screen name='TvShowScreen' component={TvShowScreen} />
       <BottomTab.Screen name='ExploreScreen' component={ExploreScreen} />

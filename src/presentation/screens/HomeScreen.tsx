@@ -52,7 +52,8 @@ export const HomeScreen = () => {
                     {/* Top Rated */}
                     <HorizontalFeed
                         title='Top Rated' movies={topRated}
-                        onMovieClicked={(movie) => navigation.navigate('DetailScreen', movie)} />
+                        onMovieClicked={(movie) => navigation.navigate('DetailScreen', movie)} 
+                        onSeeAllClicked={() => navigation.navigate('MovieListingScreen')}/>
 
                 </View >
 

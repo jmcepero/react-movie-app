@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { MovieResponse } from '../../data/movie/entities/MovieInterface';
 import { Movie } from '../../domain/movie/entities/Movies';
 import { ValorationView } from './base/ValorationView';
@@ -9,17 +9,20 @@ import { CardType, MovieCard } from './MovieCard';
 interface Props {
     title?: string,
     movies: Movie[],
-    onMovieClicked: (movie: Movie) => void
+    onMovieClicked: (movie: Movie) => void,
+    onSeeAllClicked?: () => void
 }
 
-export const HorizontalFeed = ({ title, movies, onMovieClicked }: Props) => {
+export const HorizontalFeed = ({ title, movies, onMovieClicked, onSeeAllClicked }: Props) => {
     return (
         <View>
             {
                 title && (
                     <View style={styles.headerContainer}>
                         <Text style={styles.headerTitle}>{title}</Text>
-                        <Text style={styles.button}>See all</Text>
+                        <TouchableOpacity onPress={() => onSeeAllClicked?.()}>
+                            <Text style={styles.button}>See all</Text>
+                        </TouchableOpacity>
                     </View>
                 )
             }
@@ -72,23 +75,23 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     headerTitle: {
-        fontFamily: 'ArchivoRegular',
+        fontFamily: 'Archivo-Regular',
         fontSize: 18,
         color: 'rgba(251,246,248,0.7)',
     },
     button: {
-        fontFamily: 'ArchivoRegular',
+        fontFamily: 'Archivo-Regular',
         fontSize: 16,
         color: '#553081',
         alignSelf: 'center'
     },
     movieTitle: {
-        fontFamily: 'ArchivoBlack',
+        fontFamily: 'Archivo-Black',
         fontSize: 12,
         color: 'rgba(251,246,248,1)',
     },
     yearTitle: {
-        fontFamily: 'ArchivoThin',
+        fontFamily: 'Archivo-Thin',
         fontSize: 12,
         color: 'rgba(251,246,248,0.7)',
         marginHorizontal: 4,

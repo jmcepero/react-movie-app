@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         color: '#988396'
     },
     text: {
-        fontFamily: 'ArchivoRegular',
+        fontFamily: 'Archivo-Regular',
         fontSize: 14,
         color: '#988396',
         marginHorizontal: 8

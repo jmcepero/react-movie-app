@@ -15,11 +15,11 @@ export const errorHandler = (error: any) : ErrorMessage => {
     } else if (request) {
         //request sent but no response received
         return {
-            message: "server time out",
+            message: "Opps! something went wrong. Please try again",
             status: 503,
         };
     } else {
         // Something happened in setting up the request that triggered an Error
-        return { message: "opps! something went wrong while setting up request" };
+        return { message: "Opps! something went wrong. Please try again" };
     }
 };

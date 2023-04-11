@@ -16,6 +16,7 @@
 		7699B88040F8A987B510C191 /* libPods-MovieApp-MovieAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-MovieApp-MovieAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		B44FC720217248AA8ADAD2E1 /* ArchivoLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5059B9C0C6B34578AD111F64 /* ArchivoLight.ttf */; };
+		BC906B1829DF4E0B00B39BCF /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BC0E7E2D29D289A3002225A9 /* Ionicons.ttf */; };
 		C9A1271DDDC74167B2875038 /* ArchivoRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CBCBAFCB36CF4204A46362E8 /* ArchivoRegular.ttf */; };
 		E0D9B7F6373E44908E5109B5 /* ArchivoThin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 077443A4E5994140AAB0332C /* ArchivoThin.ttf */; };
 		ECAA5171ADCA4C4396E7DA0D /* ArchivoBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D31BC9BFC8B84237985E3A23 /* ArchivoBlack.ttf */; };
@@ -275,6 +276,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC906B1829DF4E0B00B39BCF /* Ionicons.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				ECAA5171ADCA4C4396E7DA0D /* ArchivoBlack.ttf in Resources */,

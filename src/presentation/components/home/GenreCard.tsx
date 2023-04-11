@@ -19,7 +19,7 @@ export const GenreCard = ({ genere }: Props) => {
 
 const styles = StyleSheet.create({
     genereTitle: {
-        fontFamily: 'ArchivoBlack',
+        fontFamily: 'Archivo-Black',
         fontSize: 12,
         color: 'rgba(251,246,248,1)',
         marginHorizontal: 4,

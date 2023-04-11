@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         gap: 4
       },
       valorationTitle: {
-        fontFamily: 'ArchivoRegular',
+        fontFamily: 'Archivo-Regular',
         fontSize: 14,
         color: 'white',
       },
