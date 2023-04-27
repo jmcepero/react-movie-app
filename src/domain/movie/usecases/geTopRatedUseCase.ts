@@ -1,7 +1,13 @@
-import { MovieRepository } from '../../../data/movie/MovieRepository';
-import { MovieRemoteDataSource } from '../../../data/movie/remote/MovieRemoteDataSource';
+import { IMovieRepository } from '../../../data/movie/MovieRepository';
+import { Movies } from '../entities/Movies';
 
-export const getTopRatedUseCase = async () => {
-    const repository = new MovieRepository(new MovieRemoteDataSource())
-    return repository.getTopRated()
+class GetTopRatedUseCase {
+
+    constructor(private repository: IMovieRepository) {}
+    
+    async execute(page?: number): Promise<Movies> {
+        return this.repository.getTopRated(page)
+    }
 }
+
+export default GetTopRatedUseCase;

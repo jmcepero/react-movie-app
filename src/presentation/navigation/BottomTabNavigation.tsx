@@ -3,7 +3,7 @@ import React from 'react'
 import BottomTabBar from '../components/base/BottomTabBar'
 import { AccountScreen } from '../screens/AccountScreen'
 import { ExploreScreen } from '../screens/ExploreScreen'
-import { HomeScreen } from '../screens/HomeScreen'
+import { HomeScreen } from '../screens/home/HomeScreen'
 import { TvShowScreen } from '../screens/TvShowScreen'
 
 export type BottomTabParams = {

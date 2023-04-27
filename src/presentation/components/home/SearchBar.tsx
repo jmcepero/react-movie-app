@@ -1,13 +1,17 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export const SearchBar = () => {
+interface Props {
+    onClick: () => void
+}
+
+export const SearchBar = ({ onClick }: Props) => {
     return (
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={onClick}>
             <Icon style={styles.icon} name='search-outline' size={22} />
             <Text style={styles.text}>Search</Text>
-        </View>
+        </TouchableOpacity>
     )
 }
 

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { getNowPlayingUseCase } from '../../domain/movie/usecases/getNowPlayingUseCase';
 import { Movies } from '../../domain/movie/entities/Movies';
 import { errorHandler } from '../base/errorHandler';
+import GetNowPlayingUseCase from '../../domain/movie/usecases/GetNowPlayingUseCase';
+import di from '../../di';
 
 interface MoviesState {
     nowPlaying: Movies | undefined;
@@ -10,14 +11,14 @@ interface MoviesState {
 
 export const useMoviesError = () => {
 
+    const useCase = di.GetPopularUseCase
     const [moviesState, setMoviesState] = useState<MoviesState>({
         nowPlaying: undefined,
     })
 
     const getMoviesNowPlaying = async () => {
-        const nowtestPro = getNowPlayingUseCase()
         try {
-            const [nowPlayingResp] = await Promise.all([nowtestPro])
+            const [nowPlayingResp] = await Promise.all([useCase.execute()])
             setMoviesState({
                 nowPlaying: nowPlayingResp,
                 error: undefined

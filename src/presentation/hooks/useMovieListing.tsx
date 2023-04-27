@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Movie } from '../../domain/movie/entities/Movies';
-import { getPopularUseCase } from '../../domain/movie/usecases/getPopularUseCase';
 import { errorHandler } from '../base/errorHandler';
+import GetPopularUseCase from '../../domain/movie/usecases/GetPopularUseCase';
+import di from '../../di';
 
 interface MovieListingState {
     mainLoading: boolean,
@@ -11,6 +12,7 @@ interface MovieListingState {
 }
 
 export const useMovieListing = () => {
+    const getPopularUseCase = di.GetPopularUseCase;
     const [page, setPage] = useState(1);
     const [movieListingState, setMovieListingState] = useState<MovieListingState>({
         mainLoading: false,
@@ -19,8 +21,7 @@ export const useMovieListing = () => {
     })
 
     const getPopularMovies = async (page: number) => {
-        console.log(page.toString())
-        const popularProm = getPopularUseCase(page)
+        const popularProm = getPopularUseCase.execute(page)
         try {
             const popularRes = await popularProm
             console.log('current page' + popularRes.page.toString())

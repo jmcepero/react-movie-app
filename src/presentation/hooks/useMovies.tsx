@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
 import { genres, CustomGenre } from '../../data/genre/local/CustomGenres';
-import { getNowPlayingUseCase } from '../../domain/movie/usecases/getNowPlayingUseCase';
+import di from '../../di';
 import { Movie } from '../../domain/movie/entities/Movies';
-import { getPopularUseCase } from '../../domain/movie/usecases/getPopularUseCase';
-import { getTopRatedUseCase } from '../../domain/movie/usecases/geTopRatedUseCase';
 import { errorHandler } from '../base/errorHandler';
 
 interface MoviesState {
@@ -16,6 +14,9 @@ interface MoviesState {
 
 export const useMovies = () => {
 
+    const getNowPlayingUseCase = di.GetNowPlayingUseCase;
+    const getPopularUseCase = di.GetPopularUseCase;
+    const getTopRatedUseCase = di.GetTopRatedUseCase;
     const [isLoading, setIsLoading] = useState(true);
     const [moviesState, setMoviesState] = useState<MoviesState>({
         nowPlaying: [],
@@ -25,9 +26,9 @@ export const useMovies = () => {
     })
 
     const getMoviesNowPlaying = async () => {
-        const nowPlayingProm = getNowPlayingUseCase();
-        const popularProm = getPopularUseCase();
-        const topRatedProm = getTopRatedUseCase();
+        const nowPlayingProm = getNowPlayingUseCase.execute();
+        const popularProm = getPopularUseCase.execute();
+        const topRatedProm = getTopRatedUseCase.execute();
         try {
             const [
                 nowPlayingRes,

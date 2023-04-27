@@ -8,8 +8,8 @@ export interface Movies {
 }
 
 export interface Dates {
-    maximum: Date;
-    minimum: Date;
+    maximum: string;
+    minimum: string;
 }
 
 export interface Movie {
@@ -22,7 +22,7 @@ export interface Movie {
     overview: string;
     popularity: number;
     posterPath: string;
-    releaseDate: Date;
+    releaseDate: string;
     title: string;
     video: boolean;
     voteAverage: number;

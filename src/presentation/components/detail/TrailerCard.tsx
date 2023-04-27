@@ -13,7 +13,7 @@ export const TrailerCard = ({ trailerUri }: Props) => {
             <Text style={styles.headerText}>Trailer</Text>
             <View style={styles.videoContainer}>
                 <YoutubePlayer
-                    height={200}
+                    height={190}
                     videoId={trailerUri}
                     webViewStyle={{
                         opacity: 0.99,

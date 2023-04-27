@@ -25,7 +25,8 @@ export const DetailScreen = ({ route }: Props) => {
   const { detail, director, cast, isLoading, trailerUri, reviews } = useMovieDetail(movie.id);
   const releaseDate = new Date(detail?.release_date || '')
 
-  const uri = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
+  const uri = `https://image.tmdb.org/t/p/original${movie.posterPath}`;
+  console.log(uri)
 
   if (isLoading) {
     return <View style={{

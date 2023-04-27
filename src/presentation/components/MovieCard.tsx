@@ -2,6 +2,7 @@ import React from 'react'
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
 import { Movie } from '../../domain/movie/entities/Movies';
+import { FadeInImage } from './base/FadeImage';
 
 export enum CardType {
     Carousel,
@@ -30,9 +31,7 @@ export const MovieCard = ({ movie, width, height, onClick, type = CardType.Carou
                 height: height
             }}>
                 <LinearGradient style={[styles.gradient]} colors={['#211920', '#382c3e']} />
-                <Image source={{
-                    uri: uri
-                }} style={styles.image} />
+                <FadeInImage uri={uri} style={styles.image} />
             </View>
         </TouchableOpacity>
     )
@@ -56,7 +55,9 @@ const styles = StyleSheet.create({
         shadowRadius: 1,
     },
     image: {
-        flex: 1,
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
         borderRadius: 15,
         resizeMode: 'cover'
     },

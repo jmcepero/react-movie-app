@@ -3,8 +3,8 @@ import { Movies } from '../../../domain/movie/entities/Movies';
 
 export const moviesResponseToDomain = (moviesResponse: MoviesResponse): Movies => ({
         dates: {
-            maximum: new Date(moviesResponse.dates?.maximum || ''),
-            minimum: new Date(moviesResponse.dates?.minimum || '')
+            maximum: moviesResponse.dates?.maximum || '',
+            minimum: moviesResponse.dates?.minimum || ''
         },
         page: moviesResponse.page,
         results: moviesResponse.results.map((movie) => {
@@ -18,7 +18,7 @@ export const moviesResponseToDomain = (moviesResponse: MoviesResponse): Movies =
                 overview: movie.overview,
                 popularity: movie.popularity,
                 posterPath: movie.poster_path,
-                releaseDate: new Date(movie.release_date || ''),
+                releaseDate: movie.release_date,
                 title: movie.title,
                 video: movie.video,
                 voteAverage: movie.vote_average,
