@@ -15,55 +15,60 @@ interface Props {
 
 export const HorizontalFeed = ({ title, movies, onMovieClicked, onSeeAllClicked }: Props) => {
     return (
-        <View>
-            {
-                title && (
-                    <View style={styles.headerContainer}>
-                        <Text style={styles.headerTitle}>{title}</Text>
-                        <TouchableOpacity onPress={() => onSeeAllClicked?.()}>
-                            <Text style={styles.button}>See all</Text>
-                        </TouchableOpacity>
-                    </View>
-                )
-            }
-            <FlatList
-                contentContainerStyle={{
-                    paddingHorizontal: 8
-                }}
-                data={movies}
-                renderItem={
-                    ({ index }) => (
-                        <View style={{
-                            paddingVertical: 8,
-                            paddingHorizontal: 8
-                        }}>
-                            <MovieCard
-                                movie={movies[index]}
-                                width={160}
-                                height={220}
-                                type={CardType.Feed}
-                                onClick={(movie) => onMovieClicked(movie)}
-                            />
-                            <View style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                paddingHorizontal: 4,
-                                marginTop: 8
-                            }}>
-                                <Text style={[styles.movieTitle, { width: 90 }]} numberOfLines={1} ellipsizeMode={'tail'}>{movies[index].title}</Text>
-                                <ValorationView average={movies[index].voteAverage} iconSize={12} />
-                            </View>
-
-                            <Text style={styles.yearTitle}>{new Date(movies[index]?.releaseDate || '').getFullYear()}</Text>
-
+        movies.length > 0 ? (
+            <View>
+                {
+                    title && (
+                        <View style={styles.headerContainer}>
+                            <Text style={styles.headerTitle}>{title}</Text>
+                            <TouchableOpacity onPress={() => onSeeAllClicked?.()}>
+                                <Text style={styles.button}>See all</Text>
+                            </TouchableOpacity>
                         </View>
                     )
                 }
-                keyExtractor={(item) => item.id.toString()}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-            />
-        </View>
+                <FlatList
+                    contentContainerStyle={{
+                        paddingHorizontal: 8
+                    }}
+                    data={movies}
+                    renderItem={
+                        ({ index }) => (
+                            <View style={{
+                                paddingVertical: 8,
+                                paddingHorizontal: 8
+                            }}>
+                                <MovieCard
+                                    imageID={{
+                                        backdropPath: movies[index].backdropPath,
+                                        posterPath: movies[index].posterPath
+                                    }}
+                                    width={160}
+                                    height={220}
+                                    type={CardType.Feed}
+                                    onClick={() => onMovieClicked(movies[index])}
+                                />
+                                <View style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    paddingHorizontal: 4,
+                                    marginTop: 8
+                                }}>
+                                    <Text style={[styles.movieTitle, { width: 90 }]} numberOfLines={1} ellipsizeMode={'tail'}>{movies[index].title}</Text>
+                                    <ValorationView average={movies[index].voteAverage} iconSize={12} />
+                                </View>
+
+                                <Text style={styles.yearTitle}>{new Date(movies[index]?.releaseDate || '').getFullYear()}</Text>
+
+                            </View>
+                        )
+                    }
+                    keyExtractor={(item) => item.id.toString()}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                />
+            </View>
+        ) : <></>
     )
 }
 

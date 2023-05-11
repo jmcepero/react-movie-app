@@ -1,13 +1,19 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Images } from '../../../../assets/images/Images.index';
 
+interface CustomToolbarProps {
+    title: string;
+    onUserIconClicked?: () => void;
+}
 
-export const CustomToolbar = () => {
+export const CustomToolbar = ({ title, onUserIconClicked }: CustomToolbarProps) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Hi, Welcome!</Text>
-            <Image style={styles.avatar} source={Images.user} />
+            <Text style={styles.title}>{title}</Text>
+            <TouchableOpacity onPress={() => onUserIconClicked?.()}>
+                <Image style={styles.avatar} source={Images.user} />
+            </TouchableOpacity>
         </View>
     )
 }

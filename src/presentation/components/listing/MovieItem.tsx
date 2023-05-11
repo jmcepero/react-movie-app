@@ -26,11 +26,14 @@ const MovieItem = ({ movie, width = Dimensions.get('window').width, height = 220
             paddingHorizontal: 8
         }}>
             <MovieCard
-                movie={movie}
+                imageID={{
+                    backdropPath: movie.backdropPath,
+                    posterPath: movie.posterPath
+                }}
                 width={width * 0.46}
                 height={height}
                 type={type}
-                onClick={(movie) => {
+                onClick={() => {
                     onClick?.(movie);
                 }}
             />

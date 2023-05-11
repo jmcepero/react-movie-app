@@ -1,11 +1,12 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import { DetailScreen } from '../screens/DetailScreen';
-import { MovieResponse } from '../../data/movie/entities/MovieInterface';
 import { BottomTabNavigation } from './BottomTabNavigation';
-import { MovieListingScreen, MovieListingProps } from '../screens/movies/MovieListingScreen';
-import { SearchScreen } from '../screens/SearchScreen';
+import { MovieListingScreen } from '../screens/movies/MovieListingScreen';
+import { SearchScreen } from '../screens/search/SearchScreen';
 import { Movie } from '../../domain/movie/entities/Movies';
+import { WatchProviderScreen } from '../screens/warch_provider/WatchProviderScreen';
+import { TVShowDetailScreen } from '../screens/tv_show/TVShowDetailScreen';
+import { DetailScreen } from '../screens/movies/DetailScreen';
 
 export type RootStackParams = {
   BottomTabNavigation: undefined;
@@ -14,7 +15,16 @@ export type RootStackParams = {
     category: 'popular' | 'topRated';
     title: 'Popular' | 'Top Rated'
   };
-  SearchScreen: undefined;
+  SearchScreen: {
+    type: 'movie' | 'tvShow'
+  };
+  WatchProviderScreen: {
+    itemId: string,
+    itemType: 'movie' | 'tvShow'
+  };
+  TVShowDetailScreen: {
+    tvShowId: string
+  }
 }
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -36,6 +46,8 @@ export const StackNavigation = () => {
       <Stack.Screen name="DetailScreen" component={DetailScreen} />
       <Stack.Screen name="MovieListingScreen" component={MovieListingScreen} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
+      <Stack.Screen name="WatchProviderScreen" component={WatchProviderScreen} />
+      <Stack.Screen name="TVShowDetailScreen" component={TVShowDetailScreen} />
     </Stack.Navigator>
   );
 }

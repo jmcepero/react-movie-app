@@ -1,8 +1,8 @@
-import { IMovieRemoteDataSource } from '../remote/MovieRemoteDataSource';
 import MovieRemoteDataSource from '../remote/MovieRemoteDataSource';
 import MovieRepository from '../MovieRepository';
+import MovieRemoteDataSourceImpl from '../remote/MovieRemoteDataSource';
 
-const movieRemoteDataSource = new MovieRemoteDataSource()
+const movieRemoteDataSource = new MovieRemoteDataSourceImpl()
 
 export default() => {
     return {

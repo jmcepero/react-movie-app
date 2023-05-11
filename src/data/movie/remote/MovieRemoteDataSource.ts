@@ -1,14 +1,15 @@
 import movieDB from "../../api/movieDB";
-import { MoviesResponse } from "../entities/MovieInterface";
+import { MovieResponse, MoviesResponse, MovieDetailResponse } from '../entities/MovieInterface';
 
-export interface IMovieRemoteDataSource {
-    getMoviesByClasification(clasification: string, page?: number) : Promise<MoviesResponse>;
-    findMovies(term: string, page: number): Promise<MoviesResponse>
+export interface MovieRemoteDataSource {
+    getMoviesByClasification(clasification: string, page?: number): Promise<MoviesResponse>;
+    findMovies(term: string, page: number): Promise<MoviesResponse>;
+    getMovieDetail(movieId: string): Promise<MovieDetailResponse>;
 }
 
-class MovieRemoteDataSource implements IMovieRemoteDataSource {
+class MovieRemoteDataSourceImpl implements MovieRemoteDataSourceImpl {
 
-     async getMoviesByClasification(clasification: string, page?: number): Promise<MoviesResponse> {
+    async getMoviesByClasification(clasification: string, page?: number): Promise<MoviesResponse> {
         let url = `movie/${clasification}`
         if (page) {
             url = url + `?page=${page}`
@@ -24,7 +25,12 @@ class MovieRemoteDataSource implements IMovieRemoteDataSource {
         const resp = await movieDB.get<MoviesResponse>(url);
         return resp.data
     }
+
+    async getMovieDetail(movieId: string): Promise<MovieDetailResponse> {
+        const resp = await movieDB.get<MovieDetailResponse>(`movie/${movieId}?append_to_response=videos,reviews,credits`)
+        return resp.data
+    }
 }
 
-export default MovieRemoteDataSource;
+export default MovieRemoteDataSourceImpl;
 

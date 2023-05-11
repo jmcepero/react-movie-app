@@ -3,7 +3,7 @@ import di from "../../../di";
 import { Movie } from "../../../domain/movie/entities/Movies";
 import { CustomGenre, genres } from '../../../data/genre/local/CustomGenres';
 
-interface HomeMovies {
+interface HomeMoviesState {
     isLoading: boolean;
     nowPlaying: Movie[];
     popular: Movie[];
@@ -12,8 +12,8 @@ interface HomeMovies {
     error: string;
 }
 
-const initialHomeMoviesState: HomeMovies = {
-    isLoading: false,
+const initialHomeMoviesState: HomeMoviesState = {
+    isLoading: true,
     nowPlaying: [],
     popular: [],
     genres: [],
@@ -44,11 +44,15 @@ export const homeSlice = createSlice({
                 state.isLoading = true;
             })
             .addCase(loadHomeMoviesAsync.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.nowPlaying = action.payload[0].results.slice(0, 5)
-                state.popular = action.payload[1].results
-                state.topRated = action.payload[2].results
-                state.genres = genres
+               state = {
+                ...state,
+                nowPlaying: action.payload[0].results.slice(0, 8),
+                popular: action.payload[1].results,
+                topRated:  action.payload[2].results,
+                genres: genres,
+                isLoading: false,
+               }
+               return state
             })
             .addCase(loadHomeMoviesAsync.rejected, (state, action) => {
                 console.log(action.error.message)

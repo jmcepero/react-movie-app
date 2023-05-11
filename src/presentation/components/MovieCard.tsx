@@ -1,8 +1,9 @@
 import React from 'react'
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
 import { Movie } from '../../domain/movie/entities/Movies';
 import { FadeInImage } from './base/FadeImage';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export enum CardType {
     Carousel,
@@ -10,20 +11,23 @@ export enum CardType {
 }
 
 interface Props {
-    movie: Movie,
+    imageID: {
+        backdropPath?: string;
+        posterPath?: string
+    },
     width?: number,
     height?: number,
-    onClick?: (movie: Movie) => void,
+    onClick?: () => void,
     type?: CardType
 }
 
-export const MovieCard = ({ movie, width, height, onClick, type = CardType.Carousel }: Props) => {
-    const uri = `https://image.tmdb.org/t/p/${type === CardType.Carousel ? 'original'+movie.backdropPath : 'w500'+movie.posterPath}`;
+export const MovieCard = ({ imageID, width, height, onClick, type = CardType.Carousel }: Props) => {
+    const uri = `https://image.tmdb.org/t/p/${type === CardType.Carousel ? 'original' + imageID.backdropPath : 'w500' + imageID.posterPath}`;
 
     return (
         <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => onClick?.(movie)}
+            onPress={() => onClick?.()}
             style={styles.container}>
             <View style={{
                 ...styles.imageContainer,

@@ -1,14 +1,14 @@
 import React from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
-import { Review } from '../../../data/movie/entities/MovieInterface';
+import { Review } from '../../../domain/movie/entities/Movies';
 import { ReviewCard } from './ReviewCard';
 
 interface Props {
-    reviews: Review[]
+    reviews?: Review[]
 }
 
 export const ReviewFeed = ({ reviews }: Props) => {
-    return reviews.length > 0 ?
+    return reviews !== undefined && reviews.length > 0 ?
         <View style={styles.container}>
             <Text style={styles.headerText}>Comments</Text>
             <FlatList

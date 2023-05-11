@@ -2,13 +2,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import React from 'react'
 import BottomTabBar from '../components/base/BottomTabBar'
 import { AccountScreen } from '../screens/AccountScreen'
-import { ExploreScreen } from '../screens/ExploreScreen'
+import { WatchProviderScreen } from '../screens/warch_provider/WatchProviderScreen'
 import { HomeScreen } from '../screens/home/HomeScreen'
-import { TvShowScreen } from '../screens/TvShowScreen'
+import { TVShowScreen } from '../screens/tv_show/TVShowScreen'
+import { ExploreScreen } from '../screens/ExploreScreen';
 
 export type BottomTabParams = {
   HomeScreen: undefined,
-  TvShowScreen: undefined,
+  TVShowScreen: undefined,
   ExploreScreen: undefined,
   AccountScreen: undefined
 }
@@ -23,7 +24,7 @@ export const BottomTabNavigation = () => {
       headerShown: false,
     }} initialRouteName={'HomeScreen'} tabBar={(props) => <BottomTabBar {...props} />}>
       <BottomTab.Screen name='HomeScreen' component={HomeScreen} />
-      <BottomTab.Screen name='TvShowScreen' component={TvShowScreen} />
+      <BottomTab.Screen name='TVShowScreen' component={TVShowScreen} />
       <BottomTab.Screen name='ExploreScreen' component={ExploreScreen} />
       <BottomTab.Screen name='AccountScreen' component={AccountScreen} />
     </BottomTab.Navigator>

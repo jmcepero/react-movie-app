@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Images } from '../../../../assets/images/Images.index';
-import { Cast } from '../../../data/movie/entities/MovieInterface';
+import { Cast } from '../../../domain/movie/entities/Movies';
 
 interface Props {
     cast: Cast,
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const CastCard = ({ cast, width, height, onClick }: Props) => {
-    const uri = `https://image.tmdb.org/t/p/w500${cast.profile_path}`;
+    const uri = `https://image.tmdb.org/t/p/w500${cast.profilePath}`;
 
     return (
         <View>

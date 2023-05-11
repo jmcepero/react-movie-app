@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { RoundImage } from '../base/RoundImage'
 import moment from 'moment';
-import { Review } from '../../../data/movie/entities/MovieInterface';
+import { Review } from '../../../domain/movie/entities/Movies';
 
 interface Props {
     review: Review
@@ -12,8 +12,8 @@ interface Props {
 const width = Dimensions.get('window').width
 
 export const ReviewCard = ({ review }: Props) => {
-    const uri = `https://image.tmdb.org/t/p/w500${review.author_details.avatar_path}`;
-    const date = moment(review.created_at)
+    const uri = `https://image.tmdb.org/t/p/w500${review.authorDetails.avatarPath}`;
+    const date = moment(review.createdAt)
 
     return (
         <View style={styles.container}>
@@ -21,12 +21,12 @@ export const ReviewCard = ({ review }: Props) => {
                 <RoundImage uri={uri} containerStyle={styles.roundContainerStyle} />
 
                 <View style={styles.titleAndDate}>
-                    <Text style={styles.title}>{review.author_details.username}</Text>
+                    <Text style={styles.title}>{review.authorDetails.username}</Text>
                     <Text style={styles.caption}>{date.format("YYYY, d MMM")}</Text>
                 </View>
 
                 <View style={styles.valorationContainer}>
-                    <Text style={styles.title}>{ review.author_details.rating?.toFixed(1) || 0.0}</Text>
+                    <Text style={styles.title}>{ review.authorDetails.rating?.toFixed(1) || 0.0}</Text>
                     <Icon name="star" size={16} style={styles.icon} />
                 </View>
             </View>

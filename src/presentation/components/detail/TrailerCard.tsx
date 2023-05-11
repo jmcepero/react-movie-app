@@ -3,32 +3,34 @@ import { Platform, StyleSheet, Text, View } from 'react-native'
 import YoutubePlayer from "react-native-youtube-iframe";
 
 interface Props {
-    trailerUri: string
+    trailerUri?: string
 }
 
 export const TrailerCard = ({ trailerUri }: Props) => {
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.headerText}>Trailer</Text>
-            <View style={styles.videoContainer}>
-                <YoutubePlayer
-                    height={190}
-                    videoId={trailerUri}
-                    webViewStyle={{
-                        opacity: 0.99,
-                    }}
-                    webViewProps={
-                        {
-                            androidLayerType: Platform.OS === "android" && Platform.Version <= 22 ? "hardware" : "none"
+        trailerUri ? (
+            <View style={styles.container}>
+                <Text style={styles.headerText}>Trailer</Text>
+                <View style={styles.videoContainer}>
+                    <YoutubePlayer
+                        height={190}
+                        videoId={trailerUri}
+                        webViewStyle={{
+                            opacity: 0.99,
+                        }}
+                        webViewProps={
+                            {
+                                androidLayerType: Platform.OS === "android" && Platform.Version <= 22 ? "hardware" : "none"
+                            }
                         }
-                    }
-                    initialPlayerParams={{
-                        preventFullScreen: true
-                    }}
-                />
+                        initialPlayerParams={{
+                            preventFullScreen: true
+                        }}
+                    />
+                </View>
             </View>
-        </View>
+        ) : <></>
     )
 }
 

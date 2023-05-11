@@ -1,17 +1,18 @@
-import { moviesResponseToDomain } from './mapper/MovieMapper';
-import { Movies } from "../../domain/movie/entities/Movies";
-import { IMovieRemoteDataSource } from './remote/MovieRemoteDataSource';
+import { movieDetailResponseToDetail, moviesResponseToDomain } from './mapper/MovieMapper';
+import { Movie, Movies } from "../../domain/movie/entities/Movies";
+import { MovieRemoteDataSource } from './remote/MovieRemoteDataSource';
 
-export interface IMovieRepository {
+export interface MovieDataSource {
     getNowPlaying(page?: number): Promise<Movies>;
     getPopular(page?: number): Promise<Movies>;
     getTopRated(page?: number): Promise<Movies>;
     findMovies(term: string, page: number): Promise<Movies>;
+    getMovieDetail(movieId: string): Promise<Movie>;
 }
 
-class MovieRepository implements IMovieRepository {
+class MovieRepository implements MovieDataSource {
 
-    constructor(private remoteDataSource: IMovieRemoteDataSource) {}
+    constructor(private remoteDataSource: MovieRemoteDataSource) {}
 
     async getNowPlaying(page?: number): Promise<Movies> {
         const resp = await this.remoteDataSource.getMoviesByClasification('now_playing', page);
@@ -31,6 +32,11 @@ class MovieRepository implements IMovieRepository {
     async findMovies(term: string, page: number): Promise<Movies> {
         const resp = await this.remoteDataSource.findMovies(term, page);
         return moviesResponseToDomain(resp)
+    }
+
+    async getMovieDetail(movieId: string): Promise<Movie> {
+        const resp = await this.remoteDataSource.getMovieDetail(movieId);
+        return movieDetailResponseToDetail(resp)
     }
 }
 

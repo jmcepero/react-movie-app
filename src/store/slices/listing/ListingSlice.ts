@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import di from "../../../di";
+import { Movie } from "../../../domain/movie/entities/Movies";
 import { MovieResult } from "../base/MovieResult";
 
 export interface MovieCategory {
@@ -58,7 +59,7 @@ export const listingSlice = createSlice({
             .addCase(nextPageAsync.fulfilled, (state, action) => {
                 state.pageLoading = false;
                 state.page += 1
-                state.result = [...state.result, ...action.payload.results]
+                state.result = [...state.result as Movie[], ...action.payload.results as Movie[]]
             })
             .addCase(nextPageAsync.rejected, (state, action) => {
                 state.pageLoading = false;

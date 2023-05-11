@@ -1,6 +1,6 @@
 import { ActivityIndicator } from '@react-native-material/core';
-import { useNavigation } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect } from 'react'
 import { StyleSheet, View, Dimensions } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -11,6 +11,7 @@ import LoadingView from '../../components/base/LoadingView';
 import { Toolbar } from '../../components/base/Toolbar';
 import MovieItem from '../../components/listing/MovieItem';
 import { RootStackParams } from '../../navigation/StackNavigation';
+import { Movie } from '../../../domain/movie/entities/Movies';
 
 export interface MovieListingProps extends StackScreenProps<RootStackParams, 'MovieListingScreen'> { }
 
@@ -20,7 +21,7 @@ export const MovieListingScreen = ({ route }: MovieListingProps) => {
     const { width } = Dimensions.get('window')
     const dispatch = useAppDispatch()
     const { result, isLoading, pageLoading, page, error } = useAppSelector((state: RootState) => state.listing)
-    const navigation = useNavigation()
+    const navigation = useNavigation<StackNavigationProp<ParamListBase>>()
 
     useEffect(() => {
         dispatch(loadMoviesAsync({ category: category, page: 1 }))
@@ -40,11 +41,11 @@ export const MovieListingScreen = ({ route }: MovieListingProps) => {
             <Toolbar title={title} />
             {
                 result.length > 0 && <FlatList
-                    data={result}
+                    data={result as Movie[]}
                     showsVerticalScrollIndicator={false}
                     renderItem={
                         ({ index }) => (
-                            <MovieItem movie={result[index]} onClick={
+                            <MovieItem movie={result[index] as Movie} onClick={
                                 (movie) => navigation.navigate('DetailScreen', movie)
                             } />
                         )

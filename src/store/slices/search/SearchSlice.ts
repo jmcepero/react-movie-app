@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import di from "../../../di";
 import { MovieResult } from "../base/MovieResult";
+import { Movie } from '../../../domain/movie/entities/Movies';
+import { TVShow } from '../../../domain/tv_shows/entities/TVShows';
 
 export interface SearchParams {
     term: string;
@@ -20,9 +22,19 @@ const findMovies = async (params: SearchParams) => {
     return await useCase.execute(params.term, params.page)
 }
 
+const findTVShows = async (params: SearchParams) => {
+    const useCase = di.FindTVShowUseCase
+    return await useCase.execute(params.term, params.page)
+}
+
 export const findMoviesAsync = createAsyncThunk(
     'search/findMovie',
     findMovies
+);
+
+export const findTVShowsAsync = createAsyncThunk(
+    'search/findTVShows',
+    findTVShows
 );
 
 export const nextPageAsync = createAsyncThunk(
@@ -30,10 +42,20 @@ export const nextPageAsync = createAsyncThunk(
     findMovies
 );
 
+export const nextPageTVShowAsync = createAsyncThunk(
+    'search/nextPageTvShow',
+    findTVShows
+);
+
 export const searchSlice = createSlice({
     name: 'search',
     initialState: initialSearchState,
-    reducers: {},
+    reducers: {
+        restoreToDefault: state => {
+            state = initialSearchState
+            return state
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(findMoviesAsync.pending, (state) => {
@@ -55,11 +77,38 @@ export const searchSlice = createSlice({
             .addCase(nextPageAsync.fulfilled, (state, action) => {
                 state.pageLoading = false;
                 state.page += 1
-                state.result = [...state.result, ...action.payload.results]
+                state.result = [...state.result as Movie[], ...action.payload.results as Movie[]]
             })
             .addCase(nextPageAsync.rejected, (state, action) => {
                 state.pageLoading = false;
                 state.error = action.error.message || 'Unknow error'
             })
+            .addCase(findTVShowsAsync.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(findTVShowsAsync.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.page = 1
+                state.result = action.payload.results
+            })
+            .addCase(findTVShowsAsync.rejected, (state, action) => {
+                console.log(action.error.message)
+                state.isLoading = false;
+                state.error = action.error.message || 'Unknow error'
+            })
+            .addCase(nextPageTVShowAsync.pending, (state) => {
+                state.pageLoading = true;
+            })
+            .addCase(nextPageTVShowAsync.fulfilled, (state, action) => {
+                state.pageLoading = false;
+                state.page += 1
+                state.result = [...state.result as TVShow[], ...action.payload.results as TVShow[]]
+            })
+            .addCase(nextPageTVShowAsync.rejected, (state, action) => {
+                state.pageLoading = false;
+                state.error = action.error.message || 'Unknow error'
+            })
     }
 });
+
+export const { restoreToDefault } = searchSlice.actions

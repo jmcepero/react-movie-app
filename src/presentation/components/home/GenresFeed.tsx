@@ -9,33 +9,35 @@ interface Props {
 
 export const GenresFeed = ({ genres }: Props) => {
     return (
-        <View>
+        genres.length > 0 ? (
+            <View>
 
-            <View style={styles.headerContainer}>
-                <Text style={styles.headerTitle}>Genres</Text>
-                <Text style={styles.button}>See all</Text>
+                <View style={styles.headerContainer}>
+                    <Text style={styles.headerTitle}>Genres</Text>
+                    <Text style={styles.button}>See all</Text>
+                </View>
+
+                <FlatList
+                    contentContainerStyle={{
+                        paddingHorizontal: 8
+                    }}
+                    data={genres}
+                    renderItem={
+                        ({ index }) => (
+                            <View style={{
+                                paddingVertical: 8,
+                                paddingHorizontal: 8
+                            }}>
+                                <GenreCard genere={genres[index]} />
+                            </View>
+                        )
+                    }
+                    keyExtractor={(item) => item.id.toString()}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                />
             </View>
-
-            <FlatList
-                contentContainerStyle={{
-                    paddingHorizontal: 8
-                }}
-                data={genres}
-                renderItem={
-                    ({ index }) => (
-                        <View style={{
-                            paddingVertical: 8,
-                            paddingHorizontal: 8
-                        }}>
-                            <GenreCard genere={genres[index]} />
-                        </View>
-                    )
-                }
-                keyExtractor={(item) => item.id.toString()}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-            />
-        </View>
+        ) : <></>
     )
 }
 
