@@ -1,11 +1,19 @@
 import React from 'react';
 import { StatusBar, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer, Theme } from '@react-navigation/native';
 import { StackNavigation } from './src/presentation/navigation/StackNavigation';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { MyStatusBar } from './src/presentation/components/base/MyStatusBar';
 import { Provider } from 'react-redux'
 import { store } from './src/store/store';
+
+const navTheme: Theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'transparent'
+  }
+}
 
 export const App = () => {
   SystemNavigationBar.setNavigationColor('#0d0d0d');
@@ -23,7 +31,7 @@ const AppContent = () => {
       <View style={{
         flex: 1,
       }}>
-        <NavigationContainer>
+        <NavigationContainer theme={navTheme}>
           <StackNavigation />
         </NavigationContainer>
       </View>

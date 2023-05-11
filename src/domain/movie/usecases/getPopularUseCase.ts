@@ -1,4 +1,4 @@
-import MovieRepository, { MovieDataSource } from '../../../data/movie/MovieRepository';
+import { MovieDataSource } from '../../../data/movie/MovieRepository';
 import { Movies } from '../entities/Movies';
 
 class GetPopularUseCase {

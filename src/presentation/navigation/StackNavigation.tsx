@@ -40,7 +40,8 @@ export const StackNavigation = () => {
         },
         headerStyle: {
           backgroundColor: 'black'
-        }
+        },
+        presentation: 'transparentModal'
       }}>
       <Stack.Screen name="BottomTabNavigation" component={BottomTabNavigation} />
       <Stack.Screen name="DetailScreen" component={DetailScreen} />

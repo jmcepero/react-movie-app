@@ -6,7 +6,7 @@ import { RootStackParams } from '../../navigation/StackNavigation';
 import { loadWatchProvidersAsync } from '../../../store/slices/watch_provider/WatchProviderSlice';
 import { FlatList, SectionList, StyleSheet, View } from 'react-native';
 import { Text } from '@react-native-material/core';
-import LoadingView from '../../components/base/LoadingView';
+import { LoadingView } from '../../components/base/LoadingView';
 import { Toolbar } from '../../components/base/Toolbar';
 import { FadeInImage } from '../../components/base/FadeImage';
 import LinearGradient from 'react-native-linear-gradient';
@@ -20,7 +20,7 @@ export const WatchProviderScreen = ({ route }: WatchProviderProps) => {
   const { isLoading, watchProvider, error } = useAppSelector(state => state.watchProvider);
 
   useEffect(() => {
-    dispatch(loadWatchProvidersAsync({itemId: itemId, itemType: itemType}))
+    dispatch(loadWatchProvidersAsync({ itemId: itemId, itemType: itemType }))
   }, [itemId])
 
   if (isLoading) {
