@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import di from "../../../di";
 import { Movie } from "../../../domain/movie/entities/Movies";
 import { CustomGenre, genres } from '../../../data/genre/local/CustomGenres';
+import { getPopularUseCase } from "../../../domain/movie/usecases/GetPopularUseCase";
 
 interface HomeMoviesState {
     isLoading: boolean;
@@ -23,7 +24,6 @@ const initialHomeMoviesState: HomeMoviesState = {
 
 const loadHomeMovies = async () => {
     const nowPlayingUseCase = di.GetNowPlayingUseCase
-    const getPopularUseCase = di.GetPopularUseCase
     const getTopRatedUseCase = di.GetTopRatedUseCase
 
     return await Promise.all([nowPlayingUseCase.execute(), getPopularUseCase.execute(), getTopRatedUseCase.execute()])

@@ -7,7 +7,7 @@ export interface MovieRemoteDataSource {
     getMovieDetail(movieId: string): Promise<MovieDetailResponse>;
 }
 
-class MovieRemoteDataSourceImpl implements MovieRemoteDataSourceImpl {
+export const movieRemoteDataSource : MovieRemoteDataSource = {
 
     async getMoviesByClasification(clasification: string, page?: number): Promise<MoviesResponse> {
         let url = `movie/${clasification}`
@@ -18,19 +18,15 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSourceImpl {
         const resp = await movieDB.get<MoviesResponse>(url);
 
         return resp.data
-    }
-
+    },
     async findMovies(term: string, page: number): Promise<MoviesResponse> {
         let url = `search/movie?query=${term}&page=${page}`
         const resp = await movieDB.get<MoviesResponse>(url);
         return resp.data
-    }
-
+    },
     async getMovieDetail(movieId: string): Promise<MovieDetailResponse> {
         const resp = await movieDB.get<MovieDetailResponse>(`movie/${movieId}?append_to_response=videos,reviews,credits`)
         return resp.data
     }
 }
-
-export default MovieRemoteDataSourceImpl;
 

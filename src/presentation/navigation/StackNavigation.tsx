@@ -7,6 +7,7 @@ import { Movie } from '../../domain/movie/entities/Movies';
 import { WatchProviderScreen } from '../screens/warch_provider/WatchProviderScreen';
 import { TVShowDetailScreen } from '../screens/tv_show/TVShowDetailScreen';
 import { DetailScreen } from '../screens/movies/DetailScreen';
+import { Platform } from 'react-native';
 
 export type RootStackParams = {
   BottomTabNavigation: undefined;
@@ -41,7 +42,7 @@ export const StackNavigation = () => {
         headerStyle: {
           backgroundColor: 'black'
         },
-        presentation: 'transparentModal'
+        presentation: Platform.OS === 'android' ? 'transparentModal' : 'card'
       }}>
       <Stack.Screen name="BottomTabNavigation" component={BottomTabNavigation} />
       <Stack.Screen name="DetailScreen" component={DetailScreen} />

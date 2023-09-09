@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, ScrollView } from 'react-native';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { LoadingView } from '../../components/base/LoadingView';
 import { CustomToolbar } from '../../components/home/CustomToolbar';
 import { GenresFeed } from '../../components/home/GenresFeed';
 import { MainCarousel } from '../../components/home/MainCarousel';
@@ -12,8 +11,6 @@ import { Snackbar } from '@react-native-material/core';
 import { useAppSelector, useAppDispatch } from '../../../store/hooks';
 import { loadHomeMoviesAsync } from '../../../store/slices/home/HomeSlice';
 import { RefreshControl } from 'react-native-gesture-handler';
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder'
-import LinearGradient from 'react-native-linear-gradient';
 
 export const HomeScreen = () => {
 

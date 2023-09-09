@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Movie } from '../../domain/movie/entities/Movies';
 import { errorHandler } from '../base/errorHandler';
-import GetPopularUseCase from '../../domain/movie/usecases/GetPopularUseCase';
+import getPopularUseCase from '../../domain/movie/usecases/GetPopularUseCase';
 import di from '../../di';
 
 interface MovieListingState {

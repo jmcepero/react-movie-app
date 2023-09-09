@@ -1,6 +1,6 @@
 import { movieDetailResponseToDetail, moviesResponseToDomain } from './mapper/MovieMapper';
 import { Movie, Movies } from "../../domain/movie/entities/Movies";
-import { MovieRemoteDataSource } from './remote/MovieRemoteDataSource';
+import { MovieRemoteDataSource, movieRemoteDataSource } from './remote/MovieRemoteDataSource';
 
 export interface MovieDataSource {
     getNowPlaying(page?: number): Promise<Movies>;
@@ -10,34 +10,26 @@ export interface MovieDataSource {
     getMovieDetail(movieId: string): Promise<Movie>;
 }
 
-class MovieRepository implements MovieDataSource {
-
-    constructor(private remoteDataSource: MovieRemoteDataSource) {}
+export const movieRepository: MovieDataSource = {
 
     async getNowPlaying(page?: number): Promise<Movies> {
-        const resp = await this.remoteDataSource.getMoviesByClasification('now_playing', page);
+        const resp = await movieRemoteDataSource.getMoviesByClasification('now_playing', page);
         return moviesResponseToDomain(resp)
-    }
-
+    },
     async getPopular(page?: number): Promise<Movies> {
-        const resp = await this.remoteDataSource.getMoviesByClasification('popular', page);
+        const resp = await movieRemoteDataSource.getMoviesByClasification('popular', page);
         return moviesResponseToDomain(resp)
-    }
-
+    },
     async getTopRated(page?: number): Promise<Movies> {
-        const resp = await this.remoteDataSource.getMoviesByClasification('top_rated', page);
+        const resp = await movieRemoteDataSource.getMoviesByClasification('top_rated', page);
         return moviesResponseToDomain(resp)
-    }
-
+    },
     async findMovies(term: string, page: number): Promise<Movies> {
-        const resp = await this.remoteDataSource.findMovies(term, page);
+        const resp = await movieRemoteDataSource.findMovies(term, page);
         return moviesResponseToDomain(resp)
-    }
-
+    },
     async getMovieDetail(movieId: string): Promise<Movie> {
-        const resp = await this.remoteDataSource.getMovieDetail(movieId);
+        const resp = await movieRemoteDataSource.getMovieDetail(movieId);
         return movieDetailResponseToDetail(resp)
     }
 }
-
-export default MovieRepository;
