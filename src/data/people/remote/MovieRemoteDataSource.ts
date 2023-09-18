@@ -1,22 +1,18 @@
-import movieDB from "../../api/movieDB";
-import { PeopleResponse, PeoplesResponse } from "../entities/PeopleInterfaces";
+import movieDB from '../../api/movieDB';
+import {PeoplesResponse} from '../entities/PeopleInterfaces';
 
 export interface PeopleRemoteDataSource {
-    getPopularPeople(page?: number): Promise<PeoplesResponse>;
+  getPopularPeople(page?: number): Promise<PeoplesResponse>;
 }
 
-class PeopleRemoteDataSourceImpl implements PeopleRemoteDataSourceImpl {
-
-    async getPopularPeople(page?: number): Promise<PeoplesResponse> {
-        let url = `person/popular`
-        if (page) {
-            url = url + `?page=${page}`
-        }
-        const resp = await movieDB.get<PeoplesResponse>(url);
-
-        return resp.data
+export const peopleRemoteDataSourceImpl: PeopleRemoteDataSource = {
+  async getPopularPeople(page?: number): Promise<PeoplesResponse> {
+    let url = `person/popular`;
+    if (page) {
+      url = url + `?page=${page}`;
     }
-}
+    const resp = await movieDB.get<PeoplesResponse>(url);
 
-export default PeopleRemoteDataSourceImpl;
-
+    return resp.data;
+  },
+};

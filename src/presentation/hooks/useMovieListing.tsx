@@ -1,65 +1,73 @@
-import React, { useEffect, useState } from 'react'
-import { Movie } from '../../domain/movie/entities/Movies';
-import { errorHandler } from '../base/errorHandler';
-import getPopularUseCase from '../../domain/movie/usecases/GetPopularUseCase';
-import di from '../../di';
+import {useEffect, useState} from 'react';
+import {errorHandler} from '../base/errorHandler';
+import {MovieResult} from './base/MovieResult';
+import {getTopRatedUseCase} from '../../domain/movie/usecases/GeTopRatedUseCase';
+import {getPopularUseCase} from '../../domain/movie/usecases/GetPopularUseCase';
 
-interface MovieListingState {
-    mainLoading: boolean,
-    pageLoading: boolean,
-    movies: Movie[],
-    errorMessage?: string
-}
+const initialListingState: MovieResult = {
+  isLoading: false,
+  pageLoading: false,
+  result: [],
+  page: 1,
+  error: '',
+};
 
-export const useMovieListing = () => {
-    const getPopularUseCase = di.GetPopularUseCase;
-    const [page, setPage] = useState(1);
-    const [movieListingState, setMovieListingState] = useState<MovieListingState>({
-        mainLoading: false,
-        pageLoading: false,
-        movies: [],
-    })
+export const useMovieListing = (params: string) => {
+  const [movieListingState, setMovieListingState] =
+    useState<MovieResult>(initialListingState);
 
-    const getPopularMovies = async (page: number) => {
-        const popularProm = getPopularUseCase.execute(page)
-        try {
-            const popularRes = await popularProm
-            console.log('current page' + popularRes.page.toString())
-            setMovieListingState({
-                ...movieListingState,
-                mainLoading: false,
-                pageLoading: false,
-                movies: movieListingState.movies.concat(popularRes.results)
-            })
-        } catch (error) {
-            const { message } = errorHandler(error);
-            console.log(error)
-            setMovieListingState({
-                ...movieListingState,
-                mainLoading: false,
-                pageLoading: false,
-                errorMessage: message
-            })
-        }
-    }
+  useEffect(() => {
+    loadMovies(movieListingState.page);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params]);
 
-    useEffect(() => {
-        setMovieListingState({
-            ...movieListingState,
-            mainLoading: page === 1,
-            pageLoading: true
-        })
+  useEffect(() => {
+    loadMovies(movieListingState.page);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [movieListingState.page]);
 
-        getPopularMovies(page)
-    }, [page])
-    
+  const loadMovies = async (page: number) => {
+    const useCase =
+      params === 'popular' ? getPopularUseCase : getTopRatedUseCase;
 
-    const onReachToEnd = () => {
-        setPage(page + 1)
-    }
-
-    return {
+    setMovieListingState({
+      ...movieListingState,
+      isLoading: page === 1,
+      pageLoading: page > 1,
+    });
+    try {
+      const data = await useCase.execute(page);
+      const resultList =
+        page === 1
+          ? data.results
+          : [...movieListingState.result, ...data.results];
+      setMovieListingState({
         ...movieListingState,
-        onReachToEnd
+        isLoading: false,
+        pageLoading: false,
+        result: resultList,
+        error: '',
+      });
+    } catch (error) {
+      const {message} = errorHandler(error);
+      setMovieListingState({
+        ...movieListingState,
+        isLoading: false,
+        pageLoading: false,
+        error: message,
+      });
     }
-}
+  };
+
+  const onReachToEnd = () => {
+    setMovieListingState({
+      ...movieListingState,
+      page: movieListingState.page + 1,
+    });
+  };
+
+  return {
+    ...movieListingState,
+    onReachToEnd,
+  };
+};

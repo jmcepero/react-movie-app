@@ -1,66 +1,76 @@
-import { useEffect, useState } from 'react'
-import { genres, CustomGenre } from '../../data/genre/local/CustomGenres';
-import di from '../../di';
-import { Movie } from '../../domain/movie/entities/Movies';
-import { errorHandler } from '../base/errorHandler';
+import {useEffect, useState} from 'react';
+import {genres, CustomGenre} from '../../data/genre/local/CustomGenres';
+import {Movie} from '../../domain/movie/entities/Movies';
+import {errorHandler} from '../base/errorHandler';
+import {getNowPlayingUseCase} from '../../domain/movie/usecases/GetNowPlayingUseCase';
+import {getTopRatedUseCase} from '../../domain/movie/usecases/GeTopRatedUseCase';
+import {getPopularUseCase} from '../../domain/movie/usecases/GetPopularUseCase';
 
-interface MoviesState {
-    nowPlaying: Movie[];
-    popular: Movie[];
-    topRated: Movie[];
-    genres: CustomGenre[];
-    errorMessage?: string,
+interface HomeMoviesState {
+  isLoading: boolean;
+  nowPlaying: Movie[];
+  popular: Movie[];
+  genres: CustomGenre[];
+  topRated: Movie[];
+  error: string;
 }
+
+const initialHomeMoviesState: HomeMoviesState = {
+  isLoading: true,
+  nowPlaying: [],
+  popular: [],
+  genres: [],
+  topRated: [],
+  error: '',
+};
 
 export const useMovies = () => {
+  const [moviesState, setMoviesState] = useState<HomeMoviesState>(
+    initialHomeMoviesState,
+  );
 
-    const getNowPlayingUseCase = di.GetNowPlayingUseCase;
-    const getPopularUseCase = di.GetPopularUseCase;
-    const getTopRatedUseCase = di.GetTopRatedUseCase;
-    const [isLoading, setIsLoading] = useState(true);
-    const [moviesState, setMoviesState] = useState<MoviesState>({
-        nowPlaying: [],
-        popular: [],
-        topRated: [],
-        genres: [],
-    })
+  useEffect(() => {
+    getMoviesNowPlaying();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    const getMoviesNowPlaying = async () => {
-        const nowPlayingProm = getNowPlayingUseCase.execute();
-        const popularProm = getPopularUseCase.execute();
-        const topRatedProm = getTopRatedUseCase.execute();
-        try {
-            const [
-                nowPlayingRes,
-                popularRes,
-                topRatedRes
-            ] = await Promise.all([nowPlayingProm, popularProm, topRatedProm])
+  const getMoviesNowPlaying = async () => {
+    const nowPlayingProm = getNowPlayingUseCase.execute();
+    const popularProm = getPopularUseCase.execute();
+    const topRatedProm = getTopRatedUseCase.execute();
 
-            setMoviesState({
-                nowPlaying: nowPlayingRes.results.slice(0, 8),
-                popular: popularRes.results,
-                topRated: topRatedRes.results,
-                genres: genres
-            })
-        } catch (error) {
-            const { message } = errorHandler(error);
-            setMoviesState({
-                ...moviesState,
-                errorMessage: message
-            })
-        }
+    setMoviesState({
+      ...moviesState,
+      isLoading: true,
+    });
 
+    try {
+      const [nowPlayingRes, popularRes, topRatedRes] = await Promise.all([
+        nowPlayingProm,
+        popularProm,
+        topRatedProm,
+      ]);
 
-        setIsLoading(false)
+      setMoviesState({
+        nowPlaying: nowPlayingRes.results.slice(0, 8),
+        popular: popularRes.results,
+        genres: genres,
+        topRated: topRatedRes.results,
+        isLoading: false,
+        error: '',
+      });
+    } catch (error) {
+      const {message} = errorHandler(error);
+      setMoviesState({
+        ...moviesState,
+        isLoading: false,
+        error: message,
+      });
     }
+  };
 
-    useEffect(() => {
-        getMoviesNowPlaying();
-    }, [])
-
-    return {
-        isLoading,
-        ...moviesState
-    }
-}
-
+  return {
+    ...moviesState,
+    reloadData: getMoviesNowPlaying,
+  };
+};
