@@ -1,5 +1,5 @@
 import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -10,37 +10,35 @@ import {YearDirector} from '../../components/detail/YearDirector';
 import {CastFeed} from '../../components/detail/CastFeed';
 import {TrailerCard} from '../../components/detail/TrailerCard';
 import {ReviewFeed} from '../../components/detail/ReviewFeed';
-import {useAppDispatch, useAppSelector} from '../../../store/hooks';
-import {tvShowDetailStyle} from './style/TVShowDetailScreen.style';
+import {styles} from './style/TvShow.style';
 import {strDateToYear} from '../../extensions/StringDate';
-import {loadTVShowDetailAsync} from '../../../store/slices/tv_shows/TVShowDetailSlice';
 import {DetailImage} from '../../components/detail/DetailImage';
-import {NO_DESCRIPTION_TEXT} from '../../Constants';
+import {NO_DESCRIPTION_TEXT} from '../../utils/Constants';
 import {CurrentSeason} from './components/CurrentSeason';
+import {MobXProviderContext, observer} from 'mobx-react';
+import TvShowStore from './store/TvShowStore';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'TVShowDetailScreen'> {}
 
-export const TVShowDetailScreen = ({route}: Props) => {
+export const TVShowDetailScreen = observer(({route}: Props) => {
+  const {tvShowStore} = useContext(MobXProviderContext) as {
+    tvShowStore: TvShowStore;
+  };
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
-  const dispatch = useAppDispatch();
   const tvShowId = route.params.tvShowId;
-  const {isLoading, detail, error} = useAppSelector(
-    state => state.tvShowDetail,
-  );
-
-  const uri = `https://image.tmdb.org/t/p/original${detail?.posterPath}`;
+  const uri = `https://image.tmdb.org/t/p/original${tvShowStore.tvShow?.posterPath}`;
 
   useEffect(() => {
-    dispatch(loadTVShowDetailAsync(tvShowId));
-  }, [tvShowId]);
+    tvShowStore.onScreenLoaded(tvShowId);
+  }, [tvShowId, tvShowStore]);
 
-  if (isLoading) {
+  if (tvShowStore.isLoading) {
     return (
       <View
         style={{
-          ...tvShowDetailStyle.container,
-          justifyContent: 'center',
+          ...styles.container,
+          ...styles.center,
         }}>
         <LoadingView />
       </View>
@@ -48,25 +46,22 @@ export const TVShowDetailScreen = ({route}: Props) => {
   }
 
   return (
-    <View style={tvShowDetailStyle.container}>
-      <ScrollView
-        contentContainerStyle={{
-          paddingBottom: 80,
-        }}>
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollviewContainer}>
         <View>
           {/* Detail image */}
           <DetailImage
             uri={uri}
-            genres={detail?.genreIds}
+            genres={tvShowStore.tvShow?.genreIds}
             onBackClicked={() => navigation.goBack()}
           />
 
           {/* Title Section */}
-          <View style={tvShowDetailStyle.titleContainer}>
-            <Text style={tvShowDetailStyle.title}>{detail?.name}</Text>
-            <View style={tvShowDetailStyle.valorationContainer}>
-              <Text style={tvShowDetailStyle.valorationTitle}>
-                {detail?.voteAverage.toFixed(1) || 0.0}
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>{tvShowStore.tvShow?.name}</Text>
+            <View style={styles.valorationContainer}>
+              <Text style={styles.valorationTitle}>
+                {tvShowStore.tvShow?.voteAverage.toFixed(1) || 0.0}
               </Text>
               <Icon name="star" size={18} style={{color: '#dcb189'}} />
             </View>
@@ -74,45 +69,47 @@ export const TVShowDetailScreen = ({route}: Props) => {
 
           {/* Year Director Section */}
           <YearDirector
-            year={strDateToYear(detail?.firstAirDate)}
-            director={detail?.director || ''}
+            year={strDateToYear(tvShowStore.tvShow?.firstAirDate)}
+            director={tvShowStore.tvShow?.director || ''}
           />
 
           {/* Overview Section */}
-          <Text style={tvShowDetailStyle.overviewText}>
-            {detail?.overview || NO_DESCRIPTION_TEXT}
+          <Text style={styles.overviewText}>
+            {tvShowStore.tvShow?.overview || NO_DESCRIPTION_TEXT}
           </Text>
 
           {/* Season */}
           <CurrentSeason
-            tvShowTitle={detail?.name}
+            tvShowTitle={tvShowStore.tvShow?.name}
             season={
-              detail?.seasons !== undefined ? detail.seasons[0] : undefined
+              tvShowStore.tvShow?.seasons !== undefined
+                ? tvShowStore.tvShow.seasons[0]
+                : undefined
             }
           />
 
           {/* Cast Section */}
-          <CastFeed casts={detail?.credits?.cast} width={100} />
+          <CastFeed casts={tvShowStore.tvShow?.credits?.cast} width={100} />
 
           {/* Trailer Section */}
-          <TrailerCard trailerUri={detail?.trailer} />
+          <TrailerCard trailerUri={tvShowStore.tvShow?.trailer} />
 
           {/* Comment Section */}
-          <ReviewFeed reviews={detail?.reviews?.results} />
+          <ReviewFeed reviews={tvShowStore.tvShow?.reviews?.results} />
         </View>
       </ScrollView>
 
       <TouchableOpacity
         activeOpacity={0.9}
-        style={tvShowDetailStyle.buttonProvider}
+        style={styles.buttonProvider}
         onPress={() => {
           navigation.navigate('WatchProviderScreen', {
-            itemId: detail?.id,
+            itemId: tvShowStore.tvShow?.id,
             itemType: 'tvShow',
           });
         }}>
-        <Text style={tvShowDetailStyle.buttonText}>Watch</Text>
+        <Text style={styles.buttonText}>Watch</Text>
       </TouchableOpacity>
     </View>
   );
-};
+});

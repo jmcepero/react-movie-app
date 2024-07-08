@@ -1,7 +1,5 @@
-import React, {useEffect} from 'react';
-import {useAppDispatch, useAppSelector} from '../../../store/hooks';
+import React from 'react';
 import {RootStackParams} from '../../navigation/StackNavigation';
-import {loadWatchProvidersAsync} from '../../../store/slices/watch_provider/WatchProviderSlice';
 import {SectionList, StyleSheet, View} from 'react-native';
 import {Text} from '@react-native-material/core';
 import {LoadingView} from '../../components/base/LoadingView';
@@ -9,20 +7,13 @@ import {Toolbar} from '../../components/base/Toolbar';
 import {FadeInImage} from '../../components/base/FadeImage';
 import LinearGradient from 'react-native-linear-gradient';
 import {StackScreenProps} from '@react-navigation/stack';
+import {useWatchProvider} from '../../hooks/useWatchProvider';
 
 interface WatchProviderProps
   extends StackScreenProps<RootStackParams, 'WatchProviderScreen'> {}
 
 export const WatchProviderScreen = ({route}: WatchProviderProps) => {
-  const {itemId, itemType} = route.params;
-  const dispatch = useAppDispatch();
-  const {isLoading, watchProvider, error} = useAppSelector(
-    state => state.watchProvider,
-  );
-
-  useEffect(() => {
-    dispatch(loadWatchProvidersAsync({itemId: itemId, itemType: itemType}));
-  }, [itemId]);
+  const {isLoading, watchProvider} = useWatchProvider(route.params);
 
   if (isLoading) {
     return (
@@ -93,6 +84,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   headerContainer: {
+    backgroundColor: '#2B2533',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

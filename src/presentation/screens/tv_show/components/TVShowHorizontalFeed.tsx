@@ -2,6 +2,7 @@ import React from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {TVShow} from '../../../../domain/tv_shows/entities/TVShows';
 import {TVShowItem} from './TVShowItem';
+import {fullWidth} from '../../../utils/Dimen';
 
 interface Props {
   title?: string;
@@ -35,6 +36,8 @@ export const TVShowHorizontalFeed = ({
           <TVShowItem
             tvShow={tvShows[index]}
             onTVShowClicked={onTVShowClicked}
+            width={fullWidth * 0.42}
+            height={220}
           />
         )}
         keyExtractor={item => item.id.toString()}

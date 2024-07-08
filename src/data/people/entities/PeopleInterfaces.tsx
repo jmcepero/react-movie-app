@@ -10,14 +10,14 @@ export interface PeopleResponse {
   adult: boolean;
   gender: number;
   id: number;
-  known_for: KnownFor[];
-  known_for_department: KnownForDepartment;
+  known_for: Cast[];
+  known_for_department: KnownForDepartmentResponse;
   name: string;
   popularity: number;
   profile_path: string;
 }
 
-export interface KnownFor {
+export interface Cast {
   adult?: boolean;
   backdrop_path?: string;
   genre_ids: number[];
@@ -52,7 +52,30 @@ export enum OriginalLanguage {
   Tr = 'tr',
 }
 
-export enum KnownForDepartment {
+export enum KnownForDepartmentResponse {
   Acting = 'Acting',
   Directing = 'Directing',
+}
+
+export interface MovieCredits {
+  cast: Cast[];
+  crew: Cast[];
+  id: number;
+}
+
+export interface PeopleDetailResponse {
+  adult: boolean;
+  also_known_as: string[];
+  biography: string;
+  birthday: Date;
+  deathday: Date | null;
+  gender: number;
+  id: number;
+  imdb_id: string;
+  known_for_department: string;
+  name: string;
+  place_of_birth: string;
+  popularity: number;
+  profile_path: string;
+  movie_credits: MovieCredits;
 }

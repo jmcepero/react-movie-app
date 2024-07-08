@@ -1,1 +1,3 @@
-export interface Item {}
+export interface Item {
+  id: number;
+}

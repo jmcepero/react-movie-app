@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {Text} from '@react-native-material/core';
 import {strDateToYear} from '../../../extensions/StringDate';
 import {TVShow} from '../../../../domain/tv_shows/entities/TVShows';
-import {MovieCard} from '../../../components/MovieCard';
+import {ImageCard} from '../../../components/MovieCard';
 import {ValorationView} from '../../../components/base/ValorationView';
 
 interface MainCarouselItemProps {
@@ -19,7 +19,7 @@ export const TVShowCarouselItem = ({
 }: MainCarouselItemProps) => {
   return (
     <View style={customStyle.container}>
-      <MovieCard
+      <ImageCard
         imageID={{
           backdropPath: tvShow.backdropPath,
           posterPath: tvShow.posterPath,

@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react';
 import {errorHandler} from '../base/errorHandler';
-import {MovieResult} from './base/MovieResult';
+import {SearchesResult} from './base/MovieResult';
 import {getTopRatedUseCase} from '../../domain/movie/usecases/GeTopRatedUseCase';
 import {getPopularUseCase} from '../../domain/movie/usecases/GetPopularUseCase';
 
-const initialListingState: MovieResult = {
+const initialListingState: SearchesResult = {
   isLoading: false,
   pageLoading: false,
   result: [],
@@ -14,7 +14,7 @@ const initialListingState: MovieResult = {
 
 export const useMovieListing = (params: string) => {
   const [movieListingState, setMovieListingState] =
-    useState<MovieResult>(initialListingState);
+    useState<SearchesResult>(initialListingState);
 
   useEffect(() => {
     loadMovies(movieListingState.page);

@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {Movie} from '../../../domain/movie/entities/Movies';
-import {MovieResult} from '../../../presentation/hooks/base/MovieResult';
+import {SearchesResult} from '../../../presentation/hooks/base/MovieResult';
 import {getPopularUseCase} from '../../../domain/movie/usecases/GetPopularUseCase';
 import {getTopRatedUseCase} from '../../../domain/movie/usecases/GeTopRatedUseCase';
 
@@ -9,7 +9,7 @@ export interface MovieCategory {
   page: number;
 }
 
-const initialListingState: MovieResult = {
+const initialListingState: SearchesResult = {
   isLoading: false,
   pageLoading: false,
   result: [],

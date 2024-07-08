@@ -6,34 +6,31 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {CustomToolbar} from '../../components/home/CustomToolbar';
 import {SearchBar} from '../../components/home/SearchBar';
 import {Snackbar} from '@react-native-material/core';
-import {useAppSelector, useAppDispatch} from '../../../store/hooks';
-import {loadTVShowsAsync} from '../../../store/slices/tv_shows/TVShowSlice';
 import {TVShowCarousel} from './components/TVShowCarousel';
 import {TVShowHorizontalFeed} from './components/TVShowHorizontalFeed';
+import {useTvShow} from '../../hooks/useTvShow';
+import {styles} from './style/TvShow.style';
+import {tvShowOption} from '../../utils/Constants';
 
 export const TVShowScreen = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
-  const dispatch = useAppDispatch();
-  const {isLoading, onTheAir, popular, topRated, error} = useAppSelector(
-    state => state.tvShow,
-  );
+  const {isLoading, onTheAir, popular, topRated, error, loadTvShows} =
+    useTvShow();
 
   const refreshData = () => {
-    dispatch(loadTVShowsAsync());
+    loadTvShows();
   };
 
   useEffect(() => {
     refreshData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingBottom: 80,
-          backgroundColor: 'rgba(23, 24, 27, 1)',
-        }}
+        contentContainerStyle={styles.scrollviewContainer}
         refreshControl={
           <RefreshControl
             refreshing={isLoading}
@@ -47,9 +44,7 @@ export const TVShowScreen = () => {
 
           {/* Search Section */}
           <SearchBar
-            onClick={() =>
-              navigation.navigate('SearchScreen', {type: 'tvShow'})
-            }
+            onClick={() => navigation.navigate('SearchScreen', tvShowOption)}
           />
 
           {/* Main Corousel */}
@@ -83,17 +78,7 @@ export const TVShowScreen = () => {
         </View>
       </ScrollView>
 
-      {error && (
-        <Snackbar
-          message={error}
-          style={{
-            position: 'absolute',
-            start: 16,
-            end: 16,
-            bottom: 90,
-          }}
-        />
-      )}
+      {error && <Snackbar message={error} style={styles.snackBarError} />}
     </View>
   );
 };

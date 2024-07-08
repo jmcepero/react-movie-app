@@ -51,7 +51,8 @@ export const DetailScreen = ({route}: Props) => {
       <ScrollView
         contentContainerStyle={{
           paddingBottom: 80,
-        }}>
+        }}
+        showsVerticalScrollIndicator={false}>
         <View>
           <View
             style={{
@@ -147,7 +148,7 @@ export const DetailScreen = ({route}: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(33,25,32,1)',
+    backgroundColor: 'rgba(23, 24, 27, 1)',
   },
   image: {
     flex: 1,

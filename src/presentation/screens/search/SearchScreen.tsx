@@ -1,129 +1,100 @@
-import React, {useEffect, useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  FlatList,
-  ActivityIndicator,
-  BackHandler,
-  Text,
-} from 'react-native';
-import {useAppDispatch, useAppSelector} from '../../../store/hooks';
-import {
-  findMoviesAsync,
-  nextPageAsync,
-  findTVShowsAsync,
-  nextPageTVShowAsync,
-  restoreToDefault,
-} from '../../../store/slices/search/SearchSlice';
-import {RootState} from '../../../store/store';
-import {SearchInput} from '../../components/base/SearchInput';
-import MovieItem from '../../components/listing/MovieItem';
+import React, {useContext, useEffect} from 'react';
+import {View, StyleSheet, FlatList} from 'react-native';
+import SearchInput from '../../components/base/SearchInput';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
 import {RootStackParams} from '../../navigation/StackNavigation';
-import {Movie} from '../../../domain/movie/entities/Movies';
-import {TVShow} from '../../../domain/tv_shows/entities/TVShows';
-import {TVShowItem} from '../tv_show/components/TVShowItem';
+import {searchesOptions} from '../../utils/Constants';
+import {ListFooterComponent} from './components/ListFooterComponent';
+import ChipsGroup from './components/ChipGroup';
+import ItemRenderer from '../../components/listing/ItemRenderer';
+import {MobXProviderContext, observer} from 'mobx-react';
+import SearchStore from './store/SearchStore';
 
 export interface SearchScreenProps
   extends StackScreenProps<RootStackParams, 'SearchScreen'> {}
 
-export const SearchScreen = ({route}: SearchScreenProps) => {
-  const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
-  const dispatch = useAppDispatch();
-  const {result, isLoading, pageLoading, page, error} = useAppSelector(
-    (state: RootState) => state.search,
-  );
-  const [term, setTerm] = useState('');
-  const typeOfSearch = route.params.type;
-
-  useEffect(() => {
-    navigation.addListener('beforeRemove', e => {
-      dispatch(restoreToDefault());
-    });
-  }, []);
-
-  useEffect(() => {
-    if (typeOfSearch === 'movie') {
-      if (term.length >= 3) dispatch(findMoviesAsync({term: term, page: 1}));
-    } else {
-      if (term.length >= 3) dispatch(findTVShowsAsync({term: term, page: 1}));
-    }
-  }, [term]);
-
-  const loadMore = () => {
-    if (typeOfSearch === 'movie') {
-      dispatch(nextPageAsync({term: term, page: page}));
-    } else {
-      dispatch(nextPageTVShowAsync({term: term, page: 1}));
-    }
+export const SearchScreen = observer(({route}: SearchScreenProps) => {
+  const {searchStore} = useContext(MobXProviderContext) as {
+    searchStore: SearchStore;
   };
+  const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+
+  const handleInputChange = (value: string) => {
+    searchStore.handleTermChange(value);
+  };
+
+  const handleChipChange = (newChip: number) => {
+    searchStore.setSelectedChip(newChip);
+  };
+
+  useEffect(() => {
+    searchStore.setSelectedChip(route.params.index);
+  }, [route.params.index, searchStore]);
 
   return (
     <View style={styles.container}>
-      <Text style={{fontSize: 60}}>{error}</Text>
-      <SearchInput
-        onDebounced={setTerm}
-        style={{
-          position: 'absolute',
-          zIndex: 999,
+      <SearchInput onDebounced={handleInputChange} />
+      <ChipsGroup
+        options={searchesOptions}
+        onSelectionChange={(index, _) => handleChipChange(index)}
+        defaulItemSelected={searchStore.selectedChip}
+      />
+      <FlatList
+        data={searchStore.result}
+        showsVerticalScrollIndicator={false}
+        renderItem={({index}) => (
+          <ItemRenderer
+            item={searchStore.result[index]}
+            navigation={navigation}
+          />
+        )}
+        numColumns={2}
+        keyExtractor={(item, index) => index.toString()}
+        ListFooterComponent={
+          <ListFooterComponent
+            isLoading={searchStore.pageLoading || searchStore.isLoading}
+            hasError={searchStore.error.length > 0}
+          />
+        }
+        onEndReachedThreshold={0.5}
+        initialNumToRender={10}
+        onEndReached={() => {
+          searchStore.onReachToBottom();
         }}
       />
-      {result.length > 0 && (
-        <FlatList
-          contentContainerStyle={{
-            paddingTop: 80,
-          }}
-          data={result}
-          showsVerticalScrollIndicator={false}
-          renderItem={({index}) =>
-            typeOfSearch === 'movie' ? (
-              <MovieItem
-                movie={result[index] as Movie}
-                onClick={item =>
-                  navigation.navigate('DetailScreen', result[index] as Movie)
-                }
-              />
-            ) : (
-              <TVShowItem
-                tvShow={result[index] as TVShow}
-                onTVShowClicked={item =>
-                  navigation.navigate('TVShowDetailScreen', {
-                    tvShowId: (result[index] as TVShow).id,
-                  })
-                }
-              />
-            )
-          }
-          numColumns={2}
-          keyExtractor={(item, index) => index.toString()}
-          ListFooterComponent={() => {
-            return pageLoading || error.length > 0 ? (
-              <View
-                style={{
-                  padding: 24,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <ActivityIndicator color={'#7b44c1'} size={16} />
-              </View>
-            ) : (
-              <></>
-            );
-          }}
-          onEndReachedThreshold={0.5}
-          initialNumToRender={10}
-          onEndReached={() => {
-            loadMore();
-          }}
-        />
-      )}
     </View>
   );
-};
+});
+
+/*
+<FlatList
+        data={result}
+        showsVerticalScrollIndicator={false}
+        renderItem={({index}) => (
+          <ItemRenderer item={result[index]} navigation={navigation} />
+        )}
+        numColumns={2}
+        keyExtractor={(item, index) => index.toString()}
+        ListFooterComponent={
+          <ListFooterComponent
+            isLoading={pageLoading || isLoading}
+            hasError={error.length > 0}
+          />
+        }
+        onEndReachedThreshold={0.5}
+        initialNumToRender={10}
+        onEndReached={() => {
+          onReachToEnd();
+        }}
+      />
+*/
 
 const styles = StyleSheet.create({
+  searchInput: {
+    position: 'absolute',
+    zIndex: 999,
+  },
   container: {
     flex: 1,
   },

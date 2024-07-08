@@ -2,20 +2,24 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {TVShow} from '../../../../domain/tv_shows/entities/TVShows';
 import {ValorationView} from '../../../components/base/ValorationView';
-import {CardType, MovieCard} from '../../../components/MovieCard';
+import {CardType, ImageCard} from '../../../components/MovieCard';
+import {Dimensions} from 'react-native';
+import {fullWidth} from '../../../utils/Dimen';
 
 interface TVShowItemProps {
   tvShow: TVShow;
   onTVShowClicked: (tvShow: TVShow) => void;
   width?: number;
   height?: number;
+  type?: CardType;
 }
 
 export const TVShowItem = ({
   tvShow,
   onTVShowClicked,
-  width = 160,
+  width = fullWidth,
   height = 220,
+  type = CardType.Feed,
 }: TVShowItemProps) => {
   return (
     <View
@@ -23,14 +27,14 @@ export const TVShowItem = ({
         paddingVertical: 8,
         paddingHorizontal: 8,
       }}>
-      <MovieCard
+      <ImageCard
         imageID={{
           backdropPath: tvShow?.backdropPath,
           posterPath: tvShow.posterPath,
         }}
         width={width}
         height={height}
-        type={CardType.Feed}
+        type={type}
         onClick={() => onTVShowClicked(tvShow)}
       />
       <View

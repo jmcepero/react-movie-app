@@ -10,34 +10,36 @@ export const tvShowsResponseToDomain = (
   genres?: TVGenresResponse,
 ): TVShows => ({
   page: tvShowsResponse.page,
-  results: tvShowsResponse.results.map(tvShow => {
-    const customGenres = genres?.genres
-      .filter(item => {
-        return tvShow.genre_ids.includes(item.id);
-      })
-      .map(item => {
-        return {
-          id: item.id,
-          name: item.name,
-        };
-      });
+  results: tvShowsResponse.results
+    .filter(item => item.poster_path)
+    .map(tvShow => {
+      const customGenres = genres?.genres
+        .filter(item => {
+          return tvShow.genre_ids.includes(item.id);
+        })
+        .map(item => {
+          return {
+            id: item.id,
+            name: item.name,
+          };
+        });
 
-    return {
-      backdropPath: tvShow.backdrop_path || '',
-      firstAirDate: tvShow.first_air_date,
-      genreIds: customGenres || [],
-      id: tvShow.id,
-      name: tvShow.name,
-      originCountry: tvShow.origin_country,
-      originalLanguage: tvShow.original_language,
-      originalName: tvShow.original_name,
-      overview: tvShow.overview,
-      popularity: tvShow.popularity,
-      posterPath: tvShow.poster_path,
-      voteAverage: tvShow.vote_average,
-      voteCount: tvShow.vote_count,
-    };
-  }),
+      return {
+        backdropPath: tvShow.backdrop_path || '',
+        firstAirDate: tvShow.first_air_date,
+        genreIds: customGenres || [],
+        id: tvShow.id,
+        name: tvShow.name,
+        originCountry: tvShow.origin_country,
+        originalLanguage: tvShow.original_language,
+        originalName: tvShow.original_name,
+        overview: tvShow.overview,
+        popularity: tvShow.popularity,
+        posterPath: tvShow.poster_path,
+        voteAverage: tvShow.vote_average,
+        voteCount: tvShow.vote_count,
+      };
+    }),
   totalPages: tvShowsResponse.total_pages,
   totalResults: tvShowsResponse.total_results,
 });

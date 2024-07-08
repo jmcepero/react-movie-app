@@ -2,10 +2,14 @@ import {Dimensions, StyleSheet} from 'react-native';
 
 const width = Dimensions.get('window').width;
 
-export const tvShowDetailStyle = StyleSheet.create({
+export const styles = StyleSheet.create({
+  scrollviewContainer: {
+    paddingBottom: 80,
+    backgroundColor: 'rgba(23, 24, 27, 1)',
+  },
   container: {
     flex: 1,
-    backgroundColor: 'rgba(33,25,32,1)',
+    backgroundColor: 'rgba(23, 24, 27, 1)',
   },
   image: {
     flex: 1,
@@ -65,5 +69,14 @@ export const tvShowDetailStyle = StyleSheet.create({
     fontSize: 18,
     color: 'white',
     padding: 16,
+  },
+  snackBarError: {
+    position: 'absolute',
+    start: 16,
+    end: 16,
+    bottom: 90,
+  },
+  center: {
+    justifyContent: 'center',
   },
 });

@@ -1,6 +1,6 @@
 import {Item} from '../../../domain/base/Item';
 
-export interface MovieResult {
+export interface SearchesResult {
   isLoading: boolean;
   pageLoading: boolean;
   result: Item[];

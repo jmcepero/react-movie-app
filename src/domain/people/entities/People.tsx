@@ -1,22 +1,24 @@
-export interface PeoplesResponse {
+import {Item} from '../../base/Item';
+
+export interface Peoples {
   page: number;
-  results: PeopleResponse[];
-  total_pages: number;
-  total_results: number;
+  results: People[];
+  totalPages: number;
+  totalResults: number;
 }
 
-export interface PeopleResponse {
+export interface People extends Item {
   adult: boolean;
   gender: number;
   id: number;
-  known_for: KnownFor[];
+  known_for: Cast[];
   known_for_department: KnownForDepartment;
   name: string;
   popularity: number;
   profile_path: string;
 }
 
-export interface KnownFor {
+export interface Cast {
   adult?: boolean;
   backdrop_path?: string;
   genre_ids: number[];
@@ -54,4 +56,27 @@ export enum OriginalLanguage {
 export enum KnownForDepartment {
   Acting = 'Acting',
   Directing = 'Directing',
+}
+
+export interface MovieCredits {
+  cast: Cast[];
+  crew: Cast[];
+  id: number;
+}
+
+export interface PeopleDetail {
+  adult: boolean;
+  also_known_as: string[];
+  biography: string;
+  birthday: Date;
+  deathday: Date | null;
+  gender: number;
+  id: number;
+  imdb_id: string;
+  known_for_department: string;
+  name: string;
+  place_of_birth: string;
+  popularity: number;
+  profile_path: string;
+  movie_credits: MovieCredits;
 }

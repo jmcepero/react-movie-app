@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import di from '../../../di';
-import {MovieResult} from '../../../presentation/hooks/base/MovieResult';
+import {SearchesResult} from '../../../presentation/hooks/base/MovieResult';
 import {Movie} from '../../../domain/movie/entities/Movies';
 import {TVShow} from '../../../domain/tv_shows/entities/TVShows';
 
@@ -9,7 +9,7 @@ export interface SearchParams {
   page: number;
 }
 
-const initialSearchState: MovieResult = {
+const initialSearchState: SearchesResult = {
   isLoading: false,
   pageLoading: false,
   result: [],

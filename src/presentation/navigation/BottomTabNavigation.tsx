@@ -1,32 +1,35 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import React from 'react'
-import BottomTabBar from '../components/base/BottomTabBar'
-import { AccountScreen } from '../screens/AccountScreen'
-import { WatchProviderScreen } from '../screens/warch_provider/WatchProviderScreen'
-import { HomeScreen } from '../screens/home/HomeScreen'
-import { TVShowScreen } from '../screens/tv_show/TVShowScreen'
-import { ExploreScreen } from '../screens/ExploreScreen';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import React from 'react';
+import BottomTabBar from '../components/base/BottomTabBar';
+import {AccountScreen} from '../screens/AccountScreen';
+import {HomeScreen} from '../screens/home/HomeScreen';
+import {TVShowScreen} from '../screens/tv_show/TVShowScreen';
+import {ExploreScreen} from '../screens/ExploreScreen';
 
 export type BottomTabParams = {
-  HomeScreen: undefined,
-  TVShowScreen: undefined,
-  ExploreScreen: undefined,
-  AccountScreen: undefined
-}
+  HomeScreen: undefined;
+  TVShowScreen: undefined;
+  ExploreScreen: undefined;
+  AccountScreen: undefined;
+};
 
-const BottomTab = createBottomTabNavigator<BottomTabParams>()
+const BottomTab = createBottomTabNavigator<BottomTabParams>();
 
 export const BottomTabNavigation = () => {
   return (
-    <BottomTab.Navigator sceneContainerStyle={{
-      backgroundColor: 'rgba(23, 24, 27, 1)'
-    }} screenOptions={{
-      headerShown: false,
-    }} initialRouteName={'HomeScreen'} tabBar={(props) => <BottomTabBar {...props} />}>
-      <BottomTab.Screen name='HomeScreen' component={HomeScreen} />
-      <BottomTab.Screen name='TVShowScreen' component={TVShowScreen} />
-      <BottomTab.Screen name='ExploreScreen' component={ExploreScreen} />
-      <BottomTab.Screen name='AccountScreen' component={AccountScreen} />
+    <BottomTab.Navigator
+      sceneContainerStyle={{
+        backgroundColor: 'rgba(23, 24, 27, 1)',
+      }}
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={'HomeScreen'}
+      tabBar={props => <BottomTabBar {...props} />}>
+      <BottomTab.Screen name="HomeScreen" component={HomeScreen} />
+      <BottomTab.Screen name="TVShowScreen" component={TVShowScreen} />
+      <BottomTab.Screen name="ExploreScreen" component={ExploreScreen} />
+      <BottomTab.Screen name="AccountScreen" component={AccountScreen} />
     </BottomTab.Navigator>
-  )
-}
+  );
+};

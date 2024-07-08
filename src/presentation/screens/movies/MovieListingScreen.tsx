@@ -10,6 +10,7 @@ import MovieItem from '../../components/listing/MovieItem';
 import {RootStackParams} from '../../navigation/StackNavigation';
 import {Movie} from '../../../domain/movie/entities/Movies';
 import {useMovieListing} from '../../hooks/useMovieListing';
+import ItemRenderer from '../../components/listing/ItemRenderer';
 
 export interface MovieListingProps
   extends StackScreenProps<RootStackParams, 'MovieListingScreen'> {}
@@ -41,13 +42,10 @@ export const MovieListingScreen = ({route}: MovieListingProps) => {
           data={result as Movie[]}
           showsVerticalScrollIndicator={false}
           renderItem={({index}) => (
-            <MovieItem
-              movie={result[index] as Movie}
-              onClick={movie => navigation.navigate('DetailScreen', movie)}
-            />
+            <ItemRenderer item={result[index]} navigation={navigation} />
           )}
           numColumns={2}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item, _) => item.title}
           ListFooterComponent={() => {
             return pageLoading ? (
               <View

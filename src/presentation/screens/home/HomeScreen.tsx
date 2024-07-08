@@ -10,6 +10,8 @@ import {SearchBar} from '../../components/home/SearchBar';
 import {Snackbar} from '@react-native-material/core';
 import {RefreshControl} from 'react-native-gesture-handler';
 import {useMovies} from '../../hooks/useMovies';
+import {styles} from './styles/HomeScreen.style';
+import {movieOption} from '../../utils/Constants';
 
 export const HomeScreen = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
@@ -46,7 +48,7 @@ export const HomeScreen = () => {
 
           {/* Search Section */}
           <SearchBar
-            onClick={() => navigation.navigate('SearchScreen', {type: 'movie'})}
+            onClick={() => navigation.navigate('SearchScreen', movieOption)}
           />
 
           {/* Main Corousel */}
@@ -86,17 +88,7 @@ export const HomeScreen = () => {
         </View>
       </ScrollView>
 
-      {error && (
-        <Snackbar
-          message={error}
-          style={{
-            position: 'absolute',
-            start: 16,
-            end: 16,
-            bottom: 90,
-          }}
-        />
-      )}
+      {error && <Snackbar message={error} style={styles.toast} />}
     </View>
   );
 };
