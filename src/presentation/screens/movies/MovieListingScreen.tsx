@@ -6,7 +6,6 @@ import {StyleSheet, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {LoadingView} from '../../components/base/LoadingView';
 import {Toolbar} from '../../components/base/Toolbar';
-import MovieItem from '../../components/listing/MovieItem';
 import {RootStackParams} from '../../navigation/StackNavigation';
 import {Movie} from '../../../domain/movie/entities/Movies';
 import {useMovieListing} from '../../hooks/useMovieListing';

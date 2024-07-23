@@ -5,6 +5,7 @@ import {ValorationView} from '../../../components/base/ValorationView';
 import {CardType, ImageCard} from '../../../components/MovieCard';
 import {Dimensions} from 'react-native';
 import {fullWidth} from '../../../utils/Dimen';
+import {movieStyle} from '../../../components/listing/MovieItem.style';
 
 interface TVShowItemProps {
   tvShow: TVShow;
@@ -22,11 +23,7 @@ export const TVShowItem = ({
   type = CardType.Feed,
 }: TVShowItemProps) => {
   return (
-    <View
-      style={{
-        paddingVertical: 8,
-        paddingHorizontal: 8,
-      }}>
+    <View style={[movieStyle.movieContainer, {width: width}]}>
       <ImageCard
         imageID={{
           backdropPath: tvShow?.backdropPath,
@@ -37,15 +34,9 @@ export const TVShowItem = ({
         type={type}
         onClick={() => onTVShowClicked(tvShow)}
       />
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          paddingHorizontal: 4,
-          marginTop: 8,
-        }}>
+      <View style={movieStyle.movieTitleContainer}>
         <Text
-          style={[styles.movieTitle, {width: 90}]}
+          style={movieStyle.movieTitle}
           numberOfLines={1}
           ellipsizeMode={'tail'}>
           {tvShow.name}

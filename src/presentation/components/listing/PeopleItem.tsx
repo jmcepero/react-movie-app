@@ -19,7 +19,7 @@ const PeopleItem = ({
   onClick,
 }: PeopleItemProps) => {
   return (
-    <View style={movieStyle.movieContainer}>
+    <View style={[movieStyle.movieContainer, {width: width}]}>
       <ImageCard
         imageID={{
           posterPath: people.profile_path,

@@ -1,30 +1,23 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {Movie} from '../../domain/movie/entities/Movies';
-import MovieItem from './listing/MovieItem';
-import {fullWidth} from '../utils/Dimen';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {Cast} from '../../../../data/people/entities/PeopleInterfaces';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {ParamListBase} from '@react-navigation/native';
+import CastItem from '../../../components/listing/CastItem';
+import {fractionWidth} from '../../../utils/Dimen';
 
 interface Props {
   title?: string;
-  movies: Movie[];
-  onMovieClicked: (movie: Movie) => void;
-  onSeeAllClicked?: () => void;
+  cast: Cast[];
+  navigation: StackNavigationProp<ParamListBase>;
 }
 
-export const HorizontalFeed = ({
-  title,
-  movies,
-  onMovieClicked,
-  onSeeAllClicked,
-}: Props) => {
-  return movies.length > 0 ? (
+export const HorizontalCastCrewFeed = ({title, cast, navigation}: Props) => {
+  return cast.length > 0 ? (
     <View>
       {title && (
         <View style={styles.headerContainer}>
           <Text style={styles.headerTitle}>{title}</Text>
-          <TouchableOpacity onPress={() => onSeeAllClicked?.()}>
-            <Text style={styles.button}>See all</Text>
-          </TouchableOpacity>
         </View>
       )}
       <FlatList
@@ -32,13 +25,20 @@ export const HorizontalFeed = ({
           paddingHorizontal: 16,
           gap: 8,
         }}
-        data={movies}
+        data={cast}
         renderItem={({index}) => (
-          <MovieItem
-            movie={movies[index]}
-            width={fullWidth * 0.42}
-            height={220}
-            onClick={onMovieClicked}
+          <CastItem
+            cast={cast[index]}
+            width={fractionWidth}
+            onClick={item =>
+              item.media_type === 'movie'
+                ? navigation.navigate('DetailScreen', {
+                    movieId: item.id,
+                  })
+                : navigation.navigate('TVShowDetailScreen', {
+                    tvShowId: item.id,
+                  })
+            }
           />
         )}
         keyExtractor={item => item.id.toString()}

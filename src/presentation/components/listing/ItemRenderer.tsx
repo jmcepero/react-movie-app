@@ -9,6 +9,8 @@ import {TVShowItem} from '../../screens/tv_show/components/TVShowItem';
 import {fractionWidth} from '../../utils/Dimen';
 import {People} from '../../../domain/people/entities/People';
 import PeopleItem from './PeopleItem';
+import {Cast} from '../../../data/people/entities/PeopleInterfaces';
+import CastItem from './CastItem';
 
 const ItemRenderer: React.FC<{
   item: Item;
@@ -18,7 +20,7 @@ const ItemRenderer: React.FC<{
     return (
       <MovieItem
         movie={item as Movie}
-        onClick={_ => navigation.navigate('DetailScreen', item as Movie)}
+        onClick={_ => navigation.navigate('DetailScreen', {movieId: item.id})}
         width={fractionWidth}
       />
     );
@@ -44,6 +46,21 @@ const ItemRenderer: React.FC<{
           })
         }
         width={fractionWidth}
+      />
+    );
+  } else if ((item as Cast).media_type) {
+    return (
+      <CastItem
+        cast={item as Cast}
+        onClick={cast =>
+          cast.media_type === 'movie'
+            ? navigation.navigate('DetailScreen', {
+                item: item as Movie,
+              })
+            : navigation.navigate('TVShowDetailScreen', {
+                tvShowId: (item as TVShow).id,
+              })
+        }
       />
     );
   }

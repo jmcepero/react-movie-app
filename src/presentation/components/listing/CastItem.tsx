@@ -1,44 +1,41 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {Movie} from '../../../domain/movie/entities/Movies';
 import {strDateToYear} from '../../extensions/StringDate';
 import {ValorationView} from '../base/ValorationView';
 import {ImageCard} from '../MovieCard';
 import {movieStyle} from './MovieItem.style';
 import {fullWidth} from '../../utils/Dimen';
+import {Cast} from '../../../data/people/entities/PeopleInterfaces';
+import {CardType} from './MovieItem';
 
-export enum CardType {
-  Carousel,
-  Feed,
-}
-
-interface MovieItemProps {
-  movie: Movie;
+interface CastItemProps {
+  cast: Cast;
   width?: number;
   height?: number;
-  onClick?: (movie: Movie) => void;
+  onClick?: (cast: Cast) => void;
   type?: CardType;
 }
 
-const MovieItem = ({
-  movie,
+const CastItem = ({
+  cast,
   width = fullWidth,
   height = 220,
   onClick,
   type = CardType.Feed,
-}: MovieItemProps) => {
+}: CastItemProps) => {
+  console.log(cast);
   return (
     <View style={[movieStyle.movieContainer, {width: width}]}>
       <ImageCard
         imageID={{
-          backdropPath: movie.backdropPath,
-          posterPath: movie.posterPath,
+          backdropPath: cast.backdrop_path,
+          posterPath: cast.poster_path,
         }}
         width={width}
         height={height}
         type={type}
         onClick={() => {
-          onClick?.(movie);
+          onClick?.(cast);
         }}
       />
       <View style={movieStyle.movieTitleContainer}>
@@ -46,16 +43,15 @@ const MovieItem = ({
           style={movieStyle.movieTitle}
           numberOfLines={1}
           ellipsizeMode={'tail'}>
-          {movie.title}
+          {cast.title}
         </Text>
-        <ValorationView average={movie.voteAverage} iconSize={12} />
+        <ValorationView average={cast.vote_average} iconSize={12} />
       </View>
-
       <Text style={movieStyle.yearTitle}>
-        {strDateToYear(movie.releaseDate)}
+        {strDateToYear(cast.release_date)}
       </Text>
     </View>
   );
 };
 
-export default MovieItem;
+export default CastItem;

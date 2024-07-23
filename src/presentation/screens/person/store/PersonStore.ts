@@ -28,8 +28,8 @@ class PersonStore {
       this.images = this.person.movie_credits.cast
         .filter(cast => cast.poster_path != null)
         .map(cast => cast.poster_path)
-        .map(poster => `https://image.tmdb.org/t/p/original${poster}`);
-      console.log(this.images);
+        .map(poster => `https://image.tmdb.org/t/p/original${poster}`)
+        .slice(0, 10);
       this.error = '';
     } catch (error) {
       const {message} = errorHandler(error);

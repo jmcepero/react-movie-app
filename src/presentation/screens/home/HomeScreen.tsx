@@ -54,14 +54,18 @@ export const HomeScreen = () => {
           {/* Main Corousel */}
           <MainCarousel
             movies={nowPlaying}
-            onMovieClicked={movie => navigation.navigate('DetailScreen', movie)}
+            onMovieClicked={movie =>
+              navigation.navigate('DetailScreen', {movieId: movie.id})
+            }
           />
 
           {/* Popular */}
           <HorizontalFeed
             title="Popular"
             movies={popular}
-            onMovieClicked={movie => navigation.navigate('DetailScreen', movie)}
+            onMovieClicked={movie =>
+              navigation.navigate('DetailScreen', {movieId: movie.id})
+            }
             onSeeAllClicked={() =>
               navigation.navigate('MovieListingScreen', {
                 category: 'popular',
@@ -77,7 +81,9 @@ export const HomeScreen = () => {
           <HorizontalFeed
             title="Top Rated"
             movies={topRated}
-            onMovieClicked={movie => navigation.navigate('DetailScreen', movie)}
+            onMovieClicked={movie =>
+              navigation.navigate('DetailScreen', {movieId: movie.id})
+            }
             onSeeAllClicked={() =>
               navigation.navigate('MovieListingScreen', {
                 category: 'topRated',

@@ -3,7 +3,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {BottomTabNavigation} from './BottomTabNavigation';
 import {MovieListingScreen} from '../screens/movies/MovieListingScreen';
 import {SearchScreen} from '../screens/search/SearchScreen';
-import {Movie} from '../../domain/movie/entities/Movies';
 import {WatchProviderScreen} from '../screens/warch_provider/WatchProviderScreen';
 import {TVShowDetailScreen} from '../screens/tv_show/TVShowDetailScreen';
 import {DetailScreen} from '../screens/movies/DetailScreen';
@@ -13,7 +12,9 @@ import {PersonDetailScreen} from '../screens/person/PersonDetailScreen';
 
 export type RootStackParams = {
   BottomTabNavigation: undefined;
-  DetailScreen: Movie;
+  DetailScreen: {
+    movieId: string;
+  };
   MovieListingScreen: {
     category: 'popular' | 'topRated';
     title: 'Popular' | 'Top Rated';

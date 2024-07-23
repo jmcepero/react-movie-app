@@ -32,6 +32,12 @@ export const SearchScreen = observer(({route}: SearchScreenProps) => {
     searchStore.setSelectedChip(route.params.index);
   }, [route.params.index, searchStore]);
 
+  useEffect(() => {
+    return () => {
+      searchStore.resetState();
+    };
+  }, [searchStore]);
+
   return (
     <View style={styles.container}>
       <SearchInput onDebounced={handleInputChange} />
@@ -41,6 +47,12 @@ export const SearchScreen = observer(({route}: SearchScreenProps) => {
         defaulItemSelected={searchStore.selectedChip}
       />
       <FlatList
+        contentContainerStyle={{
+          paddingHorizontal: 16,
+        }}
+        columnWrapperStyle={{
+          justifyContent: 'space-between',
+        }}
         data={searchStore.result}
         showsVerticalScrollIndicator={false}
         renderItem={({index}) => (

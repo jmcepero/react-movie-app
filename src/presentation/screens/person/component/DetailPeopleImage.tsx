@@ -18,15 +18,11 @@ const DetailPeopleImage: React.FC<ImageCarouselProps> = ({
 }) => {
   if (images.length === 1) {
     return (
-      <View
-        style={{
-          width: '100%',
-          height: height * 0.62,
-        }}>
+      <View style={styles.container}>
         <Image source={{uri: images[0]}} style={detailImageStyle.image} />
         <LinearGradient
           style={detailImageStyle.gradient}
-          colors={['transparent', 'rgba(23, 24, 27, 1)']}
+          colors={['rgba(23, 24, 27, 0.65)', 'rgba(23, 24, 27, 1)']}
           locations={[0.5, 0.9]}
         />
         <BackButton onClicked={onBackClicked} />
@@ -36,10 +32,10 @@ const DetailPeopleImage: React.FC<ImageCarouselProps> = ({
 
   return (
     <View style={styles.container}>
-      <CrossFadeImages images={images} interval={3000} />
+      <CrossFadeImages images={images} interval={5000} />
       <LinearGradient
         style={detailImageStyle.gradient}
-        colors={['transparent', 'rgba(23, 24, 27, 1)']}
+        colors={['rgba(23, 24, 27, 0.65)', 'rgba(23, 24, 27, 1)']}
         locations={[0.5, 0.9]}
       />
       <BackButton onClicked={onBackClicked} />

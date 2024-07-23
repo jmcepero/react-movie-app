@@ -29,10 +29,10 @@ interface Props extends StackScreenProps<RootStackParams, 'DetailScreen'> {}
 export const DetailScreen = ({route}: Props) => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
   const movie = route.params;
-  const {isLoading, detail, error} = useMovieDetail(movie.id.toString());
+  const {isLoading, detail, error} = useMovieDetail(movie.movieId);
   const releaseDate = new Date(detail?.releaseDate || '');
 
-  const uri = `https://image.tmdb.org/t/p/original${movie.posterPath}`;
+  const uri = `https://image.tmdb.org/t/p/original${detail?.posterPath}`;
 
   if (isLoading) {
     return (
@@ -65,7 +65,7 @@ export const DetailScreen = ({route}: Props) => {
                 height: '100%',
                 position: 'absolute',
               }}
-              colors={['transparent', 'rgba(33, 25, 32, 1)']}
+              colors={['transparent', 'rgba(23, 24, 27, 1)']}
               locations={[0.5, 0.9]}
             />
             <TouchableOpacity
@@ -86,7 +86,6 @@ export const DetailScreen = ({route}: Props) => {
               })}
             </View>
           </View>
-
           {/* Title Section */}
           <View style={styles.titleContainer}>
             <Text style={styles.title}>{detail?.title}</Text>
@@ -97,22 +96,17 @@ export const DetailScreen = ({route}: Props) => {
               <Icon name="star" size={18} style={{color: '#dcb189'}} />
             </View>
           </View>
-
           {/* Year Director Section */}
           <YearDirector
             year={releaseDate.getUTCFullYear().toString()}
             director={detail?.director || ''}
           />
-
           {/* Overview Section */}
           <Text style={styles.overviewText}>{detail?.overview}</Text>
-
           {/* Cast Section */}
           <CastFeed casts={detail?.credits?.cast} width={100} />
-
           {/* Trailer Section */}
           <TrailerCard trailerUri={detail?.trailer || ''} />
-
           {/* Comment Section */}
           <ReviewFeed reviews={detail?.reviews?.results} />
         </View>
@@ -123,7 +117,7 @@ export const DetailScreen = ({route}: Props) => {
         style={styles.buttonProvider}
         onPress={() => {
           navigation.navigate('WatchProviderScreen', {
-            itemId: movie.id,
+            itemId: movie.movieId,
             itemType: 'movie',
           });
         }}>

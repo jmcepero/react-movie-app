@@ -35,22 +35,20 @@ export const movieStyle = StyleSheet.create({
     fontFamily: 'Archivo-Black',
     fontSize: 12,
     color: 'rgba(251,246,248,1)',
-    width: 90,
+    width: '75%',
   },
   yearTitle: {
     fontFamily: 'Archivo-Thin',
     fontSize: 12,
     color: 'rgba(251,246,248,0.7)',
-    marginHorizontal: 4,
   },
   movieTitleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 4,
     marginTop: 8,
+    width: '100%',
   },
   movieContainer: {
     paddingVertical: 8,
-    paddingHorizontal: 8,
   },
 });

@@ -72,7 +72,8 @@ export const movieDetailResponseToDetail = (
       : undefined,
     director: movieDetailResponse.credits
       ? movieDetailResponse.credits.crew.find(cast => {
-          return cast.known_for_department === 'Directing';
+          console.log(cast);
+          return cast.job === 'Director';
         })?.name
       : undefined,
     trailer: movieDetailResponse.videos

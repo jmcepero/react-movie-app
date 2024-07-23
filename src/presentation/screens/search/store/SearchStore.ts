@@ -57,7 +57,6 @@ class SearchStore {
   }
 
   onReachToBottom() {
-    console.log('Entro 1');
     this.searchByTerm();
   }
 
