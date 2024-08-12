@@ -4,7 +4,8 @@ import BottomTabBar from '../components/base/BottomTabBar';
 import {AccountScreen} from '../screens/AccountScreen';
 import {HomeScreen} from '../screens/home/HomeScreen';
 import {TVShowScreen} from '../screens/tv_show/TVShowScreen';
-import {ExploreScreen} from '../screens/ExploreScreen';
+import {ExploreScreen} from '../screens/explore/ExploreScreen';
+import {tabColor} from '../utils/Colors';
 
 export type BottomTabParams = {
   HomeScreen: undefined;
@@ -19,7 +20,7 @@ export const BottomTabNavigation = () => {
   return (
     <BottomTab.Navigator
       sceneContainerStyle={{
-        backgroundColor: 'rgba(23, 24, 27, 1)',
+        backgroundColor: tabColor,
       }}
       screenOptions={{
         headerShown: false,

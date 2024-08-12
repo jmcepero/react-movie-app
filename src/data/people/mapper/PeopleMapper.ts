@@ -84,8 +84,21 @@ export const peopleDetailToDomain = (
   popularity: people.popularity,
   profile_path: people.profile_path,
   movie_credits: {
-    cast: people.movie_credits.cast.map(knownForToDomain),
-    crew: people.movie_credits.crew.map(knownForToDomain),
+    cast: people.movie_credits.cast
+      .map(knownForToDomain)
+      .filter(cast => cast.poster_path),
+    crew: people.movie_credits.crew
+      .map(knownForToDomain)
+      .filter(cast => cast.poster_path),
     id: people.movie_credits.id,
+  },
+  tv_credits: {
+    cast: people.tv_credits.cast
+      .map(knownForToDomain)
+      .filter(cast => cast.poster_path),
+    crew: people.tv_credits.crew
+      .map(knownForToDomain)
+      .filter(cast => cast.poster_path),
+    id: people.tv_credits.id,
   },
 });

@@ -3,7 +3,6 @@ import {StyleSheet, Text, View} from 'react-native';
 import {TVShow} from '../../../../domain/tv_shows/entities/TVShows';
 import {ValorationView} from '../../../components/base/ValorationView';
 import {CardType, ImageCard} from '../../../components/MovieCard';
-import {Dimensions} from 'react-native';
 import {fullWidth} from '../../../utils/Dimen';
 import {movieStyle} from '../../../components/listing/MovieItem.style';
 
@@ -78,6 +77,5 @@ const styles = StyleSheet.create({
     fontFamily: 'Archivo-Thin',
     fontSize: 12,
     color: 'rgba(251,246,248,0.7)',
-    marginHorizontal: 4,
   },
 });

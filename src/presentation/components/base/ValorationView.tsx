@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import _Icon from 'react-native-vector-icons/Ionicons';
 
 interface Props {
   average?: number | null;
@@ -8,6 +8,7 @@ interface Props {
 }
 
 export const ValorationView = ({average, iconSize}: Props) => {
+  const Icon = _Icon as React.ElementType;
   return (
     <View style={styles.valorationContainer}>
       <Text style={styles.valorationTitle}>{average?.toFixed(1) || 0.0}</Text>

@@ -49,7 +49,7 @@ export const PersonDetailScreen = observer(({route}: Props) => {
         <View>
           {/* Detail image */}
           <DetailPeopleImage
-            images={personStore.images}
+            images={personStore.tvImages}
             onBackClicked={() => navigation.goBack()}
           />
 
@@ -91,16 +91,33 @@ export const PersonDetailScreen = observer(({route}: Props) => {
           </View>
 
           {/* Overview Section */}
-          <ExpandableText style={customStyles.overviewText} numberOfLines={10}>
-            {personStore.person.biography}
-          </ExpandableText>
+          {personStore.person.biography && (
+            <ExpandableText
+              style={customStyles.overviewText}
+              numberOfLines={10}>
+              {personStore.person.biography}
+            </ExpandableText>
+          )}
 
           {/* know for */}
-          <HorizontalCastCrewFeed
-            title="Know for"
-            cast={personStore.person.movie_credits.cast.slice(0, 12)}
-            navigation={navigation}
-          />
+          {personStore.person.movie_credits.cast.length > 0 && (
+            <HorizontalCastCrewFeed
+              title="Movie credits"
+              cast={personStore.person.movie_credits.cast.slice(0, 12)}
+              navigation={navigation}
+              isTvShow={false}
+            />
+          )}
+
+          {/* know for */}
+          {personStore.person.tv_credits.cast.length > 0 && (
+            <HorizontalCastCrewFeed
+              title="Tv credits"
+              cast={personStore.person.tv_credits.cast.slice(0, 12)}
+              isTvShow={true}
+              navigation={navigation}
+            />
+          )}
         </View>
       </ScrollView>
     </View>

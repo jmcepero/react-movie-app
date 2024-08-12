@@ -2,13 +2,16 @@ import React from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {CustomGenre} from '../../../data/genre/local/CustomGenres';
 import {GenreCard} from './GenreCard';
+import Skeleton from 'react-native-reanimated-skeleton';
+import {skeletonDarkColor, skeletonLightColor} from '../../utils/Colors';
 
 interface Props {
   genres: CustomGenre[];
+  isLoading: boolean;
 }
 
-export const GenresFeed = ({genres}: Props) => {
-  return genres.length > 0 ? (
+export const GenresFeed = ({genres, isLoading}: Props) => {
+  return !isLoading ? (
     <View>
       <View style={styles.headerContainer}>
         <Text style={styles.headerTitle}>Genres</Text>
@@ -35,7 +38,61 @@ export const GenresFeed = ({genres}: Props) => {
       />
     </View>
   ) : (
-    <></>
+    <View>
+      <Skeleton
+        containerStyle={{flex: 1}}
+        isLoading={isLoading}
+        layout={[
+          {
+            key: 'title',
+            width: 100,
+            height: 18,
+            borderRadius: 15,
+            marginHorizontal: 18,
+            marginTop: 30,
+          },
+        ]}
+        boneColor={skeletonDarkColor}
+        highlightColor={skeletonLightColor}
+        duration={2000}
+      />
+
+      <FlatList
+        contentContainerStyle={{
+          paddingHorizontal: 18,
+          marginTop: 8,
+          gap: 8,
+        }}
+        data={genres}
+        renderItem={_ => (
+          <Skeleton
+            containerStyle={{flex: 1}}
+            isLoading={isLoading}
+            layout={[
+              {
+                key: 'card',
+                width: 160,
+                height: 160,
+                borderRadius: 15,
+              },
+              {
+                key: 'text',
+                width: 50,
+                height: 12,
+                borderRadius: 12,
+                marginTop: 8,
+              },
+            ]}
+            boneColor={skeletonDarkColor}
+            highlightColor={skeletonLightColor}
+            duration={2000}
+          />
+        )}
+        keyExtractor={item => item.id.toString()}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+      />
+    </View>
   );
 };
 

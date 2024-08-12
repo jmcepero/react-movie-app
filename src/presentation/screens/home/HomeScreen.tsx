@@ -37,7 +37,7 @@ export const HomeScreen = () => {
         }}
         refreshControl={
           <RefreshControl
-            refreshing={isLoading}
+            refreshing={false}
             onRefresh={refreshData}
             tintColor={'#7B44C1'}
           />
@@ -49,11 +49,13 @@ export const HomeScreen = () => {
           {/* Search Section */}
           <SearchBar
             onClick={() => navigation.navigate('SearchScreen', movieOption)}
+            isLoading={isLoading}
           />
 
           {/* Main Corousel */}
           <MainCarousel
             movies={nowPlaying}
+            isLoading={isLoading}
             onMovieClicked={movie =>
               navigation.navigate('DetailScreen', {movieId: movie.id})
             }
@@ -72,10 +74,11 @@ export const HomeScreen = () => {
                 title: 'Popular',
               })
             }
+            isLoading={isLoading}
           />
 
           {/* Generes */}
-          <GenresFeed genres={genres} />
+          <GenresFeed genres={genres} isLoading={isLoading} />
 
           {/* Top Rated */}
           <HorizontalFeed
@@ -90,6 +93,7 @@ export const HomeScreen = () => {
                 title: 'Top Rated',
               })
             }
+            isLoading={isLoading}
           />
         </View>
       </ScrollView>

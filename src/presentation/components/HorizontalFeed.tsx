@@ -3,12 +3,14 @@ import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Movie} from '../../domain/movie/entities/Movies';
 import MovieItem from './listing/MovieItem';
 import {fullWidth} from '../utils/Dimen';
+import HorizontalFeedSkeleton from './base/skeleton/HorizontalFeedSkeleton';
 
 interface Props {
   title?: string;
   movies: Movie[];
   onMovieClicked: (movie: Movie) => void;
   onSeeAllClicked?: () => void;
+  isLoading: boolean;
 }
 
 export const HorizontalFeed = ({
@@ -16,8 +18,9 @@ export const HorizontalFeed = ({
   movies,
   onMovieClicked,
   onSeeAllClicked,
+  isLoading,
 }: Props) => {
-  return movies.length > 0 ? (
+  return !isLoading ? (
     <View>
       {title && (
         <View style={styles.headerContainer}>
@@ -47,7 +50,7 @@ export const HorizontalFeed = ({
       />
     </View>
   ) : (
-    <></>
+    <HorizontalFeedSkeleton isLoading={isLoading} />
   );
 };
 

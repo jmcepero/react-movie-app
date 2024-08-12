@@ -4,19 +4,26 @@ import Carousel from 'react-native-reanimated-carousel';
 import {TVShow} from '../../../../domain/tv_shows/entities/TVShows';
 import PagerIndicator from '../../../components/home/PagerIndicator';
 import {TVShowCarouselItem} from './TVShowCarouselItem';
+import {CarouselSkeleton} from '../../../components/base/skeleton/CarouselSkeleton';
 
 interface Props {
   title: string;
   tvShows: TVShow[];
+  isLoading: boolean;
   onTVShowClicked: (tvShow: TVShow) => void;
 }
 
-export const TVShowCarousel = ({title, tvShows, onTVShowClicked}: Props) => {
+export const TVShowCarousel = ({
+  title,
+  tvShows,
+  isLoading,
+  onTVShowClicked,
+}: Props) => {
   const pageWidth = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
   const [index, setIndex] = useState(0);
 
-  return tvShows.length > 0 ? (
+  return !isLoading ? (
     <View>
       <Text style={styles.header}>{title}</Text>
 
@@ -43,7 +50,7 @@ export const TVShowCarousel = ({title, tvShows, onTVShowClicked}: Props) => {
       <PagerIndicator currentPage={index} numPages={tvShows.length} />
     </View>
   ) : (
-    <></>
+    <CarouselSkeleton isLoading={isLoading} />
   );
 };
 

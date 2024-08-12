@@ -3,12 +3,14 @@ import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {TVShow} from '../../../../domain/tv_shows/entities/TVShows';
 import {TVShowItem} from './TVShowItem';
 import {fullWidth} from '../../../utils/Dimen';
+import HorizontalFeedSkeleton from '../../../components/base/skeleton/HorizontalFeedSkeleton';
 
 interface Props {
   title?: string;
   tvShows: TVShow[];
   onTVShowClicked: (tvShow: TVShow) => void;
   onSeeAllClicked?: () => void;
+  isLoading: boolean;
 }
 
 export const TVShowHorizontalFeed = ({
@@ -16,8 +18,9 @@ export const TVShowHorizontalFeed = ({
   tvShows,
   onTVShowClicked,
   onSeeAllClicked,
+  isLoading,
 }: Props) => {
-  return tvShows.length > 0 ? (
+  return !isLoading ? (
     <View>
       {title && (
         <View style={styles.headerContainer}>
@@ -29,7 +32,8 @@ export const TVShowHorizontalFeed = ({
       )}
       <FlatList
         contentContainerStyle={{
-          paddingHorizontal: 8,
+          paddingHorizontal: 16,
+          gap: 8,
         }}
         data={tvShows}
         renderItem={({index}) => (
@@ -46,7 +50,7 @@ export const TVShowHorizontalFeed = ({
       />
     </View>
   ) : (
-    <></>
+    <HorizontalFeedSkeleton isLoading={isLoading} />
   );
 };
 

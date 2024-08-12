@@ -10,6 +10,7 @@ import ChipsGroup from './components/ChipGroup';
 import ItemRenderer from '../../components/listing/ItemRenderer';
 import {MobXProviderContext, observer} from 'mobx-react';
 import SearchStore from './store/SearchStore';
+import VerticalFeedSkeleton from '../../components/base/skeleton/VerticalFeedSkeleton';
 
 export interface SearchScreenProps
   extends StackScreenProps<RootStackParams, 'SearchScreen'> {}
@@ -46,35 +47,39 @@ export const SearchScreen = observer(({route}: SearchScreenProps) => {
         onSelectionChange={(index, _) => handleChipChange(index)}
         defaulItemSelected={searchStore.selectedChip}
       />
-      <FlatList
-        contentContainerStyle={{
-          paddingHorizontal: 16,
-        }}
-        columnWrapperStyle={{
-          justifyContent: 'space-between',
-        }}
-        data={searchStore.result}
-        showsVerticalScrollIndicator={false}
-        renderItem={({index}) => (
-          <ItemRenderer
-            item={searchStore.result[index]}
-            navigation={navigation}
-          />
-        )}
-        numColumns={2}
-        keyExtractor={(item, index) => index.toString()}
-        ListFooterComponent={
-          <ListFooterComponent
-            isLoading={searchStore.pageLoading || searchStore.isLoading}
-            hasError={searchStore.error.length > 0}
-          />
-        }
-        onEndReachedThreshold={0.5}
-        initialNumToRender={10}
-        onEndReached={() => {
-          searchStore.onReachToBottom();
-        }}
-      />
+      {!searchStore.isLoading ? (
+        <FlatList
+          contentContainerStyle={{
+            paddingHorizontal: 16,
+          }}
+          columnWrapperStyle={{
+            justifyContent: 'space-between',
+          }}
+          data={searchStore.result}
+          showsVerticalScrollIndicator={false}
+          renderItem={({index}) => (
+            <ItemRenderer
+              item={searchStore.result[index]}
+              navigation={navigation}
+            />
+          )}
+          numColumns={2}
+          keyExtractor={(item, index) => index.toString()}
+          ListFooterComponent={
+            <ListFooterComponent
+              isLoading={searchStore.pageLoading || searchStore.isLoading}
+              hasError={searchStore.error.length > 0}
+            />
+          }
+          onEndReachedThreshold={0.5}
+          initialNumToRender={10}
+          onEndReached={() => {
+            searchStore.onReachToBottom();
+          }}
+        />
+      ) : (
+        <VerticalFeedSkeleton isLoading={true} />
+      )}
     </View>
   );
 });

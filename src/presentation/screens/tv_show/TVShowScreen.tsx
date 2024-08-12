@@ -33,7 +33,7 @@ export const TVShowScreen = () => {
         contentContainerStyle={styles.scrollviewContainer}
         refreshControl={
           <RefreshControl
-            refreshing={isLoading}
+            refreshing={false}
             onRefresh={refreshData}
             tintColor={'#7B44C1'}
           />
@@ -45,12 +45,14 @@ export const TVShowScreen = () => {
           {/* Search Section */}
           <SearchBar
             onClick={() => navigation.navigate('SearchScreen', tvShowOption)}
+            isLoading={isLoading}
           />
 
           {/* Main Corousel */}
           <TVShowCarousel
             title="Top Rated"
             tvShows={topRated}
+            isLoading={isLoading}
             onTVShowClicked={tvShow => {
               navigation.navigate('TVShowDetailScreen', {tvShowId: tvShow.id});
             }}
@@ -64,6 +66,7 @@ export const TVShowScreen = () => {
               navigation.navigate('TVShowDetailScreen', {tvShowId: tvShow.id});
             }}
             onSeeAllClicked={() => {}}
+            isLoading={isLoading}
           />
 
           {/* Top Rated */}
@@ -74,6 +77,7 @@ export const TVShowScreen = () => {
               navigation.navigate('TVShowDetailScreen', {tvShowId: tvShow.id});
             }}
             onSeeAllClicked={() => {}}
+            isLoading={isLoading}
           />
         </View>
       </ScrollView>

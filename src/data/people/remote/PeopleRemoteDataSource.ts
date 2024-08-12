@@ -26,7 +26,7 @@ export const peopleRemoteDataSource: PeopleRemoteDataSource = {
     return resp.data;
   },
   async personDetail(id: string): Promise<PeopleDetailResponse> {
-    let url = `person/${id}?append_to_response=movie_credits`;
+    let url = `person/${id}?append_to_response=movie_credits,tv_credits`;
     const resp = await movieDB.get<PeopleDetailResponse>(url);
     return resp.data;
   },

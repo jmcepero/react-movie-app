@@ -79,4 +79,5 @@ export interface PeopleDetailResponse {
   popularity: number;
   profile_path: string;
   movie_credits: MovieCredits;
+  tv_credits: MovieCredits;
 }

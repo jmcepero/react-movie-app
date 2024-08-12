@@ -9,10 +9,16 @@ import {fractionWidth} from '../../../utils/Dimen';
 interface Props {
   title?: string;
   cast: Cast[];
+  isTvShow: boolean;
   navigation: StackNavigationProp<ParamListBase>;
 }
 
-export const HorizontalCastCrewFeed = ({title, cast, navigation}: Props) => {
+export const HorizontalCastCrewFeed = ({
+  title,
+  cast,
+  isTvShow,
+  navigation,
+}: Props) => {
   return cast.length > 0 ? (
     <View>
       {title && (
@@ -31,7 +37,7 @@ export const HorizontalCastCrewFeed = ({title, cast, navigation}: Props) => {
             cast={cast[index]}
             width={fractionWidth}
             onClick={item =>
-              item.media_type === 'movie'
+              !isTvShow
                 ? navigation.navigate('DetailScreen', {
                     movieId: item.id,
                   })

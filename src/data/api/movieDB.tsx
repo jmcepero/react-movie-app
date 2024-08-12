@@ -13,4 +13,13 @@ const movieDB = axios.create({
   },
 });
 
+// Añadir un interceptor de solicitud
+movieDB.interceptors.request.use(config => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(config);
+    }, 2000); // Retraso de 2 segundos
+  });
+});
+
 export default movieDB;

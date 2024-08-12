@@ -22,6 +22,7 @@ const ExpandableText: React.FC<ExpandableTextProps> = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isTruncated, setIsTruncated] = useState(false);
+  const [maxLines, setMaxLines] = useState<number | undefined>(numberOfLines);
 
   useEffect(() => {
     const measureText = async () => {
@@ -38,8 +39,10 @@ const ExpandableText: React.FC<ExpandableTextProps> = ({
             fontSize: fontSize,
             fontFamily: flattenedStyle.fontFamily as string,
           });
-
           setIsTruncated(size.height > lineHeight * numberOfLines);
+          if (size.height <= lineHeight * numberOfLines) {
+            setMaxLines(undefined);
+          }
         } catch (error) {
           console.error('Failed to measure text size', error);
         }
@@ -51,9 +54,7 @@ const ExpandableText: React.FC<ExpandableTextProps> = ({
 
   return (
     <View>
-      <Text
-        style={style}
-        numberOfLines={isExpanded ? undefined : numberOfLines}>
+      <Text style={style} numberOfLines={isExpanded ? undefined : maxLines}>
         {children}
       </Text>
       {isTruncated && (

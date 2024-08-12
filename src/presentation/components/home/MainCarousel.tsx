@@ -4,18 +4,20 @@ import Carousel from 'react-native-reanimated-carousel';
 import {Movie} from '../../../domain/movie/entities/Movies';
 import PagerIndicator from './PagerIndicator';
 import {MainCorouselItem} from './MainCorouselItem';
+import {CarouselSkeleton} from '../base/skeleton/CarouselSkeleton';
 
 interface Props {
   movies: Movie[];
+  isLoading: boolean;
   onMovieClicked: (movie: Movie) => void;
 }
 
-export const MainCarousel = ({movies, onMovieClicked}: Props) => {
+export const MainCarousel = ({movies, isLoading, onMovieClicked}: Props) => {
   const pageWidth = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
-  const [index, setIndex] = useState(0);
+  const [currentIndex, setIndex] = useState(0);
 
-  return movies.length > 0 ? (
+  return !isLoading ? (
     <View>
       <Text style={styles.title}>Now Playing</Text>
 
@@ -39,10 +41,10 @@ export const MainCarousel = ({movies, onMovieClicked}: Props) => {
         )}
       />
 
-      <PagerIndicator currentPage={index} numPages={movies.length} />
+      <PagerIndicator currentPage={currentIndex} numPages={movies.length} />
     </View>
   ) : (
-    <></>
+    <CarouselSkeleton isLoading={isLoading} />
   );
 };
 

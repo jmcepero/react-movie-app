@@ -43,12 +43,14 @@ const CastItem = ({
           style={movieStyle.movieTitle}
           numberOfLines={1}
           ellipsizeMode={'tail'}>
-          {cast.title}
+          {cast.title ? cast.title : cast.name}
         </Text>
         <ValorationView average={cast.vote_average} iconSize={12} />
       </View>
       <Text style={movieStyle.yearTitle}>
-        {strDateToYear(cast.release_date)}
+        {strDateToYear(
+          cast.release_date ? cast.release_date : cast.first_air_date,
+        )}
       </Text>
     </View>
   );
