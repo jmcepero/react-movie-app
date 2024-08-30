@@ -1,3 +1,4 @@
 export const LottieJson = {
-    loading: require('./camera.json')
+  loading: require('./camera.json'),
+  spinner: require('./spinner.json'),
 };

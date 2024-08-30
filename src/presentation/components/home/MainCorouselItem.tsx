@@ -5,6 +5,7 @@ import {Movie} from '../../../domain/movie/entities/Movies';
 import {Text} from '@react-native-material/core';
 import {ValorationView} from '../base/ValorationView';
 import {strDateToYear} from '../../extensions/StringDate';
+import {getFontFamily} from '../../utils/Fonts';
 
 interface MainCarouselItemProps {
   movie: Movie;
@@ -63,13 +64,13 @@ const customStyle = StyleSheet.create({
     flex: 1,
   },
   movieTitle: {
-    fontFamily: 'Archivo-Black',
+    fontFamily: getFontFamily('bold'),
     fontSize: 14,
     color: 'rgba(251,246,248,1)',
     marginEnd: 8,
   },
   yearTitle: {
-    fontFamily: 'Archivo-Thin',
+    fontFamily: getFontFamily('thin'),
     fontSize: 12,
     color: 'rgba(251,246,248,0.7)',
     marginTop: 4,

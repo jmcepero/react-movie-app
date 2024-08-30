@@ -5,6 +5,7 @@ import {Movie} from '../../../domain/movie/entities/Movies';
 import PagerIndicator from './PagerIndicator';
 import {MainCorouselItem} from './MainCorouselItem';
 import {CarouselSkeleton} from '../base/skeleton/CarouselSkeleton';
+import {getFontFamily} from '../../utils/Fonts';
 
 interface Props {
   movies: Movie[];
@@ -51,7 +52,7 @@ export const MainCarousel = ({movies, isLoading, onMovieClicked}: Props) => {
 const styles = StyleSheet.create({
   title: {
     marginTop: 16,
-    fontFamily: 'Archivo-Regular',
+    fontFamily: getFontFamily('normal'),
     fontSize: 18,
     color: 'rgba(251,246,248,0.7)',
     marginHorizontal: 18,

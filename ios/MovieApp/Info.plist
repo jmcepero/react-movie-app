@@ -20,6 +20,17 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.137817280284-ch1phbmkudtbreqcd5nebv7746q2fr0i</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -35,12 +46,21 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>We need your location to show nearby places.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>We need your location to show nearby places.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need your location to show nearby places.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>ArchivoBlack.ttf</string>
+		<string>ArchivoLight.ttf</string>
+		<string>ArchivoMedium.ttf</string>
+		<string>ArchivoRegular.ttf</string>
+		<string>ArchivoThin.ttf</string>
+		<string>Ionicons.ttf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -55,14 +75,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIAppFonts</key>
-	<array>
-		<string>ArchivoBlack.ttf</string>
-		<string>ArchivoLight.ttf</string>
-		<string>ArchivoMedium.ttf</string>
-		<string>ArchivoRegular.ttf</string>
-		<string>ArchivoThin.ttf</string>
-		<string>Ionicons.ttf</string>
-	</array>
 </dict>
 </plist>

@@ -15,8 +15,15 @@ import {LoadingView} from '../../components/base/LoadingView';
 import {Images} from '../../../../assets/images/Images.index';
 import {Place} from '../../../domain/places/entities/PlacesInterface';
 import {Text} from 'react-native';
-import {darkColor, tabColor} from '../../utils/Colors';
+import {
+  darkColor,
+  primaryTextColor,
+  secondaryTextColor,
+  tabColor,
+} from '../../utils/Colors';
 import {NativeSyntheticEvent} from 'react-native';
+import {ValorationView} from '../../components/base/ValorationView';
+import _Icon from 'react-native-vector-icons/Ionicons';
 
 const {width} = Dimensions.get('window');
 const ITEM_WIDTH = width * 0.7;
@@ -27,6 +34,7 @@ export const ExploreScreen = observer(() => {
     exploreStore: ExploreStore;
   };
   const mapRef = useRef<MapView>(null);
+  const Icon = _Icon as React.ElementType;
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const contentOffset = event.nativeEvent.contentOffset.x;
@@ -59,8 +67,22 @@ export const ExploreScreen = observer(() => {
         style={styles.image}
         resizeMode="cover"
       />
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.address}>{item.address}</Text>
+      <View style={styles.nameAndRatingContainer}>
+        <Text style={styles.name}>{item.name}</Text>
+        <ValorationView average={item.rating} iconSize={12} />
+      </View>
+
+      <View style={styles.addressContainer}>
+        <Icon name="locate" size={14} style={{color: 'rgb(160,241,176)'}} />
+        <Text style={styles.address}>{item.address}</Text>
+      </View>
+
+      {item.distance && (
+        <View style={styles.full}>
+          <View style={styles.full}></View>
+          <Text style={styles.distance}>{item.distance}</Text>
+        </View>
+      )}
     </View>
   );
 
@@ -106,7 +128,7 @@ export const ExploreScreen = observer(() => {
         horizontal
         bounces={false}
         snapToAlignment="center"
-        snapToInterval={ITEM_WIDTH + ITEM_MARGIN * 2}
+        snapToInterval={ITEM_WIDTH + ITEM_MARGIN * 2.5}
         decelerationRate="fast"
         showsHorizontalScrollIndicator={false}
         style={styles.carousel}
@@ -120,6 +142,9 @@ export const ExploreScreen = observer(() => {
 });
 
 const styles = StyleSheet.create({
+  full: {
+    flex: 1,
+  },
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'center',
@@ -147,8 +172,13 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginHorizontal: ITEM_MARGIN,
   },
-  name: {
+  nameAndRatingContainer: {
     marginTop: 8,
+    flexDirection: 'row',
+    paddingEnd: 2,
+  },
+  name: {
+    flex: 1,
     fontFamily: 'Archivo-Black',
     fontSize: 12,
     color: 'rgba(251,246,248,1)',
@@ -162,9 +192,22 @@ const styles = StyleSheet.create({
     fontFamily: 'Archivo-Regular',
     fontSize: 12,
     color: 'white',
-    marginTop: 4,
+    paddingEnd: 6,
+    flex: 1,
   },
   hour: {
     fontSize: 16,
+  },
+  addressContainer: {
+    marginTop: 6,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  distance: {
+    fontFamily: 'Archivo-Regular',
+    fontSize: 12,
+    color: secondaryTextColor,
+    alignSelf: 'flex-end',
   },
 });

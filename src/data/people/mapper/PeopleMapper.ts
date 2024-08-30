@@ -67,6 +67,12 @@ const knownForDepartmentToDomain = (
   }
 };
 
+const removeDuplicates = <T extends {id: number}>(array: T[]): T[] => {
+  return Array.from(new Set(array.map(item => item.id))).map(
+    id => array.find(item => item.id === id) as T,
+  );
+};
+
 export const peopleDetailToDomain = (
   people: PeopleDetailResponse,
 ): PeopleDetail => ({
@@ -84,21 +90,65 @@ export const peopleDetailToDomain = (
   popularity: people.popularity,
   profile_path: people.profile_path,
   movie_credits: {
-    cast: people.movie_credits.cast
-      .map(knownForToDomain)
-      .filter(cast => cast.poster_path),
-    crew: people.movie_credits.crew
-      .map(knownForToDomain)
-      .filter(cast => cast.poster_path),
+    cast: removeDuplicates(
+      people.movie_credits.cast
+        .sort((a, b) => {
+          if (a.release_date === undefined) return 1;
+          if (b.release_date === undefined) return -1;
+          return (
+            new Date(b.release_date).getTime() -
+            new Date(a.release_date).getTime()
+          );
+        })
+        .map(knownForToDomain)
+        .filter(cast => cast.poster_path)
+        .slice(0, 10),
+    ),
+    crew: removeDuplicates(
+      people.movie_credits.crew
+        .sort((a, b) => {
+          if (a.release_date === undefined) return 1;
+          if (b.release_date === undefined) return -1;
+          return (
+            new Date(b.release_date).getTime() -
+            new Date(a.release_date).getTime()
+          );
+        })
+        .map(knownForToDomain)
+        .filter(cast => cast.poster_path)
+        .slice(0, 10),
+    ),
     id: people.movie_credits.id,
   },
   tv_credits: {
-    cast: people.tv_credits.cast
-      .map(knownForToDomain)
-      .filter(cast => cast.poster_path),
-    crew: people.tv_credits.crew
-      .map(knownForToDomain)
-      .filter(cast => cast.poster_path),
+    cast: removeDuplicates(
+      people.tv_credits.cast
+        .sort((a, b) => {
+          if (a.first_air_date === undefined) return 1;
+          if (b.first_air_date === undefined) return -1;
+          return (
+            new Date(b.first_air_date).getTime() -
+            new Date(a.first_air_date).getTime()
+          );
+        })
+        .map(knownForToDomain)
+        .filter(cast => cast.poster_path)
+        .slice(0, 10),
+    ),
+    crew: removeDuplicates(
+      people.tv_credits.crew
+        .sort((a, b) => {
+          if (a.first_air_date === undefined) return 1;
+          if (b.first_air_date === undefined) return -1;
+          return (
+            new Date(b.first_air_date).getTime() -
+            new Date(a.first_air_date).getTime()
+          );
+        })
+        .map(knownForToDomain)
+        .filter(cast => cast.poster_path)
+        .slice(0, 10),
+    ),
     id: people.tv_credits.id,
   },
 });

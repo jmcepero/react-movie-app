@@ -7,4 +7,5 @@ export interface Place {
   photoUrl: string;
   openingHours: string[];
   rating: number;
+  distance?: string;
 }

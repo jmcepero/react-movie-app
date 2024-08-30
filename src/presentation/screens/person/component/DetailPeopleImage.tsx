@@ -8,31 +8,17 @@ import {CrossFadeImages} from './CrossFadeImages';
 const {width, height} = Dimensions.get('window');
 
 interface ImageCarouselProps {
-  images: string[];
+  image: string;
   onBackClicked: () => void;
 }
 
 const DetailPeopleImage: React.FC<ImageCarouselProps> = ({
-  images,
+  image,
   onBackClicked,
 }) => {
-  if (images.length === 1) {
-    return (
-      <View style={styles.container}>
-        <Image source={{uri: images[0]}} style={detailImageStyle.image} />
-        <LinearGradient
-          style={detailImageStyle.gradient}
-          colors={['rgba(23, 24, 27, 0.65)', 'rgba(23, 24, 27, 1)']}
-          locations={[0.5, 0.9]}
-        />
-        <BackButton onClicked={onBackClicked} />
-      </View>
-    );
-  }
-
   return (
     <View style={styles.container}>
-      <CrossFadeImages images={images} interval={5000} />
+      <Image source={{uri: image}} style={detailImageStyle.image} />
       <LinearGradient
         style={detailImageStyle.gradient}
         colors={['rgba(23, 24, 27, 0.65)', 'rgba(23, 24, 27, 1)']}
@@ -46,7 +32,7 @@ const DetailPeopleImage: React.FC<ImageCarouselProps> = ({
 const styles = StyleSheet.create({
   container: {
     width: width,
-    height: height * 0.62,
+    height: height * 0.61,
     position: 'relative',
   },
   image: {

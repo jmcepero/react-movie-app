@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {BottomTabNavigation} from './BottomTabNavigation';
 import {MovieListingScreen} from '../screens/movies/MovieListingScreen';
@@ -9,6 +9,11 @@ import {DetailScreen} from '../screens/movies/DetailScreen';
 import {Platform} from 'react-native';
 import {SearchOption} from '../utils/Constants';
 import {PersonDetailScreen} from '../screens/person/PersonDetailScreen';
+import RegisterScreen from '../screens/auth/screens/RegisterScreen';
+import LoginScreen from '../screens/auth/screens/LoginScreen';
+import {MobXProviderContext} from 'mobx-react';
+import AuthStore from '../screens/auth/store/AuthStore';
+import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 
 export type RootStackParams = {
   BottomTabNavigation: undefined;
@@ -30,14 +35,19 @@ export type RootStackParams = {
   PersonDetailScreen: {
     personId: string;
   };
+  LoginScreen: undefined;
+  RegisterScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParams>();
 
-export const StackNavigation = () => {
+interface StackNavigationProps {
+  user: FirebaseAuthTypes.User | null | undefined;
+}
+
+export const StackNavigation = ({user}: StackNavigationProps) => {
   return (
     <Stack.Navigator
-      initialRouteName="BottomTabNavigation"
       screenOptions={{
         headerShown: false,
         cardStyle: {
@@ -48,19 +58,45 @@ export const StackNavigation = () => {
         },
         presentation: Platform.OS === 'android' ? 'transparentModal' : 'card',
       }}>
-      <Stack.Screen
-        name="BottomTabNavigation"
-        component={BottomTabNavigation}
-      />
-      <Stack.Screen name="DetailScreen" component={DetailScreen} />
-      <Stack.Screen name="MovieListingScreen" component={MovieListingScreen} />
-      <Stack.Screen
-        name="WatchProviderScreen"
-        component={WatchProviderScreen}
-      />
-      <Stack.Screen name="SearchScreen" component={SearchScreen} />
-      <Stack.Screen name="TVShowDetailScreen" component={TVShowDetailScreen} />
-      <Stack.Screen name="PersonDetailScreen" component={PersonDetailScreen} />
+      {user !== undefined && user === null ? (
+        <>
+          <Stack.Screen
+            name="LoginScreen"
+            component={LoginScreen}
+            options={{title: 'Login'}}
+          />
+          <Stack.Screen
+            name="RegisterScreen"
+            component={RegisterScreen}
+            options={{title: 'Register'}}
+          />
+        </>
+      ) : (
+        <>
+          <Stack.Screen
+            name="BottomTabNavigation"
+            component={BottomTabNavigation}
+          />
+          <Stack.Screen name="DetailScreen" component={DetailScreen} />
+          <Stack.Screen
+            name="MovieListingScreen"
+            component={MovieListingScreen}
+          />
+          <Stack.Screen
+            name="WatchProviderScreen"
+            component={WatchProviderScreen}
+          />
+          <Stack.Screen name="SearchScreen" component={SearchScreen} />
+          <Stack.Screen
+            name="TVShowDetailScreen"
+            component={TVShowDetailScreen}
+          />
+          <Stack.Screen
+            name="PersonDetailScreen"
+            component={PersonDetailScreen}
+          />
+        </>
+      )}
     </Stack.Navigator>
   );
 };

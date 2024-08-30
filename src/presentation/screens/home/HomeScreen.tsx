@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {View, ScrollView} from 'react-native';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -12,8 +12,13 @@ import {RefreshControl} from 'react-native-gesture-handler';
 import {useMovies} from '../../hooks/useMovies';
 import {styles} from './styles/HomeScreen.style';
 import {movieOption} from '../../utils/Constants';
+import {MobXProviderContext} from 'mobx-react';
+import AuthStore from '../auth/store/AuthStore';
 
 export const HomeScreen = () => {
+  const {authStore} = useContext(MobXProviderContext) as {
+    authStore: AuthStore;
+  };
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
   const {isLoading, nowPlaying, popular, topRated, genres, error, reloadData} =
     useMovies();
@@ -44,7 +49,10 @@ export const HomeScreen = () => {
         }>
         <View>
           {/* Toolbar Section */}
-          <CustomToolbar title="Movies" />
+          <CustomToolbar
+            title="Movies"
+            onUserIconClicked={() => authStore.signOut()}
+          />
 
           {/* Search Section */}
           <SearchBar

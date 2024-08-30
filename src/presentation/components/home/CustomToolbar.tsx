@@ -1,6 +1,7 @@
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Images} from '../../../../assets/images/Images.index';
+import {getFontFamily} from '../../utils/Fonts';
 
 interface CustomToolbarProps {
   title: string;
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   title: {
-    fontFamily: 'Archivo-Regular',
+    fontFamily: getFontFamily('normal'),
     fontSize: 36,
     color: 'white',
   },

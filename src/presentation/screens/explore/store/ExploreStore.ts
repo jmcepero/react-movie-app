@@ -95,7 +95,17 @@ class ExploreStore {
         this.location.longitude,
       );
       runInAction(() => {
-        this.places = res;
+        this.places = res.map(item => {
+          const distance = this.calculateDistance(
+            this.location.latitude,
+            this.location.longitude,
+            item.latitude,
+            item.longitude,
+          );
+          const humanDistance = this.formatDistance(distance);
+          item.distance = humanDistance;
+          return item;
+        });
       });
     } catch (error) {
       const {message} = errorHandler(error);
@@ -104,6 +114,38 @@ class ExploreStore {
       runInAction(() => {
         this.isLoading = false;
       });
+    }
+  }
+
+  calculateDistance(
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number,
+  ): number {
+    const toRadians = (degrees: number): number => degrees * (Math.PI / 180);
+
+    const earthRadiusKm = 6371; // Radio de la Tierra en kilómetros
+    const deltaLat = toRadians(lat2 - lat1);
+    const deltaLon = toRadians(lon2 - lon1);
+    const a =
+      Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+      Math.cos(toRadians(lat1)) *
+        Math.cos(toRadians(lat2)) *
+        Math.sin(deltaLon / 2) *
+        Math.sin(deltaLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distanceKm = earthRadiusKm * c;
+
+    return distanceKm;
+  }
+
+  formatDistance(distanceKm: number): string {
+    if (distanceKm < 1) {
+      const distanceMeters = distanceKm * 1000;
+      return `${distanceMeters.toFixed(2)}ms.`;
+    } else {
+      return `${distanceKm.toFixed(2)}kms.`;
     }
   }
 }

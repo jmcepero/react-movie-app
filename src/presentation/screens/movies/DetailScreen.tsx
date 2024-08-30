@@ -11,7 +11,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {RootStackParams} from '../../navigation/StackNavigation';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import _Icon from 'react-native-vector-icons/Ionicons';
 import {ScrollView} from 'react-native-gesture-handler';
 import {LoadingView} from '../../components/base/LoadingView';
 import {CastFeed} from '../../components/detail/CastFeed';
@@ -27,6 +27,7 @@ const width = Dimensions.get('window').width;
 interface Props extends StackScreenProps<RootStackParams, 'DetailScreen'> {}
 
 export const DetailScreen = ({route}: Props) => {
+  const Icon = _Icon as React.ElementType;
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
   const movie = route.params;
   const {isLoading, detail, error} = useMovieDetail(movie.movieId);
@@ -104,7 +105,15 @@ export const DetailScreen = ({route}: Props) => {
           {/* Overview Section */}
           <Text style={styles.overviewText}>{detail?.overview}</Text>
           {/* Cast Section */}
-          <CastFeed casts={detail?.credits?.cast} width={100} />
+          <CastFeed
+            casts={detail?.credits?.cast}
+            width={100}
+            onClick={cast =>
+              navigation.navigate('PersonDetailScreen', {
+                personId: cast.id,
+              })
+            }
+          />
           {/* Trailer Section */}
           <TrailerCard trailerUri={detail?.trailer || ''} />
           {/* Comment Section */}

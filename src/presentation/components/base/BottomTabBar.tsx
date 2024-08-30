@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {View, Pressable, Dimensions, StyleSheet} from 'react-native';
+import {primaryRed} from '../../utils/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const {width} = Dimensions.get('window');
@@ -42,7 +43,7 @@ const BottomTabBar = ({state, navigation}: any) => {
                     name={icons[index]}
                     size={24}
                     style={{
-                      color: isFocused ? '#988396' : 'rgba(152,131,150,0.3)',
+                      color: isFocused ? primaryRed : 'rgba(152,131,150,0.3)',
                     }}
                   />
                 </View>

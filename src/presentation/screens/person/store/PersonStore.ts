@@ -9,8 +9,7 @@ class PersonStore {
   isLoading: boolean = false;
   person: PeopleDetail | undefined;
   error: string = '';
-  movieImages: string[] = [];
-  tvImages: string[] = [];
+  portraitImage: string = '';
 
   constructor() {
     makeAutoObservable(this);
@@ -27,17 +26,19 @@ class PersonStore {
     try {
       this.person = await getPeopleDetailUseCase.execute(value);
 
-      this.movieImages = getCarouselImages(
+      this.portraitImage = getCarouselImages(
         this.person.known_for_department === 'Acting'
           ? this.person.movie_credits.cast
           : this.person.movie_credits.crew,
       );
 
-      this.tvImages = getCarouselImages(
-        this.person.known_for_department === 'Acting'
-          ? this.person.tv_credits.cast
-          : this.person.tv_credits.crew,
-      );
+      if (this.portraitImage == '') {
+        this.portraitImage = getCarouselImages(
+          this.person.known_for_department === 'Acting'
+            ? this.person.tv_credits.cast
+            : this.person.tv_credits.crew,
+        );
+      }
 
       this.error = '';
     } catch (error) {
@@ -51,12 +52,14 @@ class PersonStore {
   }
 }
 
-function getCarouselImages(list: Cast[]): string[] {
-  return list
-    .filter(cast => cast.poster_path != null)
-    .map(cast => cast.poster_path)
-    .map(poster => `https://image.tmdb.org/t/p/original${poster}`)
-    .slice(0, 10);
+function getCarouselImages(list: Cast[]): string {
+  console.log(
+    '=====> ',
+    list.map(cast => cast.vote_average),
+  );
+  return list.map(
+    cast => `https://image.tmdb.org/t/p/original${cast.poster_path}`,
+  )[0];
 }
 
 export default PersonStore;

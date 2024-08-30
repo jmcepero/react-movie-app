@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {View} from 'react-native';
 import {
   DefaultTheme,
@@ -8,8 +8,10 @@ import {
 import {StackNavigation} from './src/presentation/navigation/StackNavigation';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import {MyStatusBar} from './src/presentation/components/base/MyStatusBar';
-import {Provider} from 'mobx-react';
+import {MobXProviderContext, observer, Provider} from 'mobx-react';
 import rootStore from './src/presentation/utils/RootStores';
+import SplashScreen from 'react-native-splash-screen';
+import AuthStore from './src/presentation/screens/auth/store/AuthStore';
 
 const navTheme: Theme = {
   ...DefaultTheme,
@@ -21,6 +23,7 @@ const navTheme: Theme = {
 
 export const App = () => {
   SystemNavigationBar.setNavigationColor('#0d0d0d');
+
   return (
     <Provider {...rootStore}>
       <AppContent />
@@ -28,7 +31,17 @@ export const App = () => {
   );
 };
 
-const AppContent = () => {
+const AppContent = observer(() => {
+  const {authStore} = useContext(MobXProviderContext) as {
+    authStore: AuthStore;
+  };
+
+  useEffect(() => {
+    if (authStore.loading !== undefined && !authStore.loading) {
+      SplashScreen.hide();
+    }
+  }, [authStore.loading]);
+
   return (
     <>
       <MyStatusBar backgroundColor={'rgba(23, 24, 27, 1)'} />
@@ -37,9 +50,9 @@ const AppContent = () => {
           flex: 1,
         }}>
         <NavigationContainer theme={navTheme}>
-          <StackNavigation />
+          <StackNavigation user={authStore.user} />
         </NavigationContainer>
       </View>
     </>
   );
-};
+});

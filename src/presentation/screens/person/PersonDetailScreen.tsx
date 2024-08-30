@@ -47,29 +47,39 @@ export const PersonDetailScreen = observer(({route}: Props) => {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollviewContainer}>
         <View>
-          {/* Detail image */}
-          <DetailPeopleImage
-            images={personStore.tvImages}
-            onBackClicked={() => navigation.goBack()}
-          />
-
-          <View style={customStyles.imageContainer}>
-            <FadeInImage
-              uri={`https://image.tmdb.org/t/p/original${personStore.person.profile_path}`}
-              style={customStyles.imageProfile}
+          <View style={{height: height * 0.61}}>
+            {/* Detail image */}
+            <DetailPeopleImage
+              image={personStore.portraitImage}
+              onBackClicked={() => navigation.goBack()}
             />
-          </View>
 
-          <View style={customStyles.birthdayContainer}>
-            <Text style={customStyles.birthdayTitle}>Birthday</Text>
-            <Text style={customStyles.birthdaySubtitle}>
-              {formatDateAndAge(personStore.person.birthday)}
-            </Text>
-            <View style={customStyles.space4} />
-            <Text style={customStyles.birthdayTitle}>Place of Birth</Text>
-            <Text style={customStyles.birthdaySubtitle}>
-              {personStore.person.place_of_birth}
-            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                position: 'absolute',
+                marginHorizontal: 12,
+                bottom: 0,
+              }}>
+              <View style={customStyles.imageContainer}>
+                <FadeInImage
+                  uri={`https://image.tmdb.org/t/p/original${personStore.person.profile_path}`}
+                  style={customStyles.imageProfile}
+                />
+              </View>
+
+              <View style={customStyles.birthdayContainer}>
+                <Text style={customStyles.birthdayTitle}>Birthday</Text>
+                <Text style={customStyles.birthdaySubtitle}>
+                  {formatDateAndAge(personStore.person.birthday)}
+                </Text>
+                <View style={customStyles.space4} />
+                <Text style={customStyles.birthdayTitle}>Place of Birth</Text>
+                <Text style={customStyles.birthdaySubtitle}>
+                  {personStore.person.place_of_birth}
+                </Text>
+              </View>
+            </View>
           </View>
 
           {/* Title Section */}
@@ -143,9 +153,6 @@ export const customStyles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 1,
-    position: 'absolute',
-    top: height * 0.42,
-    start: 16,
   },
   title: {
     fontFamily: 'Archivo-Medium',
@@ -154,7 +161,7 @@ export const customStyles = StyleSheet.create({
   },
   titleContainer: {
     paddingHorizontal: 16,
-    paddingTop: 36,
+    marginTop: 16,
   },
   subtitle: {
     fontFamily: 'Archivo-Regular',
@@ -186,9 +193,10 @@ export const customStyles = StyleSheet.create({
     color: '#988396',
   },
   birthdayContainer: {
-    position: 'absolute',
-    top: height * 0.57,
-    start: 146,
+    flex: 1,
+    marginStart: 12,
+    marginEnd: 12,
+    justifyContent: 'flex-end',
   },
   space4: {
     height: 6,

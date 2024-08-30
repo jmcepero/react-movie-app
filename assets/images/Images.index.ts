@@ -9,4 +9,5 @@ export const Images = {
   pin: require('./pin.png'),
   userPin: require('./user_pin.png'),
   cinema: require('./cinema_placeholder.jpg'),
+  google: require('./google.png'),
 };

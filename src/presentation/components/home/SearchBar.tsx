@@ -3,6 +3,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Skeleton from 'react-native-reanimated-skeleton';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {skeletonDarkColor, skeletonLightColor} from '../../utils/Colors';
+import {getFontFamily} from '../../utils/Fonts';
 
 interface Props {
   onClick: () => void;
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     color: '#988396',
   },
   text: {
-    fontFamily: 'Archivo-Regular',
+    fontFamily: getFontFamily('normal'),
     fontSize: 14,
     color: '#988396',
     marginHorizontal: 8,
