@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
 import {StyleSheet, View} from 'react-native';
@@ -6,25 +6,30 @@ import {FlatList} from 'react-native-gesture-handler';
 import {Toolbar} from '../../components/base/Toolbar';
 import {RootStackParams} from '../../navigation/StackNavigation';
 import {Movie} from '../../../domain/movie/entities/Movies';
-import {useMovieListing} from '../../hooks/useMovieListing';
+import MovieListingStore from './store/MovieListingStore';
 import ItemRenderer from '../../components/listing/ItemRenderer';
 import VerticalFeedSkeleton from '../../components/base/skeleton/VerticalFeedSkeleton';
 import {ListFooterComponent} from '../search/components/ListFooterComponent';
+import {MobXProviderContext, observer} from 'mobx-react';
 
 export interface MovieListingProps
   extends StackScreenProps<RootStackParams, 'MovieListingScreen'> {}
 
-export const MovieListingScreen = ({route}: MovieListingProps) => {
-  const {category, title} = route.params;
-
-  const {result, isLoading, pageLoading, onReachToEnd, error} =
-    useMovieListing(category);
+const MovieListingScreen = ({route}: MovieListingProps) => {
+  const {movieListingStore} = useContext(MobXProviderContext) as {
+    movieListingStore: MovieListingStore;
+  };
+  const {title} = route.params;
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+
+  useEffect(() => {
+    movieListingStore.onScreenLoaded(route.params);
+  }, []);
 
   return (
     <View style={styles.container}>
       <Toolbar title={title} />
-      {!isLoading ? (
+      {!movieListingStore.isLoading ? (
         <FlatList
           contentContainerStyle={{
             paddingHorizontal: 16,
@@ -32,22 +37,25 @@ export const MovieListingScreen = ({route}: MovieListingProps) => {
           columnWrapperStyle={{
             justifyContent: 'space-between',
           }}
-          data={result as Movie[]}
+          data={movieListingStore.result as Movie[]}
           showsVerticalScrollIndicator={false}
           renderItem={({index}) => (
-            <ItemRenderer item={result[index]} navigation={navigation} />
+            <ItemRenderer
+              item={movieListingStore.result[index]}
+              navigation={navigation}
+            />
           )}
           numColumns={2}
           keyExtractor={(item, _) => item.title}
           ListFooterComponent={
             <ListFooterComponent
-              isLoading={pageLoading}
-              hasError={error.length > 0}
+              isLoading={movieListingStore.pageLoading}
+              hasError={movieListingStore.error.length > 0}
             />
           }
           onEndReachedThreshold={0.5}
           initialNumToRender={10}
-          onEndReached={() => onReachToEnd()}
+          onEndReached={() => movieListingStore.onReachToEnd()}
         />
       ) : (
         <VerticalFeedSkeleton isLoading={true} />
@@ -55,6 +63,8 @@ export const MovieListingScreen = ({route}: MovieListingProps) => {
     </View>
   );
 };
+
+export default observer(MovieListingScreen);
 
 const styles = StyleSheet.create({
   container: {

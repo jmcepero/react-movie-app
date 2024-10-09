@@ -9,28 +9,27 @@ import {HorizontalFeed} from '../../components/HorizontalFeed';
 import {SearchBar} from '../../components/home/SearchBar';
 import {Snackbar} from '@react-native-material/core';
 import {RefreshControl} from 'react-native-gesture-handler';
-import {useMovies} from '../../hooks/useMovies';
+import MovieStore from './store/MovieStore';
 import {styles} from './styles/HomeScreen.style';
 import {movieOption} from '../../utils/Constants';
-import {MobXProviderContext} from 'mobx-react';
+import {MobXProviderContext, observer} from 'mobx-react';
 import AuthStore from '../auth/store/AuthStore';
 
-export const HomeScreen = () => {
-  const {authStore} = useContext(MobXProviderContext) as {
+export const HomeScreen = observer(() => {
+  const {authStore, movieStore} = useContext(MobXProviderContext) as {
     authStore: AuthStore;
+    movieStore: MovieStore;
   };
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
-  const {isLoading, nowPlaying, popular, topRated, genres, error, reloadData} =
-    useMovies();
 
   const refreshData = async () => {
-    reloadData();
+    movieStore.reloadData(authStore.user?.uid);
   };
 
   useEffect(() => {
-    refreshData();
+    if (authStore.user) refreshData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [authStore.user, movieStore]);
 
   return (
     <View style={{flex: 1}}>
@@ -57,13 +56,13 @@ export const HomeScreen = () => {
           {/* Search Section */}
           <SearchBar
             onClick={() => navigation.navigate('SearchScreen', movieOption)}
-            isLoading={isLoading}
+            isLoading={movieStore.isLoading}
           />
 
           {/* Main Corousel */}
           <MainCarousel
-            movies={nowPlaying}
-            isLoading={isLoading}
+            movies={movieStore.nowPlaying}
+            isLoading={movieStore.isLoading}
             onMovieClicked={movie =>
               navigation.navigate('DetailScreen', {movieId: movie.id})
             }
@@ -72,26 +71,48 @@ export const HomeScreen = () => {
           {/* Popular */}
           <HorizontalFeed
             title="Popular"
-            movies={popular}
+            movies={movieStore.popular}
             onMovieClicked={movie =>
               navigation.navigate('DetailScreen', {movieId: movie.id})
             }
             onSeeAllClicked={() =>
               navigation.navigate('MovieListingScreen', {
-                category: 'popular',
+                params: {type: 'byCategory', value: 'popular'},
                 title: 'Popular',
               })
             }
-            isLoading={isLoading}
+            isLoading={movieStore.isLoading}
           />
 
           {/* Generes */}
-          <GenresFeed genres={genres} isLoading={isLoading} />
+          <GenresFeed
+            genres={movieStore.genres}
+            isLoading={movieStore.isLoading}
+            onClick={value => {
+              navigation.navigate('MovieListingScreen', {
+                params: {type: 'byGenre', value: value.id.toString()},
+                title: value.name,
+              });
+            }}
+            onSeeAllClicked={() => {
+              navigation.navigate('GenresScreen');
+            }}
+          />
+
+          <HorizontalFeed
+            title="For you"
+            movies={movieStore.byInterest}
+            onMovieClicked={movie =>
+              navigation.navigate('DetailScreen', {movieId: movie.id})
+            }
+            onSeeAllClicked={() => {}}
+            isLoading={movieStore.isLoading}
+          />
 
           {/* Top Rated */}
           <HorizontalFeed
             title="Top Rated"
-            movies={topRated}
+            movies={movieStore.topRated}
             onMovieClicked={movie =>
               navigation.navigate('DetailScreen', {movieId: movie.id})
             }
@@ -101,12 +122,14 @@ export const HomeScreen = () => {
                 title: 'Top Rated',
               })
             }
-            isLoading={isLoading}
+            isLoading={movieStore.isLoading}
           />
         </View>
       </ScrollView>
 
-      {error && <Snackbar message={error} style={styles.toast} />}
+      {movieStore.error && (
+        <Snackbar message={movieStore.error} style={styles.toast} />
+      )}
     </View>
   );
-};
+});

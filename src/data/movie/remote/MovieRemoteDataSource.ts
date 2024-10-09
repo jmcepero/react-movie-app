@@ -8,6 +8,10 @@ export interface MovieRemoteDataSource {
   ): Promise<MoviesResponse>;
   findMovies(term: string, page: number): Promise<MoviesResponse>;
   getMovieDetail(movieId: string): Promise<MovieDetailResponse>;
+  discoverMoviesByGenres(
+    genres: string,
+    page?: number,
+  ): Promise<MoviesResponse>;
 }
 
 export const movieRemoteDataSource: MovieRemoteDataSource = {
@@ -33,6 +37,19 @@ export const movieRemoteDataSource: MovieRemoteDataSource = {
     const resp = await movieDB.get<MovieDetailResponse>(
       `movie/${movieId}?append_to_response=videos,reviews,credits`,
     );
+    return resp.data;
+  },
+  async discoverMoviesByGenres(
+    genres: string,
+    page?: number,
+  ): Promise<MoviesResponse> {
+    let url = `discover/movie`;
+    const resp = await movieDB.get<MoviesResponse>(url, {
+      params: {
+        with_genres: genres,
+        ...(page && {page}),
+      },
+    });
     return resp.data;
   },
 };

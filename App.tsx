@@ -12,6 +12,8 @@ import {MobXProviderContext, observer, Provider} from 'mobx-react';
 import rootStore from './src/presentation/utils/RootStores';
 import SplashScreen from 'react-native-splash-screen';
 import AuthStore from './src/presentation/screens/auth/store/AuthStore';
+import Toast from 'react-native-toast-message';
+import {toastConfig} from './src/presentation/utils/ToastConfig';
 
 const navTheme: Theme = {
   ...DefaultTheme,
@@ -37,7 +39,11 @@ const AppContent = observer(() => {
   };
 
   useEffect(() => {
-    if (authStore.loading !== undefined && !authStore.loading) {
+    if (
+      authStore.loading !== undefined &&
+      !authStore.loading &&
+      authStore.isOnBoardingComplete !== undefined
+    ) {
       SplashScreen.hide();
     }
   }, [authStore.loading]);
@@ -50,8 +56,12 @@ const AppContent = observer(() => {
           flex: 1,
         }}>
         <NavigationContainer theme={navTheme}>
-          <StackNavigation user={authStore.user} />
+          <StackNavigation
+            user={authStore.user}
+            onBoardingComplete={authStore.isOnBoardingComplete}
+          />
         </NavigationContainer>
+        <Toast config={toastConfig} />
       </View>
     </>
   );

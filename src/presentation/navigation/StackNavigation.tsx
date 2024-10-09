@@ -1,7 +1,7 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {BottomTabNavigation} from './BottomTabNavigation';
-import {MovieListingScreen} from '../screens/movies/MovieListingScreen';
+import MovieListingScreen from '../screens/movies/MovieListingScreen';
 import {SearchScreen} from '../screens/search/SearchScreen';
 import {WatchProviderScreen} from '../screens/warch_provider/WatchProviderScreen';
 import {TVShowDetailScreen} from '../screens/tv_show/TVShowDetailScreen';
@@ -11,19 +11,25 @@ import {SearchOption} from '../utils/Constants';
 import {PersonDetailScreen} from '../screens/person/PersonDetailScreen';
 import RegisterScreen from '../screens/auth/screens/RegisterScreen';
 import LoginScreen from '../screens/auth/screens/LoginScreen';
-import {MobXProviderContext} from 'mobx-react';
-import AuthStore from '../screens/auth/store/AuthStore';
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import SetYourNameScreen from '../screens/onboading/SetYourNameScreen';
+import SetGnresPreferences from '../screens/onboading/SetGnresPreferences';
+import GenresScreen from '../screens/genres/GenresScreen';
+
+export interface MovieListingParams {
+  title: string;
+  params: {
+    type: 'byGenre' | 'byCategory';
+    value: string;
+  };
+}
 
 export type RootStackParams = {
   BottomTabNavigation: undefined;
   DetailScreen: {
     movieId: string;
   };
-  MovieListingScreen: {
-    category: 'popular' | 'topRated';
-    title: 'Popular' | 'Top Rated';
-  };
+  MovieListingScreen: MovieListingParams;
   SearchScreen: SearchOption;
   WatchProviderScreen: {
     itemId: string;
@@ -37,15 +43,26 @@ export type RootStackParams = {
   };
   LoginScreen: undefined;
   RegisterScreen: undefined;
+  SetYourNameScreen: undefined;
+  SetGnresPreferences: undefined;
+  GenresScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParams>();
 
 interface StackNavigationProps {
   user: FirebaseAuthTypes.User | null | undefined;
+  onBoardingComplete: boolean | null | undefined;
 }
 
-export const StackNavigation = ({user}: StackNavigationProps) => {
+export const StackNavigation = ({
+  user,
+  onBoardingComplete,
+}: StackNavigationProps) => {
+  if (user === undefined && onBoardingComplete === undefined) {
+    return null;
+  }
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -71,29 +88,62 @@ export const StackNavigation = ({user}: StackNavigationProps) => {
             options={{title: 'Register'}}
           />
         </>
+      ) : onBoardingComplete !== undefined && !onBoardingComplete ? (
+        <>
+          {!user?.displayName && (
+            <Stack.Screen
+              name="SetYourNameScreen"
+              component={SetYourNameScreen}
+              options={{title: 'SetYourNameScreen'}}
+            />
+          )}
+          <Stack.Screen
+            name="SetGnresPreferences"
+            component={SetGnresPreferences}
+            options={{title: 'SetGnresPreferences'}}
+          />
+        </>
       ) : (
         <>
           <Stack.Screen
             name="BottomTabNavigation"
             component={BottomTabNavigation}
+            options={{title: 'BottomTabNavigation'}}
           />
-          <Stack.Screen name="DetailScreen" component={DetailScreen} />
+          <Stack.Screen
+            name="DetailScreen"
+            component={DetailScreen}
+            options={{title: 'DetailScreen'}}
+          />
           <Stack.Screen
             name="MovieListingScreen"
             component={MovieListingScreen}
+            options={{title: 'MovieListingScreen'}}
           />
           <Stack.Screen
             name="WatchProviderScreen"
             component={WatchProviderScreen}
+            options={{title: 'WatchProviderScreen'}}
           />
-          <Stack.Screen name="SearchScreen" component={SearchScreen} />
+          <Stack.Screen
+            name="SearchScreen"
+            component={SearchScreen}
+            options={{title: 'SearchScreen'}}
+          />
           <Stack.Screen
             name="TVShowDetailScreen"
             component={TVShowDetailScreen}
+            options={{title: 'TVShowDetailScreen'}}
           />
           <Stack.Screen
             name="PersonDetailScreen"
             component={PersonDetailScreen}
+            options={{title: 'PersonDetailScreen'}}
+          />
+          <Stack.Screen
+            name="GenresScreen"
+            component={GenresScreen}
+            options={{title: 'Genres'}}
           />
         </>
       )}

@@ -8,7 +8,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import React from 'react';
-import {primaryRed} from '../../utils/Colors';
+import {primaryRed, secondaryButtonColor} from '../../utils/Colors';
 import {getFontFamily} from '../../utils/Fonts';
 import SpinnerLottie from './SpinnerLottie';
 import {Image} from 'react-native';
@@ -16,9 +16,11 @@ import {Image} from 'react-native';
 interface RNMovieButtonProps {
   onClick: () => void;
   label: string;
-  isLoading: boolean | undefined;
+  isLoading?: boolean;
   leftIcon?: ImageSourcePropType | undefined;
   styles?: StyleProp<ViewStyle>;
+  disabled?: boolean;
+  secondary?: boolean;
 }
 
 export default function RNMovieButton({
@@ -27,12 +29,20 @@ export default function RNMovieButton({
   isLoading,
   leftIcon,
   styles,
+  disabled,
+  secondary,
 }: RNMovieButtonProps) {
   return (
     <TouchableOpacity
       activeOpacity={0.9}
-      style={[localStyles.button, styles]}
-      onPress={() => onClick()}>
+      style={[
+        localStyles.button,
+        styles,
+        disabled ? localStyles.buttonDisable : null,
+        secondary ? localStyles.buttonSecondary : null,
+      ]}
+      onPress={() => onClick()}
+      disabled={disabled}>
       {isLoading !== undefined && isLoading ? (
         <SpinnerLottie />
       ) : (
@@ -51,7 +61,6 @@ const localStyles = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: 12,
     backgroundColor: primaryRed,
-    marginHorizontal: 16,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -79,5 +88,11 @@ const localStyles = StyleSheet.create({
   icon: {
     width: 22,
     height: 22,
+  },
+  buttonDisable: {
+    backgroundColor: 'gray',
+  },
+  buttonSecondary: {
+    backgroundColor: secondaryButtonColor,
   },
 });

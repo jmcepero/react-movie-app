@@ -1,21 +1,34 @@
-import React from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {CustomGenre} from '../../../data/genre/local/CustomGenres';
 import {GenreCard} from './GenreCard';
 import Skeleton from 'react-native-reanimated-skeleton';
-import {skeletonDarkColor, skeletonLightColor} from '../../utils/Colors';
+import {
+  primaryRed,
+  skeletonDarkColor,
+  skeletonLightColor,
+} from '../../utils/Colors';
 
 interface Props {
   genres: CustomGenre[];
   isLoading: boolean;
+  onClick?: (value: CustomGenre) => void;
+  onSeeAllClicked: () => void;
 }
 
-export const GenresFeed = ({genres, isLoading}: Props) => {
+export const GenresFeed = ({
+  genres,
+  isLoading,
+  onClick,
+  onSeeAllClicked,
+}: Props) => {
   return !isLoading ? (
     <View>
       <View style={styles.headerContainer}>
         <Text style={styles.headerTitle}>Genres</Text>
-        <Text style={styles.button}>See all</Text>
+        <TouchableOpacity onPress={onSeeAllClicked}>
+          <Text style={styles.button}>See all</Text>
+        </TouchableOpacity>
       </View>
 
       <FlatList
@@ -29,7 +42,7 @@ export const GenresFeed = ({genres, isLoading}: Props) => {
               paddingVertical: 8,
               paddingHorizontal: 8,
             }}>
-            <GenreCard genere={genres[index]} />
+            <GenreCard genre={genres[index]} onClick={onClick} />
           </View>
         )}
         keyExtractor={item => item.id.toString()}
@@ -111,7 +124,7 @@ const styles = StyleSheet.create({
   button: {
     fontFamily: 'Archivo-Regular',
     fontSize: 16,
-    color: '#553081',
+    color: primaryRed,
     alignSelf: 'center',
   },
   movieTitle: {

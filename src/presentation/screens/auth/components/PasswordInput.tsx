@@ -1,22 +1,35 @@
 import React, {useCallback, useState} from 'react';
+import {FieldError} from 'react-hook-form';
 import {
+  NativeSyntheticEvent,
   StyleProp,
   StyleSheet,
   TextInput,
+  TextInputFocusEventData,
   TouchableOpacity,
   View,
 } from 'react-native';
-import _Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {ViewStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
+import {primaryRed} from '../../../utils/Colors';
 
 interface Props {
   textValue: string;
   onChange: (value: string) => void;
   style?: StyleProp<ViewStyle>;
+  onBlur?:
+    | ((e: NativeSyntheticEvent<TextInputFocusEventData>) => void)
+    | undefined;
+  passwordError?: FieldError | undefined;
 }
 
-const PasswordInput = ({textValue, onChange, style}: Props) => {
-  const Icon = _Icon as React.ElementType;
+const PasswordInput = ({
+  textValue,
+  onChange,
+  onBlur,
+  style,
+  passwordError,
+}: Props) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = useCallback(() => {
@@ -28,7 +41,12 @@ const PasswordInput = ({textValue, onChange, style}: Props) => {
   }, []);
 
   return (
-    <View style={[style, styles.textContainer]}>
+    <View
+      style={[
+        style,
+        styles.textContainer,
+        passwordError ? styles.textInputError : null,
+      ]}>
       <Icon
         style={styles.icon}
         name="lock-closed"
@@ -37,6 +55,7 @@ const PasswordInput = ({textValue, onChange, style}: Props) => {
       />
       <TextInput
         value={textValue}
+        onBlur={onBlur}
         onChangeText={onChangeText}
         placeholder="Password"
         placeholderTextColor={'#988396'}
@@ -84,6 +103,10 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginLeft: 16,
+  },
+  textInputError: {
+    borderWidth: 0.8,
+    borderColor: primaryRed,
   },
   iconRight: {
     marginRight: 16,

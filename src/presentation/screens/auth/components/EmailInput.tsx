@@ -1,26 +1,43 @@
 import React, {useCallback} from 'react';
+import {FieldError} from 'react-hook-form';
+import {NativeSyntheticEvent, TextInputFocusEventData} from 'react-native';
 import {StyleProp, StyleSheet, TextInput, View} from 'react-native';
-import _Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {ViewStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
+import {onyxColor, primaryRed} from '../../../utils/Colors';
 
 interface Props {
   textValue: string;
   onChange: (value: string) => void;
+  onBlur?:
+    | ((e: NativeSyntheticEvent<TextInputFocusEventData>) => void)
+    | undefined;
   style?: StyleProp<ViewStyle>;
+  emailError?: FieldError | undefined;
 }
 
-const EmailInput = ({textValue, onChange, style}: Props) => {
-  const Icon = _Icon as React.ElementType;
-
+const EmailInput = ({
+  textValue,
+  onChange,
+  onBlur,
+  style,
+  emailError,
+}: Props) => {
   const onChangeText = useCallback((value: string) => {
     onChange(value);
   }, []);
 
   return (
-    <View style={[style, styles.textContainer]}>
+    <View
+      style={[
+        style,
+        styles.textContainer,
+        emailError ? styles.textInputError : null,
+      ]}>
       <Icon style={styles.icon} name="mail" size={18} color={'#988396'} />
       <TextInput
         value={textValue}
+        onBlur={onBlur}
         onChangeText={onChangeText}
         placeholder="Email"
         placeholderTextColor={'#988396'}
@@ -35,7 +52,7 @@ export default React.memo(EmailInput);
 
 const styles = StyleSheet.create({
   textContainer: {
-    backgroundColor: '#392c3e',
+    backgroundColor: onyxColor,
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 12,
@@ -55,6 +72,10 @@ const styles = StyleSheet.create({
     flex: 1,
     color: 'white',
     fontFamily: 'Archivo-Medium',
+  },
+  textInputError: {
+    borderWidth: 0.8,
+    borderColor: primaryRed,
   },
   icon: {
     marginLeft: 16,

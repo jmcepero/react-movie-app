@@ -3,7 +3,11 @@ import {Images} from '../../../../assets/images/Images.index';
 export interface CustomGenre {
   id: number;
   name: string;
-  image: any;
+  image?: string;
+}
+
+export interface GenresResponse {
+  genres: CustomGenre[];
 }
 
 export const genres: CustomGenre[] = [

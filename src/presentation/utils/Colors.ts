@@ -5,5 +5,7 @@ export const darkColor = 'rgba(23,24,27,1)';
 export const primaryTextColor = 'rgba(251,246,248,1)';
 export const secondaryTextColor = '#988396';
 export const primaryBackgroundColor = 'rgba(23, 24, 27, 1)';
-
+export const onyxColor = '#392c3e';
 export const primaryRed = 'rgba(174,17,36,1)';
+export const secondaryButtonColor = 'rgba(41,42,48,1)';
+export const secondaryBackgroundColor = 'rgba(24,25,31,1)';

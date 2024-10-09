@@ -4,6 +4,7 @@ import {Movie} from '../../domain/movie/entities/Movies';
 import MovieItem from './listing/MovieItem';
 import {fullWidth} from '../utils/Dimen';
 import HorizontalFeedSkeleton from './base/skeleton/HorizontalFeedSkeleton';
+import {primaryRed} from '../utils/Colors';
 
 interface Props {
   title?: string;
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
   button: {
     fontFamily: 'Archivo-Regular',
     fontSize: 16,
-    color: '#553081',
+    color: primaryRed,
     alignSelf: 'center',
   },
   movieTitle: {

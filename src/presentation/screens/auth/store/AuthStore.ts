@@ -1,9 +1,10 @@
-import {action, makeAutoObservable, runInAction} from 'mobx';
+import {makeAutoObservable, runInAction} from 'mobx';
 import auth, {
   FirebaseAuthTypes,
   updateProfile,
 } from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {isUserCompleteOnBoardingUseCase} from '../../../../domain/preferences/usecases/IsUserCompleteOnBoardingUseCase';
 
 GoogleSignin.configure({
   webClientId:
@@ -11,11 +12,16 @@ GoogleSignin.configure({
 });
 
 class AuthStore {
-  email: string = '';
-  password: string = '';
+  loginEmail: string = '';
+  loginPassword: string = '';
+  registerEmail: string = '';
+  registerPassword: string = '';
   name: string = '';
   user: FirebaseAuthTypes.User | null | undefined = undefined;
   loading: boolean | undefined = undefined;
+  googleLoading: boolean | undefined = undefined;
+  error: string | null = null;
+  isOnBoardingComplete: boolean | undefined = undefined;
 
   constructor() {
     makeAutoObservable(this);
@@ -31,24 +37,43 @@ class AuthStore {
   }
 
   onEmailChange(value: string) {
-    this.email = value;
+    this.loginEmail = value;
   }
 
   onPasswordChange(value: string) {
-    this.password = value;
+    this.loginPassword = value;
+  }
+
+  onRegisterEmailChange(value: string) {
+    this.registerEmail = value;
+  }
+
+  onRegisterPasswordChange(value: string) {
+    this.registerPassword = value;
   }
 
   onNameChange(value: string) {
     this.name = value;
   }
 
+  setGoogleLoading(loading: boolean) {
+    this.googleLoading = loading;
+  }
+
+  setIsOnBoardingComplete(value: boolean | undefined) {
+    this.isOnBoardingComplete = value;
+  }
+
   async signInWithEmail() {
     try {
       this.setLoading(true);
-      await auth().signInWithEmailAndPassword(this.email, this.password);
+      await auth().signInWithEmailAndPassword(
+        this.loginEmail,
+        this.loginPassword,
+      );
     } catch (error) {
       runInAction(() => {
-        console.error(error);
+        this.error = 'Incorrect username or password 😔';
         this.setLoading(false);
       });
     }
@@ -57,7 +82,10 @@ class AuthStore {
   async registerWithEmail() {
     try {
       this.setLoading(true);
-      await auth().createUserWithEmailAndPassword(this.email, this.password);
+      await auth().createUserWithEmailAndPassword(
+        this.registerEmail,
+        this.registerPassword,
+      );
     } catch (error) {
       runInAction(() => {
         console.error(error);
@@ -68,14 +96,14 @@ class AuthStore {
 
   async signInWithGoogle() {
     try {
-      this.setLoading(true);
+      this.setGoogleLoading(true);
       const {idToken} = await GoogleSignin.signIn();
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       await auth().signInWithCredential(googleCredential);
     } catch (error) {
       runInAction(() => {
         console.error(error);
-        this.setLoading(false);
+        this.setGoogleLoading(false);
       });
     }
   }
@@ -84,13 +112,18 @@ class AuthStore {
     auth().onAuthStateChanged(async user => {
       if (user) {
         const isUserVerify = await this.verifyAccount(user);
+        const onBoardingComplete = await this.checkIfOnBoardingComplete(
+          user.uid,
+        );
         if (isUserVerify) {
           runInAction(() => {
             this.onEmailChange('');
             this.onPasswordChange('');
             this.onNameChange('');
             this.setUser(user);
+            this.setIsOnBoardingComplete(onBoardingComplete);
             this.setLoading(false);
+            this.setGoogleLoading(false);
           });
         } else {
           await auth().signOut();
@@ -101,7 +134,9 @@ class AuthStore {
           this.onPasswordChange('');
           this.onNameChange('');
           this.setUser(null);
+          this.setIsOnBoardingComplete(false);
           this.setLoading(false);
+          this.setGoogleLoading(false);
         });
       }
     });
@@ -117,7 +152,7 @@ class AuthStore {
         this.setUser(null);
       });
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   }
 
@@ -132,6 +167,39 @@ class AuthStore {
     } catch (error) {
       console.log('Error fetching token result: ', error);
       return false;
+    }
+  }
+
+  async checkIfOnBoardingComplete(uid: string): Promise<boolean | undefined> {
+    try {
+      const value = await isUserCompleteOnBoardingUseCase.execute(uid);
+      return value;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  }
+
+  onErrorHide() {
+    runInAction(() => {
+      this.error = null;
+    });
+  }
+
+  async saveDisplayName(onFinish: Function) {
+    if (this.user) {
+      try {
+        // Actualiza el perfil del usuario
+        await updateProfile(this.user, {
+          displayName: this.name,
+        });
+        console.log('Nombre guardado');
+      } catch (error) {
+        console.error(error);
+        // Maneja errores aquí, como mostrar un mensaje al usuario
+      } finally {
+        onFinish();
+      }
     }
   }
 }

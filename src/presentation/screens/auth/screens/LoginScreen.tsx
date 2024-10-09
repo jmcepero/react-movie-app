@@ -4,28 +4,51 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  Image,
 } from 'react-native';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {primaryBackgroundColor, primaryRed} from '../../../utils/Colors';
 import {getFontFamily} from '../../../utils/Fonts';
-import EmailInput from '../components/EmailInput';
-import PasswordInput from '../components/PasswordInput';
-import {fullWidth} from '../../../utils/Dimen';
 import {Images} from '../../../../../assets/images/Images.index';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {observable} from 'mobx';
 import {MobXProviderContext, observer} from 'mobx-react';
 import AuthStore from '../store/AuthStore';
-import SpinnerLottie from '../../../components/base/SpinnerLottie';
 import RNMovieButton from '../../../components/base/RNMovieButton';
+import {yupResolver} from '@hookform/resolvers/yup';
+import {loginSchema} from '../components/form/LoginSchema';
+import {Controller, useForm} from 'react-hook-form';
+import Toast from 'react-native-toast-message';
+import RNInput from '../../../components/base/RNInput';
 
 const LoginScreen = observer(() => {
   const {authStore} = useContext(MobXProviderContext) as {
     authStore: AuthStore;
   };
+  const {
+    control,
+    formState: {isValid},
+  } = useForm({
+    resolver: yupResolver(loginSchema),
+    defaultValues: {
+      email: authStore.loginEmail,
+      password: authStore.loginPassword,
+    },
+    mode: 'onChange',
+  });
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+
+  useEffect(() => {
+    if (authStore.error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Invalid credentials',
+        text2: authStore.error,
+        onHide: () => {
+          authStore.onErrorHide();
+        },
+      });
+    }
+  }, [authStore.error]);
 
   return (
     <ScrollView
@@ -41,13 +64,47 @@ const LoginScreen = observer(() => {
         </View>
 
         <View style={styles.inputContainer}>
-          <EmailInput
-            textValue={authStore.email}
-            onChange={value => authStore.onEmailChange(value)}
+          <Controller
+            control={control}
+            name="email"
+            render={({
+              field: {onChange, onBlur, value},
+              fieldState: {error},
+            }) => (
+              <RNInput
+                onBlur={onBlur}
+                textValue={value}
+                onChange={value => {
+                  onChange(value);
+                  authStore.onEmailChange(value);
+                }}
+                error={error}
+                iconName="mail"
+                placeholder="Email"
+              />
+            )}
           />
-          <PasswordInput
-            textValue={authStore.password}
-            onChange={value => authStore.onPasswordChange(value)}
+
+          <Controller
+            control={control}
+            name="password"
+            render={({
+              field: {onChange, onBlur, value},
+              fieldState: {error},
+            }) => (
+              <RNInput
+                onBlur={onBlur}
+                textValue={value}
+                onChange={value => {
+                  onChange(value);
+                  authStore.onPasswordChange(value);
+                }}
+                error={error}
+                iconName="lock-closed"
+                placeholder="Password"
+                secureTextEntry
+              />
+            )}
           />
 
           <RNMovieButton
@@ -55,6 +112,7 @@ const LoginScreen = observer(() => {
             onClick={() => authStore.signInWithEmail()}
             label="Sign in"
             styles={styles.buttonProvider}
+            disabled={!isValid}
           />
         </View>
 
@@ -64,7 +122,7 @@ const LoginScreen = observer(() => {
         </View>
 
         <RNMovieButton
-          isLoading={authStore.loading}
+          isLoading={authStore.googleLoading}
           onClick={() => authStore.signInWithGoogle()}
           label="Continue with Google"
           styles={styles.buttonGoogle}
@@ -109,6 +167,7 @@ const styles = StyleSheet.create({
   },
   buttonProvider: {
     marginTop: 24,
+    marginHorizontal: 16,
   },
   buttonText: {
     fontFamily: 'Archivo-Medium',
@@ -146,6 +205,7 @@ const styles = StyleSheet.create({
     borderColor: primaryRed,
     borderWidth: 0.5,
     backgroundColor: 'rgba(19,20,24,1)',
+    marginHorizontal: 16,
   },
   googleTextContainer: {
     flex: 1,

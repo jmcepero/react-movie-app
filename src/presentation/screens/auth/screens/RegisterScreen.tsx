@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {primaryBackgroundColor, primaryRed} from '../../../utils/Colors';
 import {getFontFamily} from '../../../utils/Fonts';
 import EmailInput from '../components/EmailInput';
@@ -14,18 +14,34 @@ import PasswordInput from '../components/PasswordInput';
 import {fullWidth} from '../../../utils/Dimen';
 import {Images} from '../../../../../assets/images/Images.index';
 import NameInput from '../components/NameInput';
-import _Ionicons from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {MobXProviderContext, observer} from 'mobx-react';
 import AuthStore from '../store/AuthStore';
+import RNInput from '../../../components/base/RNInput';
+import {Controller, useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import {loginSchema} from '../components/form/LoginSchema';
+import RNMovieButton from '../../../components/base/RNMovieButton';
 
 const RegisterScreen = observer(() => {
   const {authStore} = useContext(MobXProviderContext) as {
     authStore: AuthStore;
   };
-  const Icon = _Ionicons as React.ElementType;
+  const {
+    control,
+    formState: {isValid},
+  } = useForm({
+    resolver: yupResolver(loginSchema),
+    defaultValues: {
+      email: authStore.registerEmail,
+      password: authStore.registerPassword,
+    },
+    mode: 'onChange',
+  });
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+
   return (
     <View style={{flex: 1}}>
       <ScrollView
@@ -41,24 +57,54 @@ const RegisterScreen = observer(() => {
           </View>
 
           <View style={styles.inputContainer}>
-            <NameInput
-              textValue={authStore.name}
-              onChange={value => authStore.onNameChange(value)}
+            <Controller
+              control={control}
+              name="email"
+              render={({
+                field: {onChange, onBlur, value},
+                fieldState: {error},
+              }) => (
+                <RNInput
+                  onBlur={onBlur}
+                  textValue={value}
+                  onChange={value => {
+                    onChange(value);
+                    authStore.onRegisterEmailChange(value);
+                  }}
+                  error={error}
+                  iconName="mail"
+                  placeholder="Email"
+                />
+              )}
             />
-            <EmailInput
-              textValue={authStore.email}
-              onChange={value => authStore.onEmailChange(value)}
+            <Controller
+              control={control}
+              name="password"
+              render={({
+                field: {onChange, onBlur, value},
+                fieldState: {error},
+              }) => (
+                <RNInput
+                  onBlur={onBlur}
+                  textValue={value}
+                  onChange={value => {
+                    onChange(value);
+                    authStore.onRegisterPasswordChange(value);
+                  }}
+                  error={error}
+                  iconName="lock-closed"
+                  placeholder="Password"
+                  secureTextEntry
+                />
+              )}
             />
-            <PasswordInput
-              textValue={authStore.password}
-              onChange={value => authStore.onPasswordChange(value)}
+            <RNMovieButton
+              isLoading={authStore.loading}
+              onClick={() => authStore.registerWithEmail()}
+              label="Sign up"
+              styles={styles.buttonProvider}
+              disabled={!isValid}
             />
-            <TouchableOpacity
-              activeOpacity={0.9}
-              style={styles.buttonProvider}
-              onPress={() => authStore.registerWithEmail()}>
-              <Text style={styles.buttonText}>Sign up</Text>
-            </TouchableOpacity>
           </View>
 
           <View style={styles.containerOr}>
@@ -66,15 +112,13 @@ const RegisterScreen = observer(() => {
             <Text style={styles.textOr}>Or</Text>
           </View>
 
-          <TouchableOpacity
-            activeOpacity={0.9}
-            style={styles.buttonGoogle}
-            onPress={() => {}}>
-            <View style={styles.googleTextContainer}>
-              <Image source={Images.google} style={styles.googleIcon} />
-              <Text style={styles.googleText}>Sign up with Googgle</Text>
-            </View>
-          </TouchableOpacity>
+          <RNMovieButton
+            isLoading={authStore.googleLoading}
+            onClick={() => authStore.signInWithGoogle()}
+            label="Sign up with Googgle"
+            styles={styles.buttonGoogle}
+            leftIcon={Images.google}
+          />
 
           <View style={styles.signUpContainer}>
             <Text style={styles.dontHaveAccountText}>
@@ -123,21 +167,7 @@ const styles = StyleSheet.create({
   },
   buttonProvider: {
     marginTop: 24,
-    flexDirection: 'row',
-    borderRadius: 12,
-    backgroundColor: primaryRed,
     marginHorizontal: 16,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-
-    elevation: 12,
-    alignItems: 'center',
-    alignSelf: 'center',
   },
   buttonText: {
     fontFamily: 'Archivo-Medium',
@@ -172,22 +202,10 @@ const styles = StyleSheet.create({
     opacity: 0.3,
   },
   buttonGoogle: {
-    flexDirection: 'row',
-    borderRadius: 12,
     borderColor: primaryRed,
     borderWidth: 0.5,
-    marginHorizontal: 16,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-
-    elevation: 12,
-    width: fullWidth - 32,
     backgroundColor: 'rgba(19,20,24,1)',
+    marginHorizontal: 16,
   },
   googleTextContainer: {
     flex: 1,

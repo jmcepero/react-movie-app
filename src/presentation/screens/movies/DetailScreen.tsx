@@ -204,6 +204,7 @@ const styles = StyleSheet.create({
   },
   genreContainer: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     position: 'absolute',
     bottom: 0,
     paddingHorizontal: 16,
