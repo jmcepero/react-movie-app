@@ -8,6 +8,7 @@ import GenreStore from '../screens/onboading/store/GenreStore';
 import PersonStore from '../screens/person/store/PersonStore';
 import SearchStore from '../screens/search/store/SearchStore';
 import TvShowStore from '../screens/tv_show/store/TvShowStore';
+import {AccordionStore} from '../screens/filter/store/AccordionStore';
 
 class RootStore {
   searchStore: SearchStore;
@@ -18,6 +19,7 @@ class RootStore {
   genreStore: GenreStore;
   movieStore: MovieStore;
   movieListingStore: MovieListingStore;
+  accordionStore: AccordionStore;
 
   constructor() {
     this.authStore = new AuthStore();
@@ -28,6 +30,7 @@ class RootStore {
     this.genreStore = new GenreStore();
     this.movieStore = new MovieStore();
     this.movieListingStore = new MovieListingStore();
+    this.accordionStore = new AccordionStore();
   }
 }
 

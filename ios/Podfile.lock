@@ -1408,7 +1408,7 @@ PODS:
     - React-Core
   - react-native-splash-screen (3.3.0):
     - React-Core
-  - react-native-video (6.6.1):
+  - react-native-video (6.6.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1421,7 +1421,7 @@ PODS:
     - React-featureflags
     - React-graphics
     - React-ImageManager
-    - react-native-video/Video (= 6.6.1)
+    - react-native-video/Video (= 6.6.3)
     - React-NativeModulesApple
     - React-RCTFabric
     - React-rendererdebug
@@ -1430,7 +1430,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-video/Video (6.6.1):
+  - react-native-video/Video (6.6.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1748,7 +1748,7 @@ PODS:
     - Firebase/Database (= 10.29.0)
     - React-Core
     - RNFBApp
-  - RNGestureHandler (2.19.0):
+  - RNGestureHandler (2.20.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1772,7 +1772,7 @@ PODS:
   - RNGoogleSignin (12.2.1):
     - GoogleSignIn (~> 7.1)
     - React-Core
-  - RNReanimated (3.15.2):
+  - RNReanimated (3.15.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1792,10 +1792,10 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNReanimated/reanimated (= 3.15.2)
-    - RNReanimated/worklets (= 3.15.2)
+    - RNReanimated/reanimated (= 3.15.3)
+    - RNReanimated/worklets (= 3.15.3)
     - Yoga
-  - RNReanimated/reanimated (3.15.2):
+  - RNReanimated/reanimated (3.15.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1816,7 +1816,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNReanimated/worklets (3.15.2):
+  - RNReanimated/worklets (3.15.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2205,7 +2205,7 @@ SPEC CHECKSUMS:
   react-native-pager-view: c476f76d54f946df5147645e902d3d7173688187
   react-native-safe-area-context: 851c62c48dce80ccaa5637b6aa5991a1bc36eca9
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
-  react-native-video: 62a754582f8c9d6e6860cbc782c95d39e5b0179b
+  react-native-video: 04c03f4dd6fc141b7b07e334e65afc4d1d504dfc
   react-native-webview: 7aaf4bb5b2ec08901c821aceb4b55908ad012b04
   React-nativeconfig: 4a9543185905fe41014c06776bf126083795aed9
   React-NativeModulesApple: 0506da59fc40d2e1e6e12a233db5e81c46face27
@@ -2239,9 +2239,9 @@ SPEC CHECKSUMS:
   RNFBApp: 5f87753a8d8b37d229adf85cd0ff37709ffdf008
   RNFBAuth: ecbb030e0fd3551b8bc36cc85e0ebb1bcfb7685e
   RNFBDatabase: 6cb9aea137bca41d596be5f81e12dca580c6f36d
-  RNGestureHandler: 3b6fa2bfa341c413d3d08444b838515b58e48ee7
+  RNGestureHandler: 6dfe7692a191ee224748964127114edf057a1475
   RNGoogleSignin: 08dc4ba7eac2096c7fecfe109f0950fa4683c803
-  RNReanimated: ece067b779e0d6c7887c6bb80d381d0a0efd43c9
+  RNReanimated: c543567b3482ea54dec3216811d2360e581d35d0
   RNScreens: 19719a9c326e925498ac3b2d35c4e50fe87afc06
   RNTextSize: 7efa06531c6bb7ab6ed070b4ce0d1248cf06fcdf
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d

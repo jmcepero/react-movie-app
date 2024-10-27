@@ -14,6 +14,7 @@ import SplashScreen from 'react-native-splash-screen';
 import AuthStore from './src/presentation/screens/auth/store/AuthStore';
 import Toast from 'react-native-toast-message';
 import {toastConfig} from './src/presentation/utils/ToastConfig';
+import {primaryBlackColor} from './src/presentation/utils/Colors';
 
 const navTheme: Theme = {
   ...DefaultTheme,
@@ -24,7 +25,7 @@ const navTheme: Theme = {
 };
 
 export const App = () => {
-  SystemNavigationBar.setNavigationColor('#0d0d0d');
+  SystemNavigationBar.setNavigationColor(primaryBlackColor);
 
   return (
     <Provider {...rootStore}>
@@ -50,7 +51,7 @@ const AppContent = observer(() => {
 
   return (
     <>
-      <MyStatusBar backgroundColor={'rgba(23, 24, 27, 1)'} />
+      <MyStatusBar backgroundColor={primaryBlackColor} />
       <View
         style={{
           flex: 1,

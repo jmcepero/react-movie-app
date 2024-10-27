@@ -15,6 +15,8 @@ import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import SetYourNameScreen from '../screens/onboading/SetYourNameScreen';
 import SetGnresPreferences from '../screens/onboading/SetGnresPreferences';
 import GenresScreen from '../screens/genres/GenresScreen';
+import MovieFilter from '../screens/filter/MovieFilter';
+import {primaryBlackColor} from '../utils/Colors';
 
 export interface MovieListingParams {
   title: string;
@@ -46,6 +48,7 @@ export type RootStackParams = {
   SetYourNameScreen: undefined;
   SetGnresPreferences: undefined;
   GenresScreen: undefined;
+  MovieFilter: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -67,13 +70,10 @@ export const StackNavigation = ({
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        cardStyle: {
-          backgroundColor: 'rgba(23, 24, 27, 1)',
-        },
-        headerStyle: {
-          backgroundColor: 'black',
-        },
         presentation: Platform.OS === 'android' ? 'transparentModal' : 'card',
+        cardStyle: {
+          backgroundColor: primaryBlackColor,
+        },
       }}>
       {user !== undefined && user === null ? (
         <>
@@ -144,6 +144,11 @@ export const StackNavigation = ({
             name="GenresScreen"
             component={GenresScreen}
             options={{title: 'Genres'}}
+          />
+          <Stack.Screen
+            name="MovieFilter"
+            component={MovieFilter}
+            options={{title: 'MovieFilter'}}
           />
         </>
       )}

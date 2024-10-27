@@ -14,6 +14,7 @@ import {styles} from './styles/HomeScreen.style';
 import {movieOption} from '../../utils/Constants';
 import {MobXProviderContext, observer} from 'mobx-react';
 import AuthStore from '../auth/store/AuthStore';
+import {primaryRed} from '../../utils/Colors';
 
 export const HomeScreen = observer(() => {
   const {authStore, movieStore} = useContext(MobXProviderContext) as {
@@ -37,13 +38,12 @@ export const HomeScreen = observer(() => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: 80,
-          backgroundColor: 'rgba(23, 24, 27, 1)',
         }}
         refreshControl={
           <RefreshControl
             refreshing={false}
             onRefresh={refreshData}
-            tintColor={'#7B44C1'}
+            tintColor={primaryRed}
           />
         }>
         <View>
@@ -56,6 +56,9 @@ export const HomeScreen = observer(() => {
           {/* Search Section */}
           <SearchBar
             onClick={() => navigation.navigate('SearchScreen', movieOption)}
+            onFilterClicked={() => {
+              navigation.navigate('MovieFilter');
+            }}
             isLoading={movieStore.isLoading}
           />
 

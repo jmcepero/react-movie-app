@@ -5,10 +5,10 @@ import {primaryRed, secondaryTextColor} from '../../../utils/Colors';
 import {getFontFamily} from '../../../utils/Fonts';
 
 interface ChipProps {
-  id: number;
+  id: string;
   label: string;
   isSelected: boolean;
-  onSelect: (id: number) => void;
+  onSelect: (id: string) => void;
 }
 
 const Chip: React.FC<ChipProps> = ({id, label, isSelected, onSelect}) => (

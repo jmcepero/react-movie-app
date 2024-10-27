@@ -9,3 +9,4 @@ export const onyxColor = '#392c3e';
 export const primaryRed = 'rgba(174,17,36,1)';
 export const secondaryButtonColor = 'rgba(41,42,48,1)';
 export const secondaryBackgroundColor = 'rgba(24,25,31,1)';
+export const primaryBlackColor = 'rgba(19,20,24,1)';

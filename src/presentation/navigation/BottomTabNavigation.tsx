@@ -5,7 +5,7 @@ import {AccountScreen} from '../screens/AccountScreen';
 import {HomeScreen} from '../screens/home/HomeScreen';
 import {TVShowScreen} from '../screens/tv_show/TVShowScreen';
 import {ExploreScreen} from '../screens/explore/ExploreScreen';
-import {tabColor} from '../utils/Colors';
+import {primaryBlackColor, tabColor} from '../utils/Colors';
 
 export type BottomTabParams = {
   HomeScreen: undefined;
@@ -20,7 +20,7 @@ export const BottomTabNavigation = () => {
   return (
     <BottomTab.Navigator
       sceneContainerStyle={{
-        backgroundColor: tabColor,
+        backgroundColor: primaryBlackColor,
       }}
       screenOptions={{
         headerShown: false,

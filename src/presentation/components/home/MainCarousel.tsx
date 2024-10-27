@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import {Movie} from '../../../domain/movie/entities/Movies';
@@ -17,6 +17,10 @@ export const MainCarousel = ({movies, isLoading, onMovieClicked}: Props) => {
   const pageWidth = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
   const [currentIndex, setIndex] = useState(0);
+
+  useEffect(() => {
+    setIndex(0);
+  }, [movies]);
 
   return !isLoading ? (
     <View>
