@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
   label: {
     fontFamily: getFontFamily('normal'),
     color: secondaryTextColor,
+    fontSize: 16,
   },
   labelSelected: {
     color: 'white',

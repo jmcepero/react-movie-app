@@ -18,7 +18,7 @@ interface RNMovieButtonProps {
   label: string;
   isLoading?: boolean;
   leftIcon?: ImageSourcePropType | undefined;
-  styles?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   disabled?: boolean;
   secondary?: boolean;
 }
@@ -28,7 +28,7 @@ export default function RNMovieButton({
   label: text,
   isLoading,
   leftIcon,
-  styles,
+  style,
   disabled,
   secondary,
 }: RNMovieButtonProps) {
@@ -37,7 +37,7 @@ export default function RNMovieButton({
       activeOpacity={0.9}
       style={[
         localStyles.button,
-        styles,
+        style,
         disabled ? localStyles.buttonDisable : null,
         secondary ? localStyles.buttonSecondary : null,
       ]}

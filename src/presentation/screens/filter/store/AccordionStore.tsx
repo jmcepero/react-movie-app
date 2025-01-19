@@ -1,6 +1,7 @@
 import {makeAutoObservable, runInAction} from 'mobx';
 import {getWatchRegionsUseCase} from '../../../../domain/regions';
 import {errorHandler} from '../../../base/errorHandler';
+import {getMovieGenresUseCase} from '../../../../domain/genre/usecases/GetMovieGenresUseCase';
 
 // Definiendo la interfaz para una sección del acordeón
 interface Section {
@@ -22,6 +23,8 @@ export class AccordionStore {
   sections: Section[] = [];
   selectedSections: Section[] = [];
   isLoading: boolean = false;
+  currentYear = new Date().getFullYear();
+  years = Array.from({length: 40}, (v, i) => this.currentYear - i);
 
   constructor() {
     makeAutoObservable(this);
@@ -54,11 +57,11 @@ export class AccordionStore {
         // Si la sección es de selección única
         if (section.singleSelection) {
           // Primero, deselecciona todos los chips
-          section.chips.forEach(chip => {
-            chip.isSelected = false;
+          section.chips.forEach(item => {
+            if (item.id == chipId) {
+              item.isSelected = !item.isSelected;
+            } else item.isSelected = false;
           });
-          // Luego, selecciona el chip actual
-          chip.isSelected = true;
         } else {
           // Para selección múltiple, simplemente alterna el estado de selección del chip
           chip.isSelected = !chip.isSelected;
@@ -67,24 +70,65 @@ export class AccordionStore {
     }
   }
 
+  getSelectedChipsBySection(sectionId: number): Chip[] | undefined {
+    const section = this.sections.find(section => section.id === sectionId);
+    const result = section?.chips.filter(value => {
+      return value.isSelected;
+    });
+    return result;
+  }
+
   async loadWatchRegions() {
     this.isLoading = true;
 
     const regionsProm = getWatchRegionsUseCase.execute();
+    const genresProm = getMovieGenresUseCase.execute();
 
     try {
-      const [regions] = await Promise.all([regionsProm]);
-
+      const [regions, genres] = await Promise.all([regionsProm, genresProm]);
       runInAction(() => {
         this.sections = [
           {
             id: 1,
             title: 'Regions',
             singleSelection: true,
-            expanded: true,
+            expanded: false,
             chips: regions.map(value => ({
               id: value.iso_3166_1,
               label: value.english_name,
+              isSelected: false,
+            })),
+          },
+          {
+            id: 2,
+            title: 'Genres',
+            singleSelection: false,
+            expanded: false,
+            chips: genres.map(value => ({
+              id: value.id.toString(),
+              label: value.name,
+              isSelected: false,
+            })),
+          },
+          {
+            id: 3,
+            title: 'Year',
+            singleSelection: true,
+            expanded: false,
+            chips: this.years.map(value => ({
+              id: value.toString(),
+              label: value.toString(),
+              isSelected: false,
+            })),
+          },
+          {
+            id: 4,
+            title: 'Valoration',
+            singleSelection: true,
+            expanded: false,
+            chips: [5, 4, 3, 2, 1].map(value => ({
+              id: value.toString(),
+              label: value.toString() + ' ⭐',
               isSelected: false,
             })),
           },

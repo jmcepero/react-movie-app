@@ -1,8 +1,12 @@
 import {Movies} from '../entities/Movies';
 import {movieRepository} from '../../../data/movie/MovieRepository';
+import {MovieFilterRequest} from '../entities/MovieFilterRequest';
 
 export const discoverMoviesByGenresUseCase = {
-  async execute(genres: string[], page?: number): Promise<Movies> {
-    return movieRepository.discoverMoviesByGenres(genres, page);
+  async execute(
+    movieFilterRequest: MovieFilterRequest,
+    page?: number,
+  ): Promise<Movies> {
+    return movieRepository.discoverMovies(movieFilterRequest, page);
   },
 };

@@ -31,7 +31,7 @@ const MovieGnres = ({genreStore}: GnresProps) => {
           {genreStore.movieGnres.map(genre => (
             <Chip
               key={genre.id}
-              id={genre.id}
+              id={genre.id.toString()}
               label={genre.name}
               isSelected={genreStore?.selectedMovieGenres.some(
                 g => g.id === genre.id,

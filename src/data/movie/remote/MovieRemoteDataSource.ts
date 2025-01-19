@@ -1,3 +1,4 @@
+import {MovieFilterRequest} from '../../../domain/movie/entities/MovieFilterRequest';
 import movieDB from '../../api/movieDB';
 import {MoviesResponse, MovieDetailResponse} from '../entities/MovieInterface';
 
@@ -8,8 +9,8 @@ export interface MovieRemoteDataSource {
   ): Promise<MoviesResponse>;
   findMovies(term: string, page: number): Promise<MoviesResponse>;
   getMovieDetail(movieId: string): Promise<MovieDetailResponse>;
-  discoverMoviesByGenres(
-    genres: string,
+  discoverMovies(
+    movieFilterRequest: MovieFilterRequest,
     page?: number,
   ): Promise<MoviesResponse>;
 }
@@ -39,14 +40,14 @@ export const movieRemoteDataSource: MovieRemoteDataSource = {
     );
     return resp.data;
   },
-  async discoverMoviesByGenres(
-    genres: string,
+  async discoverMovies(
+    movieFilterRequest: MovieFilterRequest,
     page?: number,
   ): Promise<MoviesResponse> {
     let url = `discover/movie`;
     const resp = await movieDB.get<MoviesResponse>(url, {
       params: {
-        with_genres: genres,
+        with_genres: movieFilterRequest.withGenres,
         ...(page && {page}),
       },
     });

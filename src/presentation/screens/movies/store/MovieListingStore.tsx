@@ -32,7 +32,7 @@ class MovieListingStore {
         ? getPopularUseCase.execute(page)
         : getTopRatedUseCase.execute(page);
     } else {
-      return discoverMoviesByGenresUseCase.execute([value], page);
+      return discoverMoviesByGenresUseCase.execute({withGenres: value}, page);
     }
   }
 

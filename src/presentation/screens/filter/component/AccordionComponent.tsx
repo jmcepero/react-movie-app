@@ -8,34 +8,60 @@ import {
 } from 'react-native';
 import React, {useContext} from 'react';
 import {MobXProviderContext, observer} from 'mobx-react';
-import {MotiView} from 'moti';
 import {AccordionStore} from '../store/AccordionStore';
 import Chip from '../../onboading/components/Chip';
-import {Flex} from '@react-native-material/core';
+import {blue} from 'react-native-reanimated/lib/typescript/Colors';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {primaryTextColor, secondaryTextColor} from '../../../utils/Colors';
+import {getFontFamily} from '../../../utils/Fonts';
+import {store} from '../../../../store/store';
+import RNMovieButton from '../../../components/base/RNMovieButton';
 
 const AccordionComponent = () => {
   const {accordionStore} = useContext(MobXProviderContext) as {
     accordionStore: AccordionStore;
   };
-  const screenHeight = Dimensions.get('window').height;
 
   return (
-    <ScrollView
+    <View
       style={{
         flex: 1,
-        backgroundColor: 'red',
         width: '100%',
-        height: screenHeight * 0.9,
       }}>
       {accordionStore.sections.map(section => (
         <View key={section.id}>
           <TouchableOpacity
+            activeOpacity={0.9}
+            style={styles.header}
             onPress={() => accordionStore.toggleSection(section.id)}>
-            <Text>{section.title}</Text>
+            <View style={styles.headerRow}>
+              <View style={styles.headerColumn}>
+                <Text style={styles.headerTitle}>{section.title}</Text>
+                {section.expanded == false &&
+                  (accordionStore.getSelectedChipsBySection(section.id) || [])
+                    .length > 0 && (
+                    <Text style={{color: 'white'}}>
+                      {accordionStore
+                        .getSelectedChipsBySection(section.id)
+                        ?.map(chip => chip.label)
+                        .join(', ')}
+                    </Text>
+                  )}
+              </View>
+              <Icon
+                name={
+                  section.expanded
+                    ? 'chevron-up-outline'
+                    : 'chevron-down-outline'
+                }
+                size={18}
+                color={primaryTextColor}
+              />
+            </View>
           </TouchableOpacity>
           {section.expanded ? (
-            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-              {section.chips.map((chip, index) => (
+            <View style={styles.expandableContent}>
+              {section.chips.map(chip => (
                 <Chip
                   key={chip.id}
                   label={chip.label}
@@ -50,10 +76,31 @@ const AccordionComponent = () => {
           ) : null}
         </View>
       ))}
-    </ScrollView>
+    </View>
   );
 };
 
 export default observer(AccordionComponent);
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  header: {
+    padding: 16,
+  },
+  headerRow: {
+    flexDirection: 'row',
+  },
+  headerColumn: {
+    flex: 1,
+  },
+  headerTitle: {
+    color: primaryTextColor,
+    fontSize: 18,
+    fontFamily: getFontFamily('medium'),
+  },
+  expandableContent: {
+    padding: 8,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: 'rgba(24,25,32,1)',
+  },
+});
