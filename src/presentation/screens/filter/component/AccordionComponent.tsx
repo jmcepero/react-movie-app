@@ -23,11 +23,7 @@ const AccordionComponent = () => {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        width: '100%',
-      }}>
+    <View style={{width: '100%'}}>
       {accordionStore.sections.map(section => (
         <View key={section.id}>
           <TouchableOpacity
@@ -101,6 +97,5 @@ const styles = StyleSheet.create({
     padding: 8,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor: 'rgba(24,25,32,1)',
   },
 });

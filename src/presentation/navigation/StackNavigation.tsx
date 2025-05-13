@@ -15,7 +15,7 @@ import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import SetYourNameScreen from '../screens/onboading/SetYourNameScreen';
 import SetGnresPreferences from '../screens/onboading/SetGnresPreferences';
 import GenresScreen from '../screens/genres/GenresScreen';
-import MovieFilter from '../screens/filter/MovieFilter';
+import MovieFilter from '../screens/filter/MovieFilterScreen';
 import {primaryBlackColor} from '../utils/Colors';
 
 export interface MovieListingParams {

@@ -4,7 +4,7 @@ import {MovieFilterRequest} from '../entities/MovieFilterRequest';
 
 export const discoverMoviesByGenresUseCase = {
   async execute(
-    movieFilterRequest: MovieFilterRequest,
+    movieFilterRequest?: MovieFilterRequest,
     page?: number,
   ): Promise<Movies> {
     return movieRepository.discoverMovies(movieFilterRequest, page);

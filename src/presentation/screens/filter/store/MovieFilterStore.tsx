@@ -1,8 +1,9 @@
 import {makeAutoObservable, runInAction} from 'mobx';
 import {Movie} from '../../../../domain/movie/entities/Movies';
 import {errorHandler} from '../../../base/errorHandler';
+import {discoverMoviesByGenresUseCase} from '../../../../domain/movie/usecases/DiscoverMoviesByGenresUseCase';
 
-class MovieStore {
+class MovieFilterStore {
   isLoading: boolean = false;
   pageLoading: boolean = false;
   filteringResult: Movie[] = [];
@@ -11,10 +12,11 @@ class MovieStore {
 
   constructor() {
     makeAutoObservable(this);
+    this.loadFilteredMovies(this.page);
   }
 
   async loadFilteredMovies(page: number) {
-    const useCase = this.getUseCaseByParams(page);
+    const useCase = discoverMoviesByGenresUseCase.execute(undefined, page);
 
     runInAction(() => {
       this.isLoading = page === 1;
@@ -50,4 +52,4 @@ class MovieStore {
   }
 }
 
-export default MovieStore;
+export default MovieFilterStore;

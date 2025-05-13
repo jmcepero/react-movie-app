@@ -1,4 +1,5 @@
 package com.reactnative.movieapp
+import expo.modules.ReactActivityDelegateWrapper
 
 import android.os.Bundle
 import com.facebook.react.ReactActivity
@@ -20,7 +21,7 @@ class MainActivity : ReactActivity() {
      * (aka React 18) with two boolean flags.
      */
     override fun createReactActivityDelegate(): ReactActivityDelegate =
-        DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
+        ReactActivityDelegateWrapper(this, BuildConfig.IS_NEW_ARCHITECTURE_ENABLED, DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SplashScreen.show(this, R.style.SplashScreenTheme, true)

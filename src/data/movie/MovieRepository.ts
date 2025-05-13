@@ -16,7 +16,7 @@ export interface MovieDataSource {
   getMovieDetail(movieId: string): Promise<Movie>;
   userMoviesByGenres(userId: string, page?: number): Promise<Movies>;
   discoverMovies(
-    movieFilterRequest: MovieFilterRequest,
+    movieFilterRequest?: MovieFilterRequest,
     page?: number,
   ): Promise<Movies>;
 }
@@ -69,7 +69,7 @@ export const movieRepository: MovieDataSource = {
     return moviesResponseToDomain(resp);
   },
   async discoverMovies(
-    movieFilterRequest: MovieFilterRequest,
+    movieFilterRequest?: MovieFilterRequest,
     page?: number,
   ): Promise<Movies> {
     const resp = await movieRemoteDataSource.discoverMovies(

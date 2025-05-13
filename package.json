@@ -11,6 +11,7 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
+    "@gorhom/bottom-sheet": "^5.1.2",
     "@hookform/resolvers": "^3.9.0",
     "@react-native-async-storage/async-storage": "^2.0.0",
     "@react-native-firebase/app": "^20.5.0",
@@ -25,6 +26,7 @@
     "@reduxjs/toolkit": "^2.3.0",
     "axios": "^1.7.7",
     "date-fns": "^4.1.0",
+    "expo": "^52.0.26",
     "framer-motion": "^11.11.11",
     "lottie-react-native": "^7.0.0",
     "mobx": "^6.13.5",
@@ -37,7 +39,6 @@
     "react-hook-form": "^7.53.1",
     "react-modal-sheet": "^3.3.0",
     "react-native": "^0.76.1",
-    "react-native-actions-sheet": "^0.9.7",
     "react-native-geolocation-service": "^5.3.1",
     "react-native-gesture-handler": "^2.22.0",
     "react-native-linear-gradient": "^2.8.3",
