@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>137817280284-ch1phbmkudtbreqcd5nebv7746q2fr0i.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.137817280284-ch1phbmkudtbreqcd5nebv7746q2fr0i</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>137817280284-b9ejisqta6o3cp15tfm6h8lps106h9it.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCgwbZ-9PFsdRBfGhsSbccGXvFN-p-Q57g</string>
+	<key>GCM_SENDER_ID</key>
+	<string>137817280284</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.reactnative.movieapp</string>
+	<key>PROJECT_ID</key>
+	<string>awesome-ripsaw-430203-m2</string>
+	<key>STORAGE_BUCKET</key>
+	<string>awesome-ripsaw-430203-m2.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:137817280284:ios:9f3c65b7421a427e2874d9</string>
+</dict>
+</plist>
