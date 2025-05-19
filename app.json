@@ -1,4 +1,10 @@
 {
   "name": "MovieApp",
-  "displayName": "MovieApp"
+  "displayName": "MovieApp",
+  "android": {
+    "package": "com.cepero91.movieapp"
+  },
+  "ios": {
+    "bundleIdentifier": "com.cepero91.movieapp"
+  }
 }

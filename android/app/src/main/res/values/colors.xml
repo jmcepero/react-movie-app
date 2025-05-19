@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="status_bar_color">#AE1124</color>
+  <color name="splashscreen_background">#FFFFFF</color>
+  <color name="colorPrimary">#023c69</color>
+  <color name="colorPrimaryDark">#ffffff</color>
 </resources>
