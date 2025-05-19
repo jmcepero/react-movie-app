@@ -18,10 +18,7 @@ import {primaryBlackColor} from './src/presentation/utils/Colors';
 
 const navTheme: Theme = {
   ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: 'transparent',
-  },
+  colors: {...DefaultTheme.colors, background: 'transparent'},
 };
 
 export const App = () => {
@@ -35,9 +32,7 @@ export const App = () => {
 };
 
 const AppContent = observer(() => {
-  const {authStore} = useContext(MobXProviderContext) as {
-    authStore: AuthStore;
-  };
+  const {authStore} = useContext(MobXProviderContext) as {authStore: AuthStore};
 
   useEffect(() => {
     if (
@@ -52,10 +47,7 @@ const AppContent = observer(() => {
   return (
     <>
       <MyStatusBar backgroundColor={primaryBlackColor} />
-      <View
-        style={{
-          flex: 1,
-        }}>
+      <View style={{flex: 1}}>
         <NavigationContainer theme={navTheme}>
           <StackNavigation
             user={authStore.user}

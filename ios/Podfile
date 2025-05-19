@@ -11,7 +11,8 @@ prepare_react_native_project!
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
   Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
-  use_frameworks! :linkage => linkage.to_sym
+  use_frameworks! :linkage => static
+  $RNFirebaseAsStaticFramework = true
 end
 
 target 'MovieApp' do
@@ -37,20 +38,18 @@ target 'MovieApp' do
   pod 'GoogleUtilities', :modular_headers => true
   pod 'FirebaseCore', :modular_headers => true
   pod 'FirebaseAppCheckInterop', :modular_headers => true
-  pod 'leveldb-library', :git => 'https://github.com/mikehardy/leveldb.git', :commit => 'dc346ebc29fa755f5193dfc9d0a9f463b42a9d2b', :modular_headers => true
+  pod 'FirebaseAuthInterop', :modular_headers => true
+  pod 'FirebaseCoreExtension', :modular_headers => true
+  pod 'RecaptchaInterop', :modular_headers => true
+  pod 'leveldb-library', :modular_headers => true
   pod 'RNTextSize', :path => '../node_modules/react-native-text-size/ios'
   rn_maps_path = '../node_modules/react-native-maps'
-  pod 'react-native-google-maps', :path => rn_maps_path
+  pod 'react-native-maps', :path => rn_maps_path
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
-
-  target 'MovieAppTests' do
-    inherit! :complete
-    # Pods for testing
-  end
 
   post_install do |installer|
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
