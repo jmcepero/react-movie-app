@@ -2,10 +2,12 @@ import {makeAutoObservable, runInAction} from 'mobx';
 import {getWatchRegionsUseCase} from '../../../../domain/regions';
 import {errorHandler} from '../../../base/errorHandler';
 import {getMovieGenresUseCase} from '../../../../domain/genre/usecases/GetMovieGenresUseCase';
+import {getWatchProvidersCase} from '../../../../domain/watch_providers/usecases/GetWatchProvidersUseCase';
 
 // Definiendo la interfaz para una sección del acordeón
 interface Section {
   id: number;
+  value: string;
   title: string;
   expanded: boolean;
   singleSelection: boolean;
@@ -21,13 +23,15 @@ interface Chip {
 
 export class AccordionStore {
   sections: Section[] = [];
-  selectedSections: Section[] = [];
   isLoading: boolean = false;
   currentYear = new Date().getFullYear();
   years = Array.from({length: 40}, (v, i) => this.currentYear - i);
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  onScreenLoaded() {
     this.loadWatchRegions();
   }
 
@@ -78,19 +82,43 @@ export class AccordionStore {
     return result;
   }
 
+  get selectedChipsMap(): Map<string, string[]> {
+    const map = new Map<string, string[]>();
+
+    this.sections.forEach(section => {
+      // Filtrar chips seleccionados en la sección actual
+      const selectedChipsInSection = section.chips
+        .filter(chip => chip.isSelected)
+        .map(chip => chip.id);
+
+      // Solo agregar la sección al Map si tiene chips seleccionados
+      if (selectedChipsInSection.length > 0) {
+        map.set(section.value, selectedChipsInSection);
+      }
+    });
+
+    return map;
+  }
+
   async loadWatchRegions() {
     this.isLoading = true;
 
     const regionsProm = getWatchRegionsUseCase.execute();
     const genresProm = getMovieGenresUseCase.execute();
+    const watchProvidersProm = getWatchProvidersCase.execute('movie');
 
     try {
-      const [regions, genres] = await Promise.all([regionsProm, genresProm]);
+      const [regions, genres, watchProviders] = await Promise.all([
+        regionsProm,
+        genresProm,
+        watchProvidersProm,
+      ]);
       runInAction(() => {
         this.sections = [
           {
             id: 1,
-            title: 'Regions',
+            value: 'watch_region',
+            title: 'Watch Regions',
             singleSelection: true,
             expanded: false,
             chips: regions.map(value => ({
@@ -101,6 +129,19 @@ export class AccordionStore {
           },
           {
             id: 2,
+            value: 'with_watch_providers',
+            title: 'Watch Provider',
+            singleSelection: false,
+            expanded: false,
+            chips: watchProviders.map(value => ({
+              id: value.providerId.toString(),
+              label: value.providerName,
+              isSelected: false,
+            })),
+          },
+          {
+            id: 3,
+            value: 'with_genres',
             title: 'Genres',
             singleSelection: false,
             expanded: false,
@@ -111,7 +152,8 @@ export class AccordionStore {
             })),
           },
           {
-            id: 3,
+            id: 4,
+            value: 'year',
             title: 'Year',
             singleSelection: true,
             expanded: false,
@@ -122,7 +164,8 @@ export class AccordionStore {
             })),
           },
           {
-            id: 4,
+            id: 5,
+            value: 'vote_average.gte',
             title: 'Valoration',
             singleSelection: true,
             expanded: false,

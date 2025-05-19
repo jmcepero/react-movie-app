@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {MobXProviderContext, observer} from 'mobx-react';
 import {AccordionStore} from '../store/AccordionStore';
 import Chip from '../../onboading/components/Chip';

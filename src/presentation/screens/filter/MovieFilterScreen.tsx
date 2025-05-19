@@ -19,6 +19,7 @@ import MovieFilterStore from './store/MovieFilterStore';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import VerticalFeedSkeleton from '../../components/base/skeleton/VerticalFeedSkeleton';
+import {TouchableWithoutFeedback} from 'react-native';
 
 const MovieFilterScreen = () => {
   const {movieFilterStore} = useContext(MobXProviderContext) as {
@@ -33,17 +34,39 @@ const MovieFilterScreen = () => {
   // Manejar apertura del modal
   const handlePresentModalPress = () => bottomSheetModalRef.current?.present();
 
+  // 1. Crea un componente Backdrop personalizado
+  const renderBackdrop = useCallback(
+    (props: any) => (
+      <TouchableWithoutFeedback
+        onPress={() => bottomSheetModalRef.current?.dismiss()}
+        style={styles.absoluteFill}>
+        <View {...props} style={[props.style, styles.backdrop]} />
+      </TouchableWithoutFeedback>
+    ),
+    [],
+  );
+
   // Footer fijo con el botón
   const renderFooter = useCallback(
     props => (
       <BottomSheetFooter {...props}>
         <View style={styles.footer}>
-          <RNMovieButton onClick={() => {}} label="Apply" />
+          <RNMovieButton
+            onClick={() => {
+              movieFilterStore.onButtonApplyClicked();
+              bottomSheetModalRef.current?.dismiss();
+            }}
+            label="Apply"
+          />
         </View>
       </BottomSheetFooter>
     ),
     [],
   );
+
+  useEffect(() => {
+    movieFilterStore.onScreenLoaded();
+  }, []);
 
   return (
     <BottomSheetModalProvider>
@@ -53,6 +76,7 @@ const MovieFilterScreen = () => {
           style={styles.openButton}>
           <Text>Expand</Text>
         </TouchableOpacity>
+
         {!movieFilterStore.isLoading ? (
           <FlatList
             contentContainerStyle={{
@@ -91,7 +115,9 @@ const MovieFilterScreen = () => {
           snapPoints={snapPoints}
           footerComponent={renderFooter}
           backgroundStyle={{backgroundColor: darkColor}}
-          handleIndicatorStyle={{backgroundColor: 'white'}}>
+          handleIndicatorStyle={{backgroundColor: 'white'}}
+          enablePanDownToClose={true}
+          backdropComponent={renderBackdrop}>
           {/* Contenido scrollable */}
           <BottomSheetScrollView
             contentContainerStyle={styles.contentContainer}
@@ -141,5 +167,12 @@ const styles = StyleSheet.create({
     backgroundColor: darkColor,
     borderTopWidth: 1,
     borderTopColor: '#ffffff30',
+  },
+  absoluteFill: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  backdrop: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 });

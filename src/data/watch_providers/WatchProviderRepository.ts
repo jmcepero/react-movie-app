@@ -1,21 +1,36 @@
 import {watchProviderRemoteDataSourceImpl} from './remote/WatchProviderRemoteDataSource';
-import {watchProviderResponseToDomain} from './mapper/WatchProviderMapper';
-import {WatchProvider} from '../../domain/watch_providers/entities/WatchProviders';
+import {
+  watchProviderByItemIdToDomain,
+  watchProvidersToDomain,
+} from './mapper/WatchProviderMapper';
+import {
+  Provider,
+  WatchProvider,
+} from '../../domain/watch_providers/entities/WatchProviders';
 
 export interface WatchProviderDataSource {
-  getWatchProvider(itemId: string, itemType: string): Promise<WatchProvider[]>;
+  getWatchProviderByItemId(
+    itemId: string,
+    itemType: string,
+  ): Promise<WatchProvider[]>;
+  getWatchProviders(itemType: string): Promise<Provider[]>;
 }
 
 export const watchProviderRepositoryImpl: WatchProviderDataSource = {
-  async getWatchProvider(
+  getWatchProviderByItemId: async function (
     itemId: string,
     itemType: string,
   ): Promise<WatchProvider[]> {
     const resp =
-      await watchProviderRemoteDataSourceImpl.getWatchProviderByMovieId(
+      await watchProviderRemoteDataSourceImpl.getWatchProviderByItemId(
         itemId,
         itemType,
       );
-    return watchProviderResponseToDomain(resp);
+    return watchProviderByItemIdToDomain(resp);
+  },
+  getWatchProviders: async function (itemType: string): Promise<Provider[]> {
+    const resp =
+      await watchProviderRemoteDataSourceImpl.getWatchProviders(itemType);
+    return watchProvidersToDomain(resp);
   },
 };

@@ -1,8 +1,8 @@
 import {watchProviderRepositoryImpl} from '../../../data/watch_providers/WatchProviderRepository';
-import {WatchProvider} from '../entities/WatchProviders';
+import {Provider, WatchProvider} from '../entities/WatchProviders';
 
-export const getWatchProviderUseCase = {
-  async execute(itemId: string, itemType: string): Promise<WatchProvider[]> {
-    return watchProviderRepositoryImpl.getWatchProvider(itemId, itemType);
+export const getWatchProvidersCase = {
+  async execute(itemType: string): Promise<Provider[]> {
+    return watchProviderRepositoryImpl.getWatchProviders(itemType);
   },
 };

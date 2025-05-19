@@ -33,7 +33,7 @@ class RootStore {
     this.movieStore = new MovieStore();
     this.movieListingStore = new MovieListingStore();
     this.accordionStore = new AccordionStore();
-    this.movieFilterStore = new MovieFilterStore();
+    this.movieFilterStore = new MovieFilterStore(this.accordionStore);
   }
 }
 
