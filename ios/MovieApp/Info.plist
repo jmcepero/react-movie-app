@@ -25,9 +25,11 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.cepero91.movieapp</string>
+				<string>com.googleusercontent.apps.137817280284-ch1phbmkudtbreqcd5nebv7746q2fr0i</string>
 			</array>
 		</dict>
 	</array>
@@ -44,6 +46,21 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need your location to show nearby places.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need your location to show nearby places.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your location to show nearby places.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Ionicons.ttf</string>
+		<string>ArchivoBlack.ttf</string>
+		<string>ArchivoLight.ttf</string>
+		<string>ArchivoMedium.ttf</string>
+		<string>ArchivoRegular.ttf</string>
+		<string>ArchivoThin.ttf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>SplashScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -65,15 +82,5 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>We need your location to show nearby places.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>We need your location to show nearby places.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need your location to show nearby places.</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Ionicons.ttf</string>
-	</array>
 </dict>
 </plist>

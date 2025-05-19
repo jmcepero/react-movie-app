@@ -1,10 +1,7 @@
 import {CustomGenre, GenresResponse} from '..';
+import {defaultAppInstance} from '../../../presentation/utils/Firebase';
 import movieDB from '../../api/movieDB';
-import database, {
-  child,
-  DataSnapshot,
-  FirebaseDatabaseTypes,
-} from '@react-native-firebase/database';
+import database, {getDatabase} from '@react-native-firebase/database';
 
 export interface GenreRemoteDataSource {
   getMovieGenre(): Promise<CustomGenre[]>;
@@ -25,7 +22,7 @@ export const genreRemoteDataSource: GenreRemoteDataSource = {
     type: 'movie' | 'tvshow',
   ): Promise<CustomGenre[]> {
     try {
-      const snapshot = await database()
+      const snapshot = await getDatabase(defaultAppInstance)
         .ref('/rnmovie/' + type + '/genres')
         .once('value');
       if (snapshot.exists()) {
