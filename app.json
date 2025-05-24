@@ -1,10 +1,10 @@
 {
   "name": "MovieApp",
-  "displayName": "MovieApp",
+  "displayName": "RN Movie",
   "android": {
-    "package": "com.cepero91.movieapp"
+    "package": "com.reactnative.movieapp"
   },
   "ios": {
-    "bundleIdentifier": "com.cepero91.movieapp"
+    "bundleIdentifier": "com.reactnative.movieapp"
   }
 }

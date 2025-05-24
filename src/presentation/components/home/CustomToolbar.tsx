@@ -1,26 +1,40 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Images} from '../../../../assets/images/Images.index';
 import {getFontFamily} from '../../utils/Fonts';
+import {MobXProviderContext, observer} from 'mobx-react';
+import AuthStore from '../../screens/auth/store/AuthStore';
 
 interface CustomToolbarProps {
   title: string;
   onUserIconClicked?: () => void;
 }
 
-export const CustomToolbar = ({
-  title,
-  onUserIconClicked,
-}: CustomToolbarProps) => {
+const CustomToolbar = ({title, onUserIconClicked}: CustomToolbarProps) => {
+  const {authStore} = useContext(MobXProviderContext) as {
+    authStore: AuthStore;
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
       <TouchableOpacity onPress={() => onUserIconClicked?.()}>
-        <Image style={styles.avatar} source={Images.user} />
+        <Image
+          style={styles.avatar}
+          source={
+            authStore.user?.photoURL
+              ? {
+                  uri: authStore.user.photoURL,
+                }
+              : Images.user
+          }
+        />
       </TouchableOpacity>
     </View>
   );
 };
+
+export default observer(CustomToolbar);
 
 const styles = StyleSheet.create({
   container: {

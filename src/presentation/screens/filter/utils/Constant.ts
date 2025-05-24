@@ -1,0 +1,9 @@
+export const POPULARITY_DESC = 'popularity.desc';
+export const VOTE_AVERAGE_DESC = 'vote_average.desc';
+export const ORIGINAL_TITLE_ASC = 'original_title.asc';
+export const RELEASE_DATE_DESC = 'release_date.desc';
+export const WATCH_REGION = 'watch_region';
+export const WITH_WATCH_PROVIDERS = 'with_watch_providers';
+export const WITH_GENRES = 'with_genres';
+export const YEAR = 'year';
+export const VOTE_AVERAGE_GTE = 'vote_average.gte';

@@ -8,11 +8,16 @@ import {getFontFamily} from '../../utils/Fonts';
 interface Props {
   title: string;
   showBackArrow?: boolean;
+  rightComponent?: React.ReactNode;
 }
 
-const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
+const APPBAR_HEIGHT = Platform.OS === 'ios' ? 46 : 56;
 
-export const Toolbar = ({title, showBackArrow = true}: Props) => {
+export const Toolbar = ({
+  title,
+  showBackArrow = true,
+  rightComponent,
+}: Props) => {
   const navigation = useNavigation();
 
   return (
@@ -24,12 +29,12 @@ export const Toolbar = ({title, showBackArrow = true}: Props) => {
           <Icon color={'white'} name="arrow-back-outline" size={24} />
         </TouchableOpacity>
       )}
+
       <Text style={customStyle.title}>{title}</Text>
-      <View
-        style={{
-          width: 40,
-        }}
-      />
+
+      <View style={customStyle.rightContainer}>
+        {rightComponent ? rightComponent : <View style={customStyle.spacer} />}
+      </View>
     </View>
   );
 };
@@ -38,6 +43,7 @@ const customStyle = StyleSheet.create({
   row: {
     flexDirection: 'row',
     height: APPBAR_HEIGHT,
+    alignItems: 'center',
   },
   button: {
     padding: 8,
@@ -46,8 +52,14 @@ const customStyle = StyleSheet.create({
     flex: 1,
     fontFamily: getFontFamily('bold'),
     fontSize: 20,
-    alignSelf: 'center',
     color: 'white',
     marginHorizontal: 16,
+  },
+  spacer: {
+    width: 40,
+  },
+  rightContainer: {
+    minWidth: 40,
+    alignItems: 'flex-end',
   },
 });

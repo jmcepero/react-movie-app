@@ -1,6 +1,12 @@
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {JSX, useCallback, useContext, useEffect, useRef} from 'react';
-import AccordionComponent from './component/AccordionComponent';
+import {StyleSheet, View} from 'react-native';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import FilterChipsComponent from './component/FilterChipsComponent';
 import {darkColor} from '../../utils/Colors';
 import RNMovieButton from '../../components/base/RNMovieButton';
 import {
@@ -9,17 +15,21 @@ import {
   BottomSheetModalProvider,
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
-import {blue} from 'react-native-reanimated/lib/typescript/Colors';
 import {MobXProviderContext, observer} from 'mobx-react';
 import {Movie} from '../../../domain/movie/entities/Movies';
 import ItemRenderer from '../../components/listing/ItemRenderer';
-import MovieListingStore from '../movies/store/MovieListingStore';
 import {ListFooterComponent} from '../search/components/ListFooterComponent';
 import MovieFilterStore from './store/MovieFilterStore';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import VerticalFeedSkeleton from '../../components/base/skeleton/VerticalFeedSkeleton';
 import {TouchableWithoutFeedback} from 'react-native';
+import {BottomSheetDefaultFooterProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter/types';
+import {Toolbar} from '../../components/base/Toolbar';
+import FilterButton from './component/FilterButton';
+import {FlashList} from '@shopify/flash-list';
+import SortingComponent from './component/SortingComponent';
+import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 
 const MovieFilterScreen = () => {
   const {movieFilterStore} = useContext(MobXProviderContext) as {
@@ -29,10 +39,23 @@ const MovieFilterScreen = () => {
 
   // Configuración del bottom sheet
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const snapPoints = ['40%', '90%']; // Puntos de snap ajustables
+  const snapPoints = ['70%', '90%']; // Puntos de snap ajustables
+
+  const [tabIndex, setTabIndex] = useState(0);
+  const [routes] = useState([
+    {key: 'filters', title: 'Filtros'},
+    {key: 'sorting', title: 'Ordenar'},
+  ]);
 
   // Manejar apertura del modal
-  const handlePresentModalPress = () => bottomSheetModalRef.current?.present();
+  const handlePresentModalPress = () => {
+    bottomSheetModalRef.current?.present();
+  };
+
+  // Manejar cierre del modal
+  const handleModalDismiss = () => {
+    movieFilterStore.onFilterPanelDismiss();
+  };
 
   // 1. Crea un componente Backdrop personalizado
   const renderBackdrop = useCallback(
@@ -48,7 +71,7 @@ const MovieFilterScreen = () => {
 
   // Footer fijo con el botón
   const renderFooter = useCallback(
-    props => (
+    (props: BottomSheetDefaultFooterProps) => (
       <BottomSheetFooter {...props}>
         <View style={styles.footer}>
           <RNMovieButton
@@ -64,35 +87,66 @@ const MovieFilterScreen = () => {
     [],
   );
 
+  const renderMovieItem = useCallback(
+    ({item, index}: {item: Movie; index: number}) => (
+      <View
+        style={{
+          marginRight: index % 2 === 0 ? 'auto' : undefined,
+          marginLeft: index % 2 === 1 ? 'auto' : undefined,
+        }}>
+        <ItemRenderer item={item} navigation={navigation} />
+      </View>
+    ),
+    [navigation],
+  );
+
+  const FiltersTab = () => (
+    <BottomSheetScrollView contentContainerStyle={styles.contentContainer}>
+      <FilterChipsComponent />
+    </BottomSheetScrollView>
+  );
+
+  const SortingTab = () => (
+    <BottomSheetScrollView contentContainerStyle={styles.contentContainer}>
+      <SortingComponent />
+    </BottomSheetScrollView>
+  );
+
+  const renderScene = SceneMap({
+    filters: FiltersTab,
+    sorting: SortingTab,
+  });
+
   useEffect(() => {
     movieFilterStore.onScreenLoaded();
+    return () => {
+      movieFilterStore.resetAllStates();
+    };
   }, []);
 
   return (
     <BottomSheetModalProvider>
       <View style={styles.container}>
-        <TouchableOpacity
-          onPress={handlePresentModalPress}
-          style={styles.openButton}>
-          <Text>Expand</Text>
-        </TouchableOpacity>
+        <Toolbar
+          title={'Discover'}
+          rightComponent={
+            <FilterButton
+              onFilterClicked={handlePresentModalPress}
+              customStyle={styles.filterButton}
+              isFilterActive={movieFilterStore.filterActive}
+            />
+          }
+        />
 
         {!movieFilterStore.isLoading ? (
-          <FlatList
+          <FlashList
             contentContainerStyle={{
               paddingHorizontal: 16,
             }}
-            columnWrapperStyle={{
-              justifyContent: 'space-between',
-            }}
+            estimatedItemSize={220}
             data={movieFilterStore.filteringResult as Movie[]}
             showsVerticalScrollIndicator={false}
-            renderItem={({index}) => (
-              <ItemRenderer
-                item={movieFilterStore.filteringResult[index]}
-                navigation={navigation}
-              />
-            )}
+            renderItem={renderMovieItem}
             numColumns={2}
             keyExtractor={(item, _) => item.title}
             ListFooterComponent={
@@ -102,7 +156,6 @@ const MovieFilterScreen = () => {
               />
             }
             onEndReachedThreshold={0.5}
-            initialNumToRender={10}
             onEndReached={() => movieFilterStore.onReachToEnd()}
           />
         ) : (
@@ -117,13 +170,22 @@ const MovieFilterScreen = () => {
           backgroundStyle={{backgroundColor: darkColor}}
           handleIndicatorStyle={{backgroundColor: 'white'}}
           enablePanDownToClose={true}
-          backdropComponent={renderBackdrop}>
+          backdropComponent={renderBackdrop}
+          onDismiss={handleModalDismiss}>
           {/* Contenido scrollable */}
-          <BottomSheetScrollView
-            contentContainerStyle={styles.contentContainer}
-            showsVerticalScrollIndicator={false}>
-            <AccordionComponent />
-          </BottomSheetScrollView>
+
+          <TabView
+            navigationState={{index: tabIndex, routes}}
+            renderScene={renderScene}
+            onIndexChange={setTabIndex}
+            renderTabBar={props => (
+              <TabBar
+                {...props}
+                indicatorStyle={{backgroundColor: 'white'}}
+                style={{backgroundColor: darkColor}}
+              />
+            )}
+          />
         </BottomSheetModal>
       </View>
     </BottomSheetModalProvider>
@@ -157,6 +219,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   contentContainer: {
+    paddingTop: 8,
     paddingBottom: 120,
   },
   buttonContainer: {
@@ -174,5 +237,11 @@ const styles = StyleSheet.create({
   backdrop: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  filterButton: {
+    paddingHorizontal: 12,
+    height: 32,
+    marginEnd: 8,
+    borderRadius: 8,
   },
 });

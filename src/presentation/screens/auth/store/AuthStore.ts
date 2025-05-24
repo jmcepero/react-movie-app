@@ -99,8 +99,16 @@ class AuthStore {
   async signInWithGoogle() {
     try {
       this.setGoogleLoading(true);
-      const {idToken} = await GoogleSignin.getTokens();
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      if (!(await GoogleSignin.hasPlayServices())) {
+        throw new Error('Google Play Services no disponibles');
+      }
+      const result = await GoogleSignin.signIn();
+      if (!result?.data?.idToken) {
+        throw new Error('Fallo en autenticación: Datos de usuario incompletos');
+      }
+      const googleCredential = auth.GoogleAuthProvider.credential(
+        result.data.idToken,
+      );
       await this.authInstance.signInWithCredential(googleCredential);
     } catch (error) {
       runInAction(() => {

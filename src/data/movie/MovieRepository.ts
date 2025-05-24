@@ -7,6 +7,7 @@ import {movieRemoteDataSource} from './remote/MovieRemoteDataSource';
 import {get, getDatabase, ref, set} from '@react-native-firebase/database';
 import {MovieFilterRequest} from '../../domain/movie/entities/MovieFilterRequest';
 import {isolateGlobalState} from 'mobx/dist/internal';
+import {WITH_GENRES} from '../../presentation/screens/filter/utils/Constant';
 
 export interface MovieDataSource {
   getNowPlaying(page?: number): Promise<Movies>;
@@ -16,7 +17,7 @@ export interface MovieDataSource {
   getMovieDetail(movieId: string): Promise<Movie>;
   userMoviesByGenres(userId: string, page?: number): Promise<Movies>;
   discoverMovies(
-    movieFilterRequest?: MovieFilterRequest,
+    movieFilterRequest?: Map<string, string>,
     page?: number,
   ): Promise<Movies>;
 }
@@ -61,15 +62,13 @@ export const movieRepository: MovieDataSource = {
       genresParams = Object.keys(genres).join('|');
     }
     const resp = await movieRemoteDataSource.discoverMovies(
-      {
-        withGenres: genresParams,
-      },
+      new Map([[WITH_GENRES, genresParams]]),
       page,
     );
     return moviesResponseToDomain(resp);
   },
   async discoverMovies(
-    movieFilterRequest?: MovieFilterRequest,
+    movieFilterRequest?: Map<string, string>,
     page?: number,
   ): Promise<Movies> {
     const resp = await movieRemoteDataSource.discoverMovies(

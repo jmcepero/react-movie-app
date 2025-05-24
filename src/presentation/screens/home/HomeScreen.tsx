@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from 'react';
 import {View, ScrollView} from 'react-native';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {CustomToolbar} from '../../components/home/CustomToolbar';
+import CustomToolbar from '../../components/home/CustomToolbar';
 import {GenresFeed} from '../../components/home/GenresFeed';
 import {MainCarousel} from '../../components/home/MainCarousel';
 import {HorizontalFeed} from '../../components/HorizontalFeed';

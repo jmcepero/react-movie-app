@@ -8,7 +8,7 @@ import GenreStore from '../screens/onboading/store/GenreStore';
 import PersonStore from '../screens/person/store/PersonStore';
 import SearchStore from '../screens/search/store/SearchStore';
 import TvShowStore from '../screens/tv_show/store/TvShowStore';
-import {AccordionStore} from '../screens/filter/store/AccordionStore';
+import {FilterChipsStore} from '../screens/filter/store/FilterChipsStore';
 import MovieFilterStore from '../screens/filter/store/MovieFilterStore';
 
 class RootStore {
@@ -20,7 +20,7 @@ class RootStore {
   genreStore: GenreStore;
   movieStore: MovieStore;
   movieListingStore: MovieListingStore;
-  accordionStore: AccordionStore;
+  filterChipsStore: FilterChipsStore;
   movieFilterStore: MovieFilterStore;
 
   constructor() {
@@ -32,8 +32,8 @@ class RootStore {
     this.genreStore = new GenreStore();
     this.movieStore = new MovieStore();
     this.movieListingStore = new MovieListingStore();
-    this.accordionStore = new AccordionStore();
-    this.movieFilterStore = new MovieFilterStore(this.accordionStore);
+    this.filterChipsStore = new FilterChipsStore();
+    this.movieFilterStore = new MovieFilterStore(this.filterChipsStore);
   }
 }
 

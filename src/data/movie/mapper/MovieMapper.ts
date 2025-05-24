@@ -1,5 +1,6 @@
 import {MoviesResponse, MovieDetailResponse} from '../entities/MovieInterface';
 import {Movies, Movie} from '../../../domain/movie/entities/Movies';
+import {Valoration, valorations} from '../../../presentation/utils/Constants';
 
 export const moviesResponseToDomain = (
   moviesResponse: MoviesResponse,
@@ -100,4 +101,10 @@ export const movieDetailResponseToDetail = (
         }
       : undefined,
   };
+};
+
+export const getValorationById = (id: string): Valoration | undefined => {
+  return valorations.filter(value => {
+    return value.id.toString() === id;
+  })[0];
 };

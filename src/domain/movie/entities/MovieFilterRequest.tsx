@@ -4,4 +4,5 @@ export interface MovieFilterRequest {
   watchProviders?: string;
   year?: string;
   voteAverageGte?: string;
+  sortBy?: string;
 }

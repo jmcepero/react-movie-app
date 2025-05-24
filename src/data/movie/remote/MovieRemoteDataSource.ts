@@ -1,6 +1,8 @@
 import {MovieFilterRequest} from '../../../domain/movie/entities/MovieFilterRequest';
+import {VOTE_AVERAGE_GTE} from '../../../presentation/screens/filter/utils/Constant';
 import movieDB from '../../api/movieDB';
 import {MoviesResponse, MovieDetailResponse} from '../entities/MovieInterface';
+import {getValorationById} from '../mapper/MovieMapper';
 
 export interface MovieRemoteDataSource {
   getMoviesByClasification(
@@ -10,7 +12,7 @@ export interface MovieRemoteDataSource {
   findMovies(term: string, page: number): Promise<MoviesResponse>;
   getMovieDetail(movieId: string): Promise<MovieDetailResponse>;
   discoverMovies(
-    movieFilterRequest?: MovieFilterRequest,
+    movieFilterRequest?: Map<string, string>,
     page?: number,
   ): Promise<MoviesResponse>;
 }
@@ -41,20 +43,26 @@ export const movieRemoteDataSource: MovieRemoteDataSource = {
     return resp.data;
   },
   async discoverMovies(
-    movieFilterRequest?: MovieFilterRequest,
+    movieFilterRequest?: Map<string, string>,
     page?: number,
   ): Promise<MoviesResponse> {
     let url = `discover/movie`;
-    const params = {
-      // Parámetros básicos
-      page: page || 1, // Valor por defecto para paginación
+    const voteAverageGte = movieFilterRequest?.get(VOTE_AVERAGE_GTE);
 
-      // Mapeo de parámetros del filtro usando operador spread y optional chaining
-      ...(movieFilterRequest && {
-        with_genres: movieFilterRequest.withGenres,
-        watch_region: movieFilterRequest.watchRegion,
-        'vote_average.gte': movieFilterRequest.voteAverageGte,
-        year: movieFilterRequest.year,
+    let valoration = voteAverageGte
+      ? getValorationById(voteAverageGte)
+      : undefined;
+
+    const filterParamsObj = movieFilterRequest
+      ? Object.fromEntries(movieFilterRequest.entries())
+      : {};
+
+    const params: Record<string, any> = {
+      page: page || 1,
+      ...filterParamsObj,
+      ...(valoration && {
+        'vote_average.gte': valoration.value[0],
+        'vote_average.lte': valoration.value[1],
       }),
     };
 

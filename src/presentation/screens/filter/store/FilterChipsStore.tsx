@@ -3,6 +3,8 @@ import {getWatchRegionsUseCase} from '../../../../domain/regions';
 import {errorHandler} from '../../../base/errorHandler';
 import {getMovieGenresUseCase} from '../../../../domain/genre/usecases/GetMovieGenresUseCase';
 import {getWatchProvidersCase} from '../../../../domain/watch_providers/usecases/GetWatchProvidersUseCase';
+import {valorations} from '../../../utils/Constants';
+import {defaultSorting, sortingValues} from '../utils/SortingData';
 
 // Definiendo la interfaz para una sección del acordeón
 interface Section {
@@ -14,25 +16,36 @@ interface Section {
   chips: Chip[];
 }
 
+export interface ChipMetadata {
+  id: string;
+  value: any;
+}
+
 // Definiendo la interfaz para los chips
-interface Chip {
+export interface Chip {
   id: string;
   label: string;
   isSelected: boolean;
+  metadata?: ChipMetadata;
 }
 
-export class AccordionStore {
+export class FilterChipsStore {
   sections: Section[] = [];
   isLoading: boolean = false;
   currentYear = new Date().getFullYear();
   years = Array.from({length: 40}, (v, i) => this.currentYear - i);
+  sortingOptions = new Array(...sortingValues);
+  sortingSaved: Chip = defaultSorting;
+
+  // Propiedad privada para guardar el estado
+  _savedSections?: Section[];
 
   constructor() {
     makeAutoObservable(this);
   }
 
   onScreenLoaded() {
-    this.loadWatchRegions();
+    this.loadData();
   }
 
   // Método para inicializar las secciones, útil si los datos vienen de una API
@@ -82,25 +95,35 @@ export class AccordionStore {
     return result;
   }
 
-  get selectedChipsMap(): Map<string, string[]> {
-    const map = new Map<string, string[]>();
+  get selectedChipsMap(): Map<string, string> | undefined {
+    const map = new Map<string, string>();
 
     this.sections.forEach(section => {
-      // Filtrar chips seleccionados en la sección actual
       const selectedChipsInSection = section.chips
         .filter(chip => chip.isSelected)
         .map(chip => chip.id);
-
-      // Solo agregar la sección al Map si tiene chips seleccionados
       if (selectedChipsInSection.length > 0) {
-        map.set(section.value, selectedChipsInSection);
+        map.set(section.value, selectedChipsInSection.join(','));
       }
     });
+
+    this.sortingOptions.forEach(value => {
+      if (value.isSelected) {
+        map.set('sort_by', value.id);
+        if (value.metadata) {
+          map.set(value.metadata.id, value.metadata.value);
+        }
+      }
+    });
+
+    if (!map || map.size === 0) {
+      return undefined;
+    }
 
     return map;
   }
 
-  async loadWatchRegions() {
+  async loadData() {
     this.isLoading = true;
 
     const regionsProm = getWatchRegionsUseCase.execute();
@@ -169,9 +192,9 @@ export class AccordionStore {
             title: 'Valoration',
             singleSelection: true,
             expanded: false,
-            chips: [5, 4, 3, 2, 1].map(value => ({
-              id: value.toString(),
-              label: value.toString() + ' ⭐',
+            chips: valorations.map(value => ({
+              id: value.id.toString(),
+              label: value.label,
               isSelected: false,
             })),
           },
@@ -185,5 +208,59 @@ export class AccordionStore {
         this.isLoading = false;
       });
     }
+  }
+
+  onSortingSelect(optionId: string) {
+    this.sortingOptions = this.sortingOptions.map(value => {
+      value.isSelected = value.id === optionId;
+      return value;
+    });
+  }
+
+  // Guarda el estado actual de selección de chips
+  saveSelectionState() {
+    this._savedSections = this.sections.map(section => ({
+      ...section,
+      chips: section.chips.map(chip => ({...chip})),
+    }));
+    this.sortingSaved =
+      this.sortingOptions.find(value => value.isSelected) ?? defaultSorting;
+  }
+
+  // Restaura el estado guardado de selección de chips
+  restoreSelectionState() {
+    if (this._savedSections) {
+      this.sections = this._savedSections.map(section => ({
+        ...section,
+        expanded: false,
+        chips: section.chips.map(chip => ({...chip})),
+      }));
+    }
+    if (this.sortingSaved) {
+      this.sortingOptions = this.sortingOptions.map(value => {
+        value.isSelected = this.sortingSaved.id === value.id;
+        return value;
+      });
+    }
+  }
+
+  // Resetea todas las selecciones de chips
+  resetSelection() {
+    this.sections.forEach(section => {
+      section.expanded = false;
+      section.chips.forEach(chip => {
+        chip.isSelected = false;
+      });
+    });
+    this.sortingSaved = defaultSorting;
+  }
+
+  resetAllStates() {
+    this.resetSelection();
+    this._savedSections = undefined;
+  }
+
+  get haveSavedSections(): boolean {
+    return !!this._savedSections && this._savedSections.length > 0;
   }
 }

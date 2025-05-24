@@ -32,11 +32,12 @@ const styles = StyleSheet.create({
   },
   chip: {
     margin: 4,
-    paddingVertical: 8,
+    height: 32,
     paddingHorizontal: 12,
     borderWidth: 1,
     borderColor: secondaryTextColor,
     borderRadius: 20,
+    justifyContent: 'center',
   },
   selected: {
     backgroundColor: primaryRed,

@@ -1,43 +1,33 @@
-import {
-  Dimensions,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React, {useContext, useEffect} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useContext} from 'react';
 import {MobXProviderContext, observer} from 'mobx-react';
-import {AccordionStore} from '../store/AccordionStore';
+import {FilterChipsStore} from '../store/FilterChipsStore';
 import Chip from '../../onboading/components/Chip';
-import {blue} from 'react-native-reanimated/lib/typescript/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {primaryTextColor, secondaryTextColor} from '../../../utils/Colors';
+import {primaryTextColor} from '../../../utils/Colors';
 import {getFontFamily} from '../../../utils/Fonts';
-import {store} from '../../../../store/store';
-import RNMovieButton from '../../../components/base/RNMovieButton';
 
-const AccordionComponent = () => {
-  const {accordionStore} = useContext(MobXProviderContext) as {
-    accordionStore: AccordionStore;
+const FilterChipsComponent = () => {
+  const {filterChipsStore} = useContext(MobXProviderContext) as {
+    filterChipsStore: FilterChipsStore;
   };
 
   return (
     <View style={{width: '100%'}}>
-      {accordionStore.sections.map(section => (
+      {filterChipsStore.sections.map(section => (
         <View key={section.id}>
           <TouchableOpacity
             activeOpacity={0.9}
             style={styles.header}
-            onPress={() => accordionStore.toggleSection(section.id)}>
+            onPress={() => filterChipsStore.toggleSection(section.id)}>
             <View style={styles.headerRow}>
               <View style={styles.headerColumn}>
                 <Text style={styles.headerTitle}>{section.title}</Text>
                 {section.expanded == false &&
-                  (accordionStore.getSelectedChipsBySection(section.id) || [])
+                  (filterChipsStore.getSelectedChipsBySection(section.id) || [])
                     .length > 0 && (
                     <Text style={{color: 'white'}}>
-                      {accordionStore
+                      {filterChipsStore
                         .getSelectedChipsBySection(section.id)
                         ?.map(chip => chip.label)
                         .join(', ')}
@@ -64,7 +54,7 @@ const AccordionComponent = () => {
                   id={chip.id}
                   isSelected={chip.isSelected}
                   onSelect={() =>
-                    accordionStore.toggleChipSelection(section.id, chip.id)
+                    filterChipsStore.toggleChipSelection(section.id, chip.id)
                   }
                 />
               ))}
@@ -76,7 +66,7 @@ const AccordionComponent = () => {
   );
 };
 
-export default observer(AccordionComponent);
+export default observer(FilterChipsComponent);
 
 const styles = StyleSheet.create({
   header: {

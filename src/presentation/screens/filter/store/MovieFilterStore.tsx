@@ -2,8 +2,9 @@ import {computed, makeAutoObservable, runInAction} from 'mobx';
 import {Movie} from '../../../../domain/movie/entities/Movies';
 import {errorHandler} from '../../../base/errorHandler';
 import {discoverMoviesByGenresUseCase} from '../../../../domain/movie/usecases/DiscoverMoviesByGenresUseCase';
-import {AccordionStore} from './AccordionStore';
+import {FilterChipsStore} from './FilterChipsStore';
 import {MovieFilterRequest} from '../../../../domain/movie/entities/MovieFilterRequest';
+import {MapHelper} from '../utils/Maps';
 
 class MovieFilterStore {
   isLoading: boolean = false;
@@ -11,9 +12,10 @@ class MovieFilterStore {
   filteringResult: Movie[] = [];
   error: string = '';
   page: number = 1;
-  private filterStore: AccordionStore;
+  filterActive: boolean = false;
+  private filterStore: FilterChipsStore;
 
-  constructor(filterStore: AccordionStore) {
+  constructor(filterStore: FilterChipsStore) {
     makeAutoObservable(this);
     this.filterStore = filterStore;
   }
@@ -27,8 +29,7 @@ class MovieFilterStore {
     this.loadFilteredMovies(1);
   }
 
-  async loadFilteredMovies(page: number) {
-    const params = this.loadParams();
+  async loadFilteredMovies(page: number, params?: Map<string, string>) {
     const useCase = discoverMoviesByGenresUseCase.execute(params, page);
 
     runInAction(() => {
@@ -64,21 +65,34 @@ class MovieFilterStore {
     this.loadFilteredMovies(this.page);
   }
 
-  private loadParams(): MovieFilterRequest {
-    const filtersSelected = this.filterStore.selectedChipsMap;
-    console.log(filtersSelected);
-    return {
-      withGenres: filtersSelected.get('with_genres')?.join(','),
-      watchRegion: '',
-      watchProviders: '',
-      year: '',
-      voteAverageGte: '',
-    };
+  onFilterPanelDismiss() {
+    if (this.filterStore.haveSavedSections) {
+      this.filterStore.restoreSelectionState();
+    } else {
+      this.filterStore.resetSelection();
+    }
   }
 
   onButtonApplyClicked() {
-    const params = this.loadParams();
-    this.loadFilteredMovies(1);
+    let filterParams = this.filterStore.selectedChipsMap;
+    if (filterParams) {
+      this.filterStore.saveSelectionState();
+      this.loadFilteredMovies(1, filterParams);
+      this.filterActive = true;
+    } else {
+      this.filterStore.resetAllStates();
+      this.filterActive = false;
+      this.loadFilteredMovies(1);
+    }
+  }
+
+  resetAllStates() {
+    this.isLoading = false;
+    this.pageLoading = false;
+    this.filteringResult = [];
+    this.error = '';
+    this.page = 1;
+    this.filterStore.resetAllStates();
   }
 }
 
