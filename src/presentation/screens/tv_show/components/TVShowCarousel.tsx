@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import { useState } from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import {TVShow} from '../../../../domain/tv_shows/entities/TVShows';

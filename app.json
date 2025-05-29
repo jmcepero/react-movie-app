@@ -1,4 +1,10 @@
 {
   "name": "MovieApp",
-  "displayName": "MovieApp"
+  "displayName": "RN Movie",
+  "android": {
+    "package": "com.reactnative.movieapp"
+  },
+  "ios": {
+    "bundleIdentifier": "com.reactnative.movieapp"
+  }
 }

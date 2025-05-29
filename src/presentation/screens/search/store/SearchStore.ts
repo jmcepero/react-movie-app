@@ -100,6 +100,10 @@ class SearchStore {
         throw new Error('Invalid chip selected');
     }
   }
+
+  get hasError() {
+    return this.error !== '';
+  }
 }
 
 export default SearchStore;

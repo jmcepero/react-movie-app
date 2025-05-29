@@ -1,9 +1,10 @@
-import React from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {TVShow} from '../../../../domain/tv_shows/entities/TVShows';
 import {TVShowItem} from './TVShowItem';
 import {fullWidth} from '../../../utils/Dimen';
 import HorizontalFeedSkeleton from '../../../components/base/skeleton/HorizontalFeedSkeleton';
+import {getFontFamily} from '../../../utils/Fonts';
+import {primaryRed} from '../../../utils/Colors';
 
 interface Props {
   title?: string;
@@ -62,23 +63,23 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   headerTitle: {
-    fontFamily: 'Archivo-Regular',
+    fontFamily: getFontFamily('normal'),
     fontSize: 18,
     color: 'rgba(251,246,248,0.7)',
   },
   button: {
-    fontFamily: 'Archivo-Regular',
+    fontFamily: getFontFamily('normal'),
     fontSize: 16,
-    color: '#553081',
+    color: primaryRed,
     alignSelf: 'center',
   },
   movieTitle: {
-    fontFamily: 'Archivo-Black',
+    fontFamily: getFontFamily('bold'),
     fontSize: 12,
     color: 'rgba(251,246,248,1)',
   },
   yearTitle: {
-    fontFamily: 'Archivo-Thin',
+    fontFamily: getFontFamily('thin'),
     fontSize: 12,
     color: 'rgba(251,246,248,0.7)',
     marginHorizontal: 4,

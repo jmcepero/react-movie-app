@@ -1,4 +1,3 @@
-import React from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 import {StyleSheet, View} from 'react-native';
 import {CustomGenre} from '../../../data/genre/local/CustomGenres';

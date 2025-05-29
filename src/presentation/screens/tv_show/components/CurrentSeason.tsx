@@ -1,4 +1,3 @@
-import React from 'react';
 import {Text, View} from 'react-native';
 import {FadeInImage} from '../../../components/base/FadeImage';
 import {Season} from '../../../../domain/tv_shows/entities/TVShows';

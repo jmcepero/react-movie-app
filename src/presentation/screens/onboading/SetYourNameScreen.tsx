@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, {useContext} from 'react';
+import { useContext } from 'react';
 import {MobXProviderContext, observer} from 'mobx-react';
 import {Toolbar} from '../../components/base/Toolbar';
 import {getFontFamily} from '../../utils/Fonts';
@@ -37,7 +37,7 @@ const SetYourNameScreen = () => {
       <RNMovieButton
         onClick={() => authStore.saveDisplayName(handleOnFinish)}
         label="Continue"
-        styles={styles.button}
+        style={styles.button}
       />
     </View>
   );

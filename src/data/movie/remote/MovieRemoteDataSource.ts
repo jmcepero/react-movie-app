@@ -1,5 +1,8 @@
+import {MovieFilterRequest} from '../../../domain/movie/entities/MovieFilterRequest';
+import {VOTE_AVERAGE_GTE} from '../../../presentation/screens/filter/utils/Constant';
 import movieDB from '../../api/movieDB';
 import {MoviesResponse, MovieDetailResponse} from '../entities/MovieInterface';
+import {getValorationById} from '../mapper/MovieMapper';
 
 export interface MovieRemoteDataSource {
   getMoviesByClasification(
@@ -8,8 +11,8 @@ export interface MovieRemoteDataSource {
   ): Promise<MoviesResponse>;
   findMovies(term: string, page: number): Promise<MoviesResponse>;
   getMovieDetail(movieId: string): Promise<MovieDetailResponse>;
-  discoverMoviesByGenres(
-    genres: string,
+  discoverMovies(
+    movieFilterRequest?: Map<string, string>,
     page?: number,
   ): Promise<MoviesResponse>;
 }
@@ -39,17 +42,31 @@ export const movieRemoteDataSource: MovieRemoteDataSource = {
     );
     return resp.data;
   },
-  async discoverMoviesByGenres(
-    genres: string,
+  async discoverMovies(
+    movieFilterRequest?: Map<string, string>,
     page?: number,
   ): Promise<MoviesResponse> {
     let url = `discover/movie`;
-    const resp = await movieDB.get<MoviesResponse>(url, {
-      params: {
-        with_genres: genres,
-        ...(page && {page}),
-      },
-    });
+    const voteAverageGte = movieFilterRequest?.get(VOTE_AVERAGE_GTE);
+
+    let valoration = voteAverageGte
+      ? getValorationById(voteAverageGte)
+      : undefined;
+
+    const filterParamsObj = movieFilterRequest
+      ? Object.fromEntries(movieFilterRequest.entries())
+      : {};
+
+    const params: Record<string, any> = {
+      page: page || 1,
+      ...filterParamsObj,
+      ...(valoration && {
+        'vote_average.gte': valoration.value[0],
+        'vote_average.lte': valoration.value[1],
+      }),
+    };
+
+    const resp = await movieDB.get<MoviesResponse>(url, {params});
     return resp.data;
   },
 };

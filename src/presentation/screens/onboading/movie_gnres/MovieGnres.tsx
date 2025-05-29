@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, {useEffect} from 'react';
+import { useEffect } from 'react';
 import GenreStore from '../store/GenreStore';
 import Chip from '../components/Chip';
 import {observer} from 'mobx-react';
@@ -31,7 +31,7 @@ const MovieGnres = ({genreStore}: GnresProps) => {
           {genreStore.movieGnres.map(genre => (
             <Chip
               key={genre.id}
-              id={genre.id}
+              id={genre.id.toString()}
               label={genre.name}
               isSelected={genreStore?.selectedMovieGenres.some(
                 g => g.id === genre.id,

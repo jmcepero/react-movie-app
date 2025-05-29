@@ -1,8 +1,6 @@
-import React from 'react';
 import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
 import {
   Dimensions,
-  Image,
   StyleSheet,
   View,
   TouchableOpacity,
@@ -14,12 +12,16 @@ import {ParamListBase, useNavigation} from '@react-navigation/native';
 import _Icon from 'react-native-vector-icons/Ionicons';
 import {ScrollView} from 'react-native-gesture-handler';
 import {LoadingView} from '../../components/base/LoadingView';
-import {CastFeed} from '../../components/detail/CastFeed';
+import {CastFeed} from '../../components/detail/feed/CastFeed';
 import {ReviewFeed} from '../../components/detail/ReviewFeed';
 import {TrailerCard} from '../../components/detail/TrailerCard';
 import {YearDirector} from '../../components/detail/YearDirector';
 import {useMovieDetail} from '../../hooks/useMovieDetail';
 import {Snackbar} from '@react-native-material/core';
+import {primaryRed} from '../../utils/Colors';
+import {Image} from 'expo-image';
+import {getFontFamily} from '../../utils/Fonts';
+import RNMovieButton from '../../components/base/RNMovieButton';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
@@ -30,10 +32,8 @@ export const DetailScreen = ({route}: Props) => {
   const Icon = _Icon as React.ElementType;
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
   const movie = route.params;
-  const {isLoading, detail, error} = useMovieDetail(movie.movieId);
+  const {isLoading, detail, error, image} = useMovieDetail(movie.movieId);
   const releaseDate = new Date(detail?.releaseDate || '');
-
-  const uri = `https://image.tmdb.org/t/p/original${detail?.posterPath}`;
 
   if (isLoading) {
     return (
@@ -59,7 +59,11 @@ export const DetailScreen = ({route}: Props) => {
             style={{
               height: height * 0.62,
             }}>
-            <Image source={{uri}} style={styles.image} />
+            <Image
+              source={{uri: image}}
+              style={styles.image}
+              transition={1000}
+            />
             <LinearGradient
               style={{
                 width: '100%',
@@ -121,17 +125,16 @@ export const DetailScreen = ({route}: Props) => {
         </View>
       </ScrollView>
 
-      <TouchableOpacity
-        activeOpacity={0.9}
-        style={styles.buttonProvider}
-        onPress={() => {
+      <RNMovieButton
+        onClick={() => {
           navigation.navigate('WatchProviderScreen', {
             itemId: movie.movieId,
             itemType: 'movie',
           });
-        }}>
-        <Text style={styles.buttonText}>Watch</Text>
-      </TouchableOpacity>
+        }}
+        label="Providers"
+        style={styles.buttonProvider}
+      />
 
       {error && (
         <Snackbar
@@ -155,7 +158,8 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    resizeMode: 'cover',
+    width: '100%',
+    height: '100%',
   },
   buttonSquare: {
     position: 'absolute',
@@ -179,7 +183,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   title: {
-    fontFamily: 'Archivo-Medium',
+    fontFamily: getFontFamily('medium'),
     fontSize: 34,
     color: '#fbf6f8',
     width: '70%',
@@ -197,17 +201,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   valorationTitle: {
-    fontFamily: 'Archivo-Regular',
+    fontFamily: getFontFamily('normal'),
     fontSize: 22,
     color: 'white',
     marginEnd: 4,
   },
   genreContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     position: 'absolute',
     bottom: 0,
-    paddingHorizontal: 16,
+    marginHorizontal: 16,
     paddingBottom: 8,
     gap: 4,
   },
@@ -218,12 +221,12 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   genreChipTitle: {
-    fontFamily: 'Archivo-Thin',
+    fontFamily: getFontFamily('thin'),
     fontSize: 14,
     color: '#988396',
   },
   overviewText: {
-    fontFamily: 'Archivo-Regular',
+    fontFamily: getFontFamily('normal'),
     fontSize: 18,
     color: '#9b959c',
     paddingHorizontal: 16,
@@ -232,7 +235,7 @@ const styles = StyleSheet.create({
   buttonProvider: {
     position: 'absolute',
     borderRadius: 16,
-    backgroundColor: '#7B44C1',
+    backgroundColor: primaryRed,
     width: width * 0.8,
     shadowColor: '#000',
     shadowOffset: {
@@ -248,7 +251,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   buttonText: {
-    fontFamily: 'Archivo-Medium',
+    fontFamily: getFontFamily('medium'),
     fontSize: 18,
     color: 'white',
     padding: 16,

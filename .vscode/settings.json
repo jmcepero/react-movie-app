@@ -1,3 +1,5 @@
 {
-  "CodeGPT.apiKey": "OpenAI"
+  "CodeGPT.apiKey": "CodeGPT Plus Beta",
+  "codium.codeCompletion.enable": false,
+  "java.compile.nullAnalysis.mode": "disabled"
 }

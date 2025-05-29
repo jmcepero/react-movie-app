@@ -1,4 +1,4 @@
 module.exports = {
-  presets: ['module:@react-native/babel-preset'],
-  plugins: [['react-native-reanimated/plugin']],
+  presets: [['babel-preset-expo', {jsxRuntime: 'automatic'}]],
+  plugins: ['react-native-reanimated/plugin'],
 };

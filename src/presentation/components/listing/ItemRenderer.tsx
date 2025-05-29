@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Item} from '../../../domain/base/Item';
 import {Movie} from '../../../domain/movie/entities/Movies';

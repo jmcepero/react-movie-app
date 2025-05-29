@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import {StyleProp, StyleSheet, TextInput, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -11,7 +11,6 @@ interface Props {
 }
 
 const SearchInput = ({onDebounced, style}: Props) => {
-  const {top} = useSafeAreaInsets();
   const [textValue, setTextValue] = useState('');
   const textDebounced = useDebounceValue(textValue);
 
@@ -24,7 +23,7 @@ const SearchInput = ({onDebounced, style}: Props) => {
   }, []);
 
   return (
-    <View style={[style, styles.textContainer, {marginTop: top + 16}]}>
+    <View style={[style, styles.textContainer, {marginTop: 8}]}>
       <Icon
         style={styles.icon}
         name="search-outline"
@@ -43,7 +42,7 @@ const SearchInput = ({onDebounced, style}: Props) => {
   );
 };
 
-export default React.memo(SearchInput);
+export default memo(SearchInput);
 
 const styles = StyleSheet.create({
   textContainer: {

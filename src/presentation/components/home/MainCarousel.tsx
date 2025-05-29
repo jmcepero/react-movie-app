@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import {Movie} from '../../../domain/movie/entities/Movies';

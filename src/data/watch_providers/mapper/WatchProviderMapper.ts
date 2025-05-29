@@ -1,8 +1,26 @@
-import {WatchProvider} from '../../../domain/watch_providers/entities/WatchProviders';
-import {WatchProvidersResponse} from '../entities/WatchProviderInterface';
+import {
+  Provider,
+  WatchProvider,
+} from '../../../domain/watch_providers/entities/WatchProviders';
+import {
+  WatchProviderByMovieResponse,
+  WatchProvidersResponse,
+} from '../entities/WatchProviderInterface';
 
-export const watchProviderResponseToDomain = (
-  watchProviderResponse: WatchProvidersResponse,
+export const POPULAR_CHILE_PROVIDERS = [
+  2, // Apple TV
+  3, // Google Play Movies
+  8, // Netflix
+  9, // Amazon Prime Video
+  337, // Disney+
+  531, // Paramount+
+  384, // HBO Max
+  167, // Claro Video
+  467, // DirecTV Go
+];
+
+export const watchProviderByItemIdToDomain = (
+  watchProviderResponse: WatchProviderByMovieResponse,
 ): WatchProvider[] => {
   const result: WatchProvider[] = [];
   if (watchProviderResponse.results?.US?.buy !== undefined) {
@@ -40,6 +58,23 @@ export const watchProviderResponseToDomain = (
       })),
     });
   }
+
+  return result;
+};
+
+export const watchProvidersToDomain = (
+  watchProviderResponse: WatchProvidersResponse,
+): Provider[] => {
+  const result: Provider[] = watchProviderResponse.results
+    .filter(value => {
+      return POPULAR_CHILE_PROVIDERS.includes(value.provider_id);
+    })
+    .map(item => ({
+      logoPath: item.logo_path,
+      providerId: item.provider_id,
+      providerName: item.provider_name,
+      displayPriority: item.display_priority,
+    }));
 
   return result;
 };

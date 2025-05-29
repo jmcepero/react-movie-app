@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import { memo, useCallback } from 'react';
 import {FieldError} from 'react-hook-form';
 import {NativeSyntheticEvent, TextInputFocusEventData} from 'react-native';
 import {StyleProp, StyleSheet, TextInput, View} from 'react-native';
@@ -48,7 +48,7 @@ const EmailInput = ({
   );
 };
 
-export default React.memo(EmailInput);
+export default memo(EmailInput);
 
 const styles = StyleSheet.create({
   textContainer: {

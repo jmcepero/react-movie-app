@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {View, Pressable, Dimensions, StyleSheet} from 'react-native';
 import {primaryRed} from '../../utils/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';

@@ -1,5 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import {View, ActivityIndicator, StyleSheet} from 'react-native';
+import {primaryRed} from '../../../utils/Colors';
 
 interface FooterProps {
   isLoading: boolean;
@@ -13,7 +14,7 @@ export const ListFooterComponent: React.FC<FooterProps> = ({
   if (isLoading || hasError) {
     return (
       <View style={styles.footerComponent}>
-        <ActivityIndicator color={'#7b44c1'} size={16} />
+        <ActivityIndicator color={primaryRed} size={16} />
       </View>
     );
   }

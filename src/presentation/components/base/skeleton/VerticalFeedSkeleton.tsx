@@ -1,5 +1,4 @@
 import {View, FlatList} from 'react-native';
-import React from 'react';
 import {styles} from '../../../screens/tv_show/style/TvShow.style';
 import Skeleton from 'react-native-reanimated-skeleton';
 import {skeletonDarkColor, skeletonLightColor} from '../../../utils/Colors';

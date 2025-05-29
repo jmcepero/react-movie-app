@@ -5,6 +5,7 @@ import auth, {
 } from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {isUserCompleteOnBoardingUseCase} from '../../../../domain/preferences/usecases/IsUserCompleteOnBoardingUseCase';
+import {defaultAppInstance} from '../../../utils/Firebase';
 
 GoogleSignin.configure({
   webClientId:
@@ -22,6 +23,7 @@ class AuthStore {
   googleLoading: boolean | undefined = undefined;
   error: string | null = null;
   isOnBoardingComplete: boolean | undefined = undefined;
+  authInstance = auth(defaultAppInstance);
 
   constructor() {
     makeAutoObservable(this);
@@ -67,7 +69,7 @@ class AuthStore {
   async signInWithEmail() {
     try {
       this.setLoading(true);
-      await auth().signInWithEmailAndPassword(
+      await this.authInstance.signInWithEmailAndPassword(
         this.loginEmail,
         this.loginPassword,
       );
@@ -82,7 +84,7 @@ class AuthStore {
   async registerWithEmail() {
     try {
       this.setLoading(true);
-      await auth().createUserWithEmailAndPassword(
+      await this.authInstance.createUserWithEmailAndPassword(
         this.registerEmail,
         this.registerPassword,
       );
@@ -97,9 +99,17 @@ class AuthStore {
   async signInWithGoogle() {
     try {
       this.setGoogleLoading(true);
-      const {idToken} = await GoogleSignin.signIn();
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      await auth().signInWithCredential(googleCredential);
+      if (!(await GoogleSignin.hasPlayServices())) {
+        throw new Error('Google Play Services no disponibles');
+      }
+      const result = await GoogleSignin.signIn();
+      if (!result?.data?.idToken) {
+        throw new Error('Fallo en autenticación: Datos de usuario incompletos');
+      }
+      const googleCredential = auth.GoogleAuthProvider.credential(
+        result.data.idToken,
+      );
+      await this.authInstance.signInWithCredential(googleCredential);
     } catch (error) {
       runInAction(() => {
         console.error(error);
@@ -109,7 +119,7 @@ class AuthStore {
   }
 
   authStateListener() {
-    auth().onAuthStateChanged(async user => {
+    this.authInstance.onAuthStateChanged(async user => {
       if (user) {
         const isUserVerify = await this.verifyAccount(user);
         const onBoardingComplete = await this.checkIfOnBoardingComplete(
@@ -147,7 +157,7 @@ class AuthStore {
       this.setLoading(true);
     });
     try {
-      await auth().signOut();
+      await this.authInstance.signOut();
       runInAction(() => {
         this.setUser(null);
       });

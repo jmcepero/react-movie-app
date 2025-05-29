@@ -1,4 +1,3 @@
-import React from 'react'
 import { StyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet'
 import { ImageStyle, ViewStyle } from 'react-native/Libraries/StyleSheet/StyleSheetTypes'
 import { Image, StyleSheet, View } from 'react-native'

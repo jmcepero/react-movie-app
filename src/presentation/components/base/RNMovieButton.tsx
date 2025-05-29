@@ -3,24 +3,31 @@ import {
   StyleProp,
   StyleSheet,
   Text,
+  TextStyle,
   TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
-import React from 'react';
 import {primaryRed, secondaryButtonColor} from '../../utils/Colors';
 import {getFontFamily} from '../../utils/Fonts';
 import SpinnerLottie from './SpinnerLottie';
 import {Image} from 'react-native';
+
+export enum ButtonType {
+  PRIMARY = 'primary',
+  SECONDARY = 'secondary',
+  TEXT = 'text',
+}
 
 interface RNMovieButtonProps {
   onClick: () => void;
   label: string;
   isLoading?: boolean;
   leftIcon?: ImageSourcePropType | undefined;
-  styles?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
   disabled?: boolean;
-  secondary?: boolean;
+  type?: ButtonType;
 }
 
 export default function RNMovieButton({
@@ -28,18 +35,19 @@ export default function RNMovieButton({
   label: text,
   isLoading,
   leftIcon,
-  styles,
+  style,
+  textStyle,
   disabled,
-  secondary,
+  type = ButtonType.PRIMARY,
 }: RNMovieButtonProps) {
   return (
     <TouchableOpacity
       activeOpacity={0.9}
       style={[
         localStyles.button,
-        styles,
-        disabled ? localStyles.buttonDisable : null,
-        secondary ? localStyles.buttonSecondary : null,
+        style,
+        disabled && localStyles.buttonDisable,
+        localStyles[`${type}Button`],
       ]}
       onPress={() => onClick()}
       disabled={disabled}>
@@ -48,7 +56,7 @@ export default function RNMovieButton({
       ) : (
         <View style={localStyles.buttonTextContainer}>
           {leftIcon && <Image source={leftIcon} style={localStyles.icon} />}
-          <Text style={localStyles.buttonText}>{text}</Text>
+          <Text style={[localStyles.buttonText, textStyle]}>{text}</Text>
         </View>
       )}
     </TouchableOpacity>
@@ -76,7 +84,7 @@ const localStyles = StyleSheet.create({
     fontFamily: getFontFamily('medium'),
     fontSize: 18,
     color: 'white',
-    padding: 16,
+    marginHorizontal: 12,
     textAlign: 'center',
   },
   buttonTextContainer: {
@@ -92,7 +100,14 @@ const localStyles = StyleSheet.create({
   buttonDisable: {
     backgroundColor: 'gray',
   },
-  buttonSecondary: {
+  primaryButton: {
+    backgroundColor: primaryRed,
+  },
+  secondaryButton: {
     backgroundColor: secondaryButtonColor,
+  },
+  textButton: {
+    backgroundColor: 'transparent',
+    borderWidth: 0,
   },
 });

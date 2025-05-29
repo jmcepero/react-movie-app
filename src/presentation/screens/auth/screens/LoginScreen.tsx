@@ -5,7 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React, {useContext, useEffect} from 'react';
+import { useContext, useEffect } from 'react';
 import {primaryBackgroundColor, primaryRed} from '../../../utils/Colors';
 import {getFontFamily} from '../../../utils/Fonts';
 import {Images} from '../../../../../assets/images/Images.index';
@@ -24,6 +24,7 @@ const LoginScreen = observer(() => {
   const {authStore} = useContext(MobXProviderContext) as {
     authStore: AuthStore;
   };
+
   const {
     control,
     formState: {isValid},
@@ -35,6 +36,7 @@ const LoginScreen = observer(() => {
     },
     mode: 'onChange',
   });
+
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
   useEffect(() => {
@@ -111,7 +113,7 @@ const LoginScreen = observer(() => {
             isLoading={authStore.loading}
             onClick={() => authStore.signInWithEmail()}
             label="Sign in"
-            styles={styles.buttonProvider}
+            style={styles.buttonProvider}
             disabled={!isValid}
           />
         </View>
@@ -125,7 +127,7 @@ const LoginScreen = observer(() => {
           isLoading={authStore.googleLoading}
           onClick={() => authStore.signInWithGoogle()}
           label="Continue with Google"
-          styles={styles.buttonGoogle}
+          style={styles.buttonGoogle}
           leftIcon={Images.google}
         />
 

@@ -5,11 +5,9 @@ const width = Dimensions.get('window').width;
 export const styles = StyleSheet.create({
   scrollviewContainer: {
     paddingBottom: 80,
-    backgroundColor: 'rgba(23, 24, 27, 1)',
   },
   container: {
     flex: 1,
-    backgroundColor: 'rgba(23, 24, 27, 1)',
   },
   image: {
     flex: 1,

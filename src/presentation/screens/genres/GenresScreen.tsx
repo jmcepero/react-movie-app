@@ -1,5 +1,5 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import React, {useContext, useEffect} from 'react';
+import { useContext, useEffect } from 'react';
 import {Toolbar} from '../../components/base/Toolbar';
 import VerticalFeedSkeleton from '../../components/base/skeleton/VerticalFeedSkeleton';
 import SquareFeedSkeleton from '../../components/base/skeleton/SquareFeedSkeleton';

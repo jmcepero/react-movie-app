@@ -1,5 +1,5 @@
 import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
-import React, {useContext, useEffect} from 'react';
+import {useContext, useEffect} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -7,7 +7,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {RootStackParams} from '../../navigation/StackNavigation';
 import {LoadingView} from '../../components/base/LoadingView';
 import {YearDirector} from '../../components/detail/YearDirector';
-import {CastFeed} from '../../components/detail/CastFeed';
+import {CastFeed} from '../../components/detail/feed/CastFeed';
 import {TrailerCard} from '../../components/detail/TrailerCard';
 import {ReviewFeed} from '../../components/detail/ReviewFeed';
 import {styles} from './style/TvShow.style';
@@ -16,14 +16,14 @@ import {DetailImage} from '../../components/detail/DetailImage';
 import {NO_DESCRIPTION_TEXT} from '../../utils/Constants';
 import {CurrentSeason} from './components/CurrentSeason';
 import {MobXProviderContext, observer} from 'mobx-react';
-import TvShowStore from './store/TvShowStore';
+import TvShowDetailStore from './store/TvShowDetailStore';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'TVShowDetailScreen'> {}
 
 export const TVShowDetailScreen = observer(({route}: Props) => {
   const {tvShowStore} = useContext(MobXProviderContext) as {
-    tvShowStore: TvShowStore;
+    tvShowStore: TvShowDetailStore;
   };
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
   const tvShowId = route.params.tvShowId;

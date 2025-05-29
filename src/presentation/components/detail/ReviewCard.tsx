@@ -1,4 +1,3 @@
-import React from 'react'
 import { Dimensions, StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { RoundImage } from '../base/RoundImage'

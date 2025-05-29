@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import { useState } from 'react';
 import {
   ActivityIndicator,
   Animated,
@@ -12,11 +12,12 @@ import {
 import {useFadeAnimation} from '../../hooks/useFadeAnimation';
 
 interface Props {
+  id: string;
   uri: string;
   style?: StyleProp<ImageStyle>;
 }
 
-export const FadeInImage = ({uri, style = {}}: Props) => {
+export const FadeInImage = ({id, uri, style = {}}: Props) => {
   const {opacity, fadeIn} = useFadeAnimation();
   const [isLoading, setIsLoading] = useState(true);
   const combinedStyle = StyleSheet.flatten([style, {opacity}]);
@@ -46,6 +47,7 @@ export const FadeInImage = ({uri, style = {}}: Props) => {
       )}
 
       <Animated.Image
+        key={id}
         source={{uri: uri}}
         onError={onError}
         onLoad={finishLoading}

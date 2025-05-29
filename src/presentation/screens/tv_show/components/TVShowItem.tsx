@@ -1,4 +1,3 @@
-import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {TVShow} from '../../../../domain/tv_shows/entities/TVShows';
 import {ValorationView} from '../../../components/base/ValorationView';

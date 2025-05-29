@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import { useEffect } from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {CustomGenre} from '../../../data/genre/local/CustomGenres';
 import {GenreCard} from './GenreCard';

@@ -1,4 +1,3 @@
-import React from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {Cast} from '../../../../data/people/entities/PeopleInterfaces';
 import {StackNavigationProp} from '@react-navigation/stack';

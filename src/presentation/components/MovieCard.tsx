@@ -1,4 +1,3 @@
-import React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {FadeInImage} from './base/FadeImage';
@@ -9,6 +8,7 @@ export enum CardType {
 }
 
 interface Props {
+  itemId: string;
   imageID: {
     backdropPath?: string;
     posterPath?: string;
@@ -20,6 +20,7 @@ interface Props {
 }
 
 export const ImageCard = ({
+  itemId,
   imageID,
   width,
   height,
@@ -47,7 +48,7 @@ export const ImageCard = ({
           style={[styles.gradient]}
           colors={['#211920', '#382c3e']}
         />
-        <FadeInImage uri={uri} style={styles.image} />
+        <FadeInImage uri={uri} style={styles.image} id={itemId} />
       </View>
     </TouchableOpacity>
   );

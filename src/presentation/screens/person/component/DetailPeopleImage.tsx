@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {View, StyleSheet, Dimensions, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {BackButton} from '../../../components/base/BackButton';
@@ -21,7 +21,7 @@ const DetailPeopleImage: React.FC<ImageCarouselProps> = ({
       <Image source={{uri: image}} style={detailImageStyle.image} />
       <LinearGradient
         style={detailImageStyle.gradient}
-        colors={['rgba(23, 24, 27, 0.65)', 'rgba(23, 24, 27, 1)']}
+        colors={['rgba(19,20,24, 0.65)', 'rgba(19,20,24,1)']}
         locations={[0.5, 0.9]}
       />
       <BackButton onClicked={onBackClicked} />

@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {WatchProvider} from '../../domain/watch_providers/entities/WatchProviders';
-import {getWatchProviderUseCase} from '../../domain/watch_providers/usecases/GetWatchProvidersUseCase';
+import {getWatchProvidersByItemIdUseCase} from '../../domain/watch_providers/usecases/GetWatchProvidersByItemIdUseCase';
 import {errorHandler} from '../base/errorHandler';
 
 interface WatchProviderState {
@@ -30,7 +30,10 @@ export const useWatchProvider = (params: WatchProviderParams) => {
   }, [params]);
 
   const getWatchProvider = async ({itemId, itemType}: WatchProviderParams) => {
-    const getWatchProviders = getWatchProviderUseCase.execute(itemId, itemType);
+    const getWatchProviders = getWatchProvidersByItemIdUseCase.execute(
+      itemId,
+      itemType,
+    );
 
     setWatchProviderState({
       ...watchProviderState,

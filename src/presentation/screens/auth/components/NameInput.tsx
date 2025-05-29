@@ -1,4 +1,5 @@
-import React, {useCallback} from 'react';
+import { useCallback } from 'react';
+import * as React from 'react';
 import {StyleProp, StyleSheet, TextInput, View} from 'react-native';
 import _Icon from 'react-native-vector-icons/Ionicons';
 import {ViewStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';

@@ -1,4 +1,3 @@
-import React from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { Review } from '../../../domain/movie/entities/Movies';
 import { ReviewCard } from './ReviewCard';
