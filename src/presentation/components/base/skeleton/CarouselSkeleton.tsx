@@ -1,5 +1,4 @@
 import {View} from 'react-native';
-import React from 'react';
 import Carousel from 'react-native-reanimated-carousel';
 import Skeleton from 'react-native-reanimated-skeleton';
 import {skeletonDarkColor, skeletonLightColor} from '../../../utils/Colors';

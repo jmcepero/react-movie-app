@@ -1,4 +1,3 @@
-import React from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Movie} from '../../domain/movie/entities/Movies';
 import MovieItem from './listing/MovieItem';

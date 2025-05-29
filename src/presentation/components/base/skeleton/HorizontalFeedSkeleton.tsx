@@ -1,5 +1,4 @@
 import {View, FlatList} from 'react-native';
-import React from 'react';
 import Skeleton from 'react-native-reanimated-skeleton';
 import {skeletonDarkColor, skeletonLightColor} from '../../../utils/Colors';
 import {fullWidth} from '../../../utils/Dimen';

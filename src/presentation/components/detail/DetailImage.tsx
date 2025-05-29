@@ -1,4 +1,3 @@
-import React from 'react';
 import {Dimensions, Image, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {BackButton} from '../base/BackButton';

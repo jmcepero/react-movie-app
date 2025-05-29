@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, {useContext} from 'react';
+import { useContext } from 'react';
 import {MobXProviderContext, observer} from 'mobx-react';
 import {Toolbar} from '../../components/base/Toolbar';
 import {getFontFamily} from '../../utils/Fonts';

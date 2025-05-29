@@ -8,7 +8,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import React from 'react';
 import {primaryRed, secondaryButtonColor} from '../../utils/Colors';
 import {getFontFamily} from '../../utils/Fonts';
 import SpinnerLottie from './SpinnerLottie';

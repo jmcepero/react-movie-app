@@ -1,4 +1,5 @@
-import React, {useContext, useEffect, useRef} from 'react';
+import { useContext, useEffect, useRef } from 'react';
+import * as React from 'react';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {mapStyle} from '../../utils/GoogleMapsStyle';
 import {MobXProviderContext, observer} from 'mobx-react';

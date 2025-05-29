@@ -1,4 +1,3 @@
-import React from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {TVShow} from '../../../../domain/tv_shows/entities/TVShows';
 import {TVShowItem} from './TVShowItem';

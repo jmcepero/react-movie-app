@@ -1,4 +1,3 @@
-import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ImageCard} from '../MovieCard';
 import {Movie} from '../../../domain/movie/entities/Movies';

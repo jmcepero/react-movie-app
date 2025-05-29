@@ -1,4 +1,3 @@
-import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Images} from '../../../../assets/images/Images.index';
 import {getFontFamily} from '../../utils/Fonts';

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import {
   View,
   TextInput,
@@ -89,7 +89,7 @@ const RNInput = ({
   );
 };
 
-export default React.memo(RNInput);
+export default memo(RNInput);
 
 const styles = StyleSheet.create({
   textContainer: {

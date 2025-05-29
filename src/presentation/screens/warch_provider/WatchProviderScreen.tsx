@@ -1,4 +1,3 @@
-import React from 'react';
 import {RootStackParams} from '../../navigation/StackNavigation';
 import {SectionList, StyleSheet, View} from 'react-native';
 import {Text} from '@react-native-material/core';

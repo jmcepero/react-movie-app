@@ -4193,12 +4193,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^19.1.4":
+"@types/react@npm:*":
   version: 19.1.4
   resolution: "@types/react@npm:19.1.4"
   dependencies:
     csstype: ^3.0.2
   checksum: 36dcbd7a2e78b011e61cddc3e97b5e8556d789a404a2e4847f9b88aaf46189a35d1c5becf93baa1bab89258a1cc1102ef295ffe3c1d008cfa95c4d4e1036606f
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^19.0.0":
+  version: 19.1.6
+  resolution: "@types/react@npm:19.1.6"
+  dependencies:
+    csstype: ^3.0.2
+  checksum: 7f4d2e5fd0c1afa6aef956e551c982a59c3ccf37cf30b877300306dcae87e0c4bf7b28b54676b1783f4ca92e730af6fb7a4c1b7f6df27ba14579aa1617a58b09
   languageName: node
   linkType: hard
 
@@ -4560,7 +4569,7 @@ __metadata:
     "@reduxjs/toolkit": ^2.8.2
     "@shopify/flash-list": ^1.8.0
     "@types/jest": ^29.5.14
-    "@types/react": ^19.1.4
+    "@types/react": ^19.0.0
     "@types/react-native-snap-carousel": ^3.8.11
     "@types/react-native-vector-icons": ^6.4.18
     "@types/react-test-renderer": ^19.0.0

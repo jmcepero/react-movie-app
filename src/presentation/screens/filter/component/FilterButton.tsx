@@ -6,7 +6,7 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import { useEffect } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {primaryRed, primaryTextColor} from '../../../utils/Colors';
 

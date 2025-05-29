@@ -1,5 +1,5 @@
 import {StyleSheet, Text, useWindowDimensions, View} from 'react-native';
-import React, {useContext, useEffect} from 'react';
+import { useState, useContext, useEffect } from 'react';
 import {Toolbar} from '../../components/base/Toolbar';
 import {getFontFamily} from '../../utils/Fonts';
 import {MobXProviderContext, observer} from 'mobx-react';
@@ -17,8 +17,8 @@ const SetGnresPreferences = observer(() => {
     genreStore: GenreStore;
     authStore: AuthStore;
   };
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
     {key: 'movie', title: 'Movie Genres'},
     {key: 'tvShow', title: 'Tv Show Genres'},
   ]);

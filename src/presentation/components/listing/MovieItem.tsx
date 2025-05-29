@@ -1,4 +1,3 @@
-import React from 'react';
 import {View, Text} from 'react-native';
 import {Movie} from '../../../domain/movie/entities/Movies';
 import {strDateToYear} from '../../extensions/StringDate';

@@ -1,4 +1,3 @@
-import React from 'react';
 import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import FilterChipsComponent from '../FilterChipsComponent';
 import {movieFilterStyles} from '../../styles/MovieFilterScreenStyles';

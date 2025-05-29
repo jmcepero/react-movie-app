@@ -1,4 +1,3 @@
-import React from 'react';
 import Lottie from 'lottie-react-native';
 import {LottieJson} from '../../../../assets/lottie/LottieJson.index';
 import {View} from 'react-native';

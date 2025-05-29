@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React, {useContext, useEffect} from 'react';
+import { useContext, useEffect } from 'react';
 import {primaryBackgroundColor, primaryRed} from '../../../utils/Colors';
 import {getFontFamily} from '../../../utils/Fonts';
 import EmailInput from '../components/EmailInput';

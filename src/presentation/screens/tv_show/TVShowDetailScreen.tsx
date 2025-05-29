@@ -1,5 +1,5 @@
 import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
-import React, {useContext, useEffect} from 'react';
+import { useContext, useEffect } from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';

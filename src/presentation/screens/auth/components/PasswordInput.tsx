@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import { memo, useCallback, useState } from 'react';
 import {FieldError} from 'react-hook-form';
 import {
   NativeSyntheticEvent,
@@ -76,7 +76,7 @@ const PasswordInput = ({
   );
 };
 
-export default React.memo(PasswordInput);
+export default memo(PasswordInput);
 
 const styles = StyleSheet.create({
   textContainer: {

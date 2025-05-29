@@ -1,4 +1,3 @@
-import React from 'react';
 import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 import {sortingValues} from '../utils/SortingData';
 import {darkColor, primaryRed, primaryTextColor} from '../../../utils/Colors';

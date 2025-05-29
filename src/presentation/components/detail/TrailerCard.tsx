@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native'
 import YoutubePlayer from "react-native-youtube-iframe";
 

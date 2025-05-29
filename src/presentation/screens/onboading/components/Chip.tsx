@@ -1,5 +1,5 @@
 // components/Chip.tsx
-import React from 'react';
+import * as React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import {primaryRed, secondaryTextColor} from '../../../utils/Colors';
 import {getFontFamily} from '../../../utils/Fonts';

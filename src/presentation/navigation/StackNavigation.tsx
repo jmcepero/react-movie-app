@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import { useContext, useEffect } from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {BottomTabNavigation} from './BottomTabNavigation';
 import MovieListingScreen from '../screens/movies/MovieListingScreen';

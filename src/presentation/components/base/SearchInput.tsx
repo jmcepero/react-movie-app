@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import {StyleProp, StyleSheet, TextInput, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -42,7 +42,7 @@ const SearchInput = ({onDebounced, style}: Props) => {
   );
 };
 
-export default React.memo(SearchInput);
+export default memo(SearchInput);
 
 const styles = StyleSheet.create({
   textContainer: {

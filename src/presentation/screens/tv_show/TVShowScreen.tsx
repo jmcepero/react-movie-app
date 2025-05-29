@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import { useContext, useEffect } from 'react';
 import {RefreshControl, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {ParamListBase, useNavigation} from '@react-navigation/native';

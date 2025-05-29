@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import { useCallback } from 'react';
 import {View} from 'react-native';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {ParamListBase, useNavigation} from '@react-navigation/native';

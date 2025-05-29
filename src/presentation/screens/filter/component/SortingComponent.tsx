@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import React, {useContext, useEffect} from 'react';
+import { useContext, useEffect } from 'react';
 import {MobXProviderContext, observer} from 'mobx-react';
 import {FilterChipsStore} from '../store/FilterChipsStore';
 import {RadioGroup} from './SortingRadioGroup';

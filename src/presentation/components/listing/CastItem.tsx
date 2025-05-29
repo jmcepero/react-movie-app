@@ -1,4 +1,3 @@
-import React from 'react';
 import {View, Text} from 'react-native';
 import {strDateToYear} from '../../extensions/StringDate';
 import {ValorationView} from '../base/ValorationView';

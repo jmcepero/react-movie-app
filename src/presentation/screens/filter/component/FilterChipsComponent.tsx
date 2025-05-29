@@ -1,5 +1,5 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useContext} from 'react';
+import { useContext } from 'react';
 import {MobXProviderContext, observer} from 'mobx-react';
 import {FilterChipsStore} from '../store/FilterChipsStore';
 import Chip from '../../onboading/components/Chip';

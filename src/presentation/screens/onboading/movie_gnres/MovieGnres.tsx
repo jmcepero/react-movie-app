@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, {useEffect} from 'react';
+import { useEffect } from 'react';
 import GenreStore from '../store/GenreStore';
 import Chip from '../components/Chip';
 import {observer} from 'mobx-react';

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import { useContext, useEffect } from 'react';
 import {View, ScrollView} from 'react-native';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';

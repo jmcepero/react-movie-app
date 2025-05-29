@@ -1,5 +1,4 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
 import {GnresProps} from '../movie_gnres/MovieGnres';
 import {observer} from 'mobx-react';
 import {styles} from '../components/styles/OnBoarding.style';

@@ -1,5 +1,5 @@
 import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
-import React, {useContext, useEffect} from 'react';
+import { useContext, useEffect } from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
