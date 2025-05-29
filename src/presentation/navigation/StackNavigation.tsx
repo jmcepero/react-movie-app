@@ -1,5 +1,4 @@
-import { useContext, useEffect } from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {BottomTabNavigation} from './BottomTabNavigation';
 import MovieListingScreen from '../screens/movies/MovieListingScreen';
 import {SearchScreen} from '../screens/search/SearchScreen';
@@ -51,7 +50,7 @@ export type RootStackParams = {
   MovieFilter: undefined;
 };
 
-const Stack = createStackNavigator<RootStackParams>();
+const Stack = createNativeStackNavigator<RootStackParams>();
 
 interface StackNavigationProps {
   user: FirebaseAuthTypes.User | null | undefined;
@@ -71,9 +70,10 @@ export const StackNavigation = ({
       screenOptions={{
         headerShown: false,
         presentation: Platform.OS === 'android' ? 'transparentModal' : 'card',
-        cardStyle: {
+        contentStyle: {
           backgroundColor: primaryBlackColor,
         },
+        animation: 'slide_from_right',
       }}>
       {user !== undefined && user === null ? (
         <>

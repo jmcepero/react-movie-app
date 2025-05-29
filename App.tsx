@@ -1,5 +1,4 @@
 import React, {useContext, useEffect} from 'react';
-import {View} from 'react-native';
 import {
   DefaultTheme,
   NavigationContainer,
@@ -15,6 +14,7 @@ import AuthStore from './src/presentation/screens/auth/store/AuthStore';
 import Toast from 'react-native-toast-message';
 import {toastConfig} from './src/presentation/utils/ToastConfig';
 import {primaryBlackColor} from './src/presentation/utils/Colors';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const navTheme: Theme = {
   ...DefaultTheme,
@@ -47,7 +47,7 @@ const AppContent = observer(() => {
   return (
     <>
       <MyStatusBar backgroundColor={primaryBlackColor} />
-      <View style={{flex: 1}}>
+      <GestureHandlerRootView style={{flex: 1}}>
         <NavigationContainer theme={navTheme}>
           <StackNavigation
             user={authStore.user}
@@ -55,7 +55,7 @@ const AppContent = observer(() => {
           />
         </NavigationContainer>
         <Toast config={toastConfig} />
-      </View>
+      </GestureHandlerRootView>
     </>
   );
 });
