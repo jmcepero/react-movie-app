@@ -23,9 +23,7 @@ export const Toolbar = ({
   return (
     <View style={customStyle.row}>
       {showBackArrow && (
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={customStyle.button}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon color={'white'} name="arrow-back-outline" size={24} />
         </TouchableOpacity>
       )}
@@ -44,9 +42,7 @@ const customStyle = StyleSheet.create({
     flexDirection: 'row',
     height: APPBAR_HEIGHT,
     alignItems: 'center',
-  },
-  button: {
-    padding: 8,
+    paddingHorizontal: 16,
   },
   title: {
     flex: 1,

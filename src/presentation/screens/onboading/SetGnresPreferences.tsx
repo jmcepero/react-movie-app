@@ -7,7 +7,7 @@ import GenreStore from './store/GenreStore';
 import {Route, TabBar, TabView} from 'react-native-tab-view';
 import MovieGnres from './movie_gnres/MovieGnres';
 import TVShowGnres from './tv_show_gnres/TVShowGnres';
-import RNMovieButton from '../../components/base/RNMovieButton';
+import RNMovieButton, {ButtonType} from '../../components/base/RNMovieButton';
 import AuthStore from '../auth/store/AuthStore';
 import {darkColor, secondaryBackgroundColor} from '../../utils/Colors';
 
@@ -63,7 +63,7 @@ const SetGnresPreferences = observer(() => {
               backgroundColor: darkColor,
               height: 40,
             }}
-            renderLabel={({route, focused, color}) => (
+            renderLabel={({route, color}) => (
               <Text
                 key={route.key}
                 style={{
@@ -83,8 +83,8 @@ const SetGnresPreferences = observer(() => {
         <RNMovieButton
           onClick={() => {}}
           label="Skip"
-          secondary
-          styles={styles.container}
+          type={ButtonType.SECONDARY}
+          style={styles.container}
         />
         <RNMovieButton
           onClick={() =>
@@ -94,7 +94,7 @@ const SetGnresPreferences = observer(() => {
             )
           }
           label="Continue"
-          styles={styles.container}
+          style={styles.container}
           disabled={!genreStore.canContinue}
         />
       </View>

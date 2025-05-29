@@ -16,6 +16,10 @@ prepare_react_native_project!
 target 'MovieApp' do
   use_expo_modules!
 
+  # Google Maps
+  rn_maps_path = '../node_modules/react-native-maps'
+  pod 'react-native-maps/Google', :path => rn_maps_path
+
   # Firebase pods que requieren modular headers:
   pod 'FirebaseAuthInterop', :modular_headers => true
   pod 'FirebaseAppCheckInterop', :modular_headers => true

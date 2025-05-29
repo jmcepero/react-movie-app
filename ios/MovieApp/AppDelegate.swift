@@ -2,6 +2,7 @@ import Expo
 import React
 import ReactAppDependencyProvider
 import Firebase
+import GoogleMaps
 
 @UIApplicationMain
 public class AppDelegate: ExpoAppDelegate {
@@ -15,6 +16,7 @@ public class AppDelegate: ExpoAppDelegate {
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
   ) -> Bool {
     FirebaseApp.configure()
+     GMSServices.provideAPIKey("AIzaSyDDKf_bts26PjtjOro9MyStbZYkwrOnj84")
     let delegate = ReactNativeDelegate()
     let factory = ExpoReactNativeFactory(delegate: delegate)
     delegate.dependencyProvider = RCTAppDependencyProvider()

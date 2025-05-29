@@ -28,8 +28,11 @@ const MovieItem = ({
   type = CardType.Feed,
 }: MovieItemProps) => {
   return (
-    <View style={[movieStyle.movieContainer, {width: width}]}>
+    <View
+      style={[movieStyle.movieContainer, {width: width}]}
+      key={`MovieItem_${movie.id.toString()}`}>
       <ImageCard
+        itemId={movie.id.toString()}
         imageID={{
           backdropPath: movie.backdropPath,
           posterPath: movie.posterPath,
@@ -43,6 +46,7 @@ const MovieItem = ({
       />
       <View style={movieStyle.movieTitleContainer}>
         <Text
+          key={`MovieTitle_${movie.id.toString()}`}
           style={movieStyle.movieTitle}
           numberOfLines={1}
           ellipsizeMode={'tail'}>
@@ -51,7 +55,9 @@ const MovieItem = ({
         <ValorationView average={movie.voteAverage} iconSize={12} />
       </View>
 
-      <Text style={movieStyle.yearTitle}>
+      <Text
+        style={movieStyle.yearTitle}
+        key={`MovieYear_${movie.id.toString()}`}>
         {strDateToYear(movie.releaseDate)}
       </Text>
     </View>

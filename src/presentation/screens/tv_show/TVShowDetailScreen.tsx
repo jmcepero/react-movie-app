@@ -16,14 +16,14 @@ import {DetailImage} from '../../components/detail/DetailImage';
 import {NO_DESCRIPTION_TEXT} from '../../utils/Constants';
 import {CurrentSeason} from './components/CurrentSeason';
 import {MobXProviderContext, observer} from 'mobx-react';
-import TvShowStore from './store/TvShowStore';
+import TvShowDetailStore from './store/TvShowDetailStore';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'TVShowDetailScreen'> {}
 
 export const TVShowDetailScreen = observer(({route}: Props) => {
   const {tvShowStore} = useContext(MobXProviderContext) as {
-    tvShowStore: TvShowStore;
+    tvShowStore: TvShowDetailStore;
   };
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
   const tvShowId = route.params.tvShowId;

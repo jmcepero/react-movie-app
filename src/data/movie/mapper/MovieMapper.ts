@@ -73,7 +73,6 @@ export const movieDetailResponseToDetail = (
       : undefined,
     director: movieDetailResponse.credits
       ? movieDetailResponse.credits.crew.find(cast => {
-          console.log(cast);
           return cast.job === 'Director';
         })?.name
       : undefined,

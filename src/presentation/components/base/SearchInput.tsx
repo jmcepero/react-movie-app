@@ -11,7 +11,6 @@ interface Props {
 }
 
 const SearchInput = ({onDebounced, style}: Props) => {
-  const {top} = useSafeAreaInsets();
   const [textValue, setTextValue] = useState('');
   const textDebounced = useDebounceValue(textValue);
 
@@ -24,7 +23,7 @@ const SearchInput = ({onDebounced, style}: Props) => {
   }, []);
 
   return (
-    <View style={[style, styles.textContainer, {marginTop: top + 16}]}>
+    <View style={[style, styles.textContainer, {marginTop: 8}]}>
       <Icon
         style={styles.icon}
         name="search-outline"

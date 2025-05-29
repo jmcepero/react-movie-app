@@ -15,12 +15,7 @@ import {LoadingView} from '../../components/base/LoadingView';
 import {Images} from '../../../../assets/images/Images.index';
 import {Place} from '../../../domain/places/entities/PlacesInterface';
 import {Text} from 'react-native';
-import {
-  darkColor,
-  primaryTextColor,
-  secondaryTextColor,
-  tabColor,
-} from '../../utils/Colors';
+import {darkColor, secondaryTextColor} from '../../utils/Colors';
 import {NativeSyntheticEvent} from 'react-native';
 import {ValorationView} from '../../components/base/ValorationView';
 import _Icon from 'react-native-vector-icons/Ionicons';

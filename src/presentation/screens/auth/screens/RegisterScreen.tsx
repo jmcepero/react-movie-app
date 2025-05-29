@@ -102,7 +102,7 @@ const RegisterScreen = observer(() => {
               isLoading={authStore.loading}
               onClick={() => authStore.registerWithEmail()}
               label="Sign up"
-              styles={styles.buttonProvider}
+              style={styles.buttonProvider}
               disabled={!isValid}
             />
           </View>
@@ -116,7 +116,7 @@ const RegisterScreen = observer(() => {
             isLoading={authStore.googleLoading}
             onClick={() => authStore.signInWithGoogle()}
             label="Sign up with Googgle"
-            styles={styles.buttonGoogle}
+            style={styles.buttonGoogle}
             leftIcon={Images.google}
           />
 

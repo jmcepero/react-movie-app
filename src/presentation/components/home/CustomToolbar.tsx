@@ -1,20 +1,19 @@
-import React, {useContext, useEffect} from 'react';
+import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Images} from '../../../../assets/images/Images.index';
 import {getFontFamily} from '../../utils/Fonts';
-import {MobXProviderContext, observer} from 'mobx-react';
-import AuthStore from '../../screens/auth/store/AuthStore';
 
 interface CustomToolbarProps {
   title: string;
+  userPhoto?: string | null;
   onUserIconClicked?: () => void;
 }
 
-const CustomToolbar = ({title, onUserIconClicked}: CustomToolbarProps) => {
-  const {authStore} = useContext(MobXProviderContext) as {
-    authStore: AuthStore;
-  };
-
+const CustomToolbar = ({
+  title,
+  userPhoto,
+  onUserIconClicked,
+}: CustomToolbarProps) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
@@ -22,9 +21,9 @@ const CustomToolbar = ({title, onUserIconClicked}: CustomToolbarProps) => {
         <Image
           style={styles.avatar}
           source={
-            authStore.user?.photoURL
+            userPhoto
               ? {
-                  uri: authStore.user.photoURL,
+                  uri: userPhoto,
                 }
               : Images.user
           }
@@ -34,7 +33,7 @@ const CustomToolbar = ({title, onUserIconClicked}: CustomToolbarProps) => {
   );
 };
 
-export default observer(CustomToolbar);
+export default CustomToolbar;
 
 const styles = StyleSheet.create({
   container: {

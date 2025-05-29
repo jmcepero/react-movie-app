@@ -1,8 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
 import {
   Dimensions,
-  Image,
   StyleSheet,
   View,
   TouchableOpacity,
@@ -20,6 +19,8 @@ import {TrailerCard} from '../../components/detail/TrailerCard';
 import {YearDirector} from '../../components/detail/YearDirector';
 import {useMovieDetail} from '../../hooks/useMovieDetail';
 import {Snackbar} from '@react-native-material/core';
+import {primaryRed} from '../../utils/Colors';
+import {Image} from 'expo-image';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
@@ -30,10 +31,8 @@ export const DetailScreen = ({route}: Props) => {
   const Icon = _Icon as React.ElementType;
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
   const movie = route.params;
-  const {isLoading, detail, error} = useMovieDetail(movie.movieId);
+  const {isLoading, detail, error, image} = useMovieDetail(movie.movieId);
   const releaseDate = new Date(detail?.releaseDate || '');
-
-  const uri = `https://image.tmdb.org/t/p/original${detail?.posterPath}`;
 
   if (isLoading) {
     return (
@@ -59,7 +58,17 @@ export const DetailScreen = ({route}: Props) => {
             style={{
               height: height * 0.62,
             }}>
-            <Image source={{uri}} style={styles.image} />
+            <View style={{flex: 1}}>
+              <Image
+                source={{uri: image}}
+                style={styles.image}
+                transition={1000}
+                onError={error => {
+                  console.log(error);
+                }}
+              />
+            </View>
+
             <LinearGradient
               style={{
                 width: '100%',
@@ -155,7 +164,8 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    resizeMode: 'cover',
+    width: '100%',
+    height: '100%',
   },
   buttonSquare: {
     position: 'absolute',
@@ -232,7 +242,7 @@ const styles = StyleSheet.create({
   buttonProvider: {
     position: 'absolute',
     borderRadius: 16,
-    backgroundColor: '#7B44C1',
+    backgroundColor: primaryRed,
     width: width * 0.8,
     shadowColor: '#000',
     shadowOffset: {

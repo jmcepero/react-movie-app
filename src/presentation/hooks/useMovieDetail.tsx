@@ -6,6 +6,7 @@ import {errorHandler} from '../base/errorHandler';
 interface MovieDetailState {
   isLoading: boolean;
   detail: Movie | undefined;
+  image: string | undefined;
   error: string;
 }
 
@@ -13,6 +14,7 @@ const initialMovieDetailState: MovieDetailState = {
   isLoading: false,
   detail: undefined,
   error: '',
+  image: undefined,
 };
 
 export const useMovieDetail = (movieId: string) => {
@@ -32,11 +34,14 @@ export const useMovieDetail = (movieId: string) => {
     });
 
     try {
-      const useCaseResult = await getMovieDetailUseCase.execute(movieId);
+      const movieDetail = await getMovieDetailUseCase.execute(movieId);
       setMovieDetailState({
         isLoading: false,
-        detail: useCaseResult,
+        detail: movieDetail,
         error: '',
+        image:
+          movieDetail?.posterPath &&
+          `https://image.tmdb.org/t/p/original${movieDetail.posterPath}`,
       });
     } catch (error) {
       const errorMessage = errorHandler(error);

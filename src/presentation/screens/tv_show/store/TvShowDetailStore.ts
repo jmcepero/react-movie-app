@@ -5,7 +5,7 @@ import {errorHandler} from '../../../base/errorHandler';
 import {TVShow} from '../../../../domain/tv_shows/entities/TVShows';
 import {getTVShowDetailUseCase} from '../../../../domain/tv_shows/usecases/GetTVShowDetailUseCase';
 
-class TvShowStore {
+class TvShowDetailStore {
   isLoading: boolean = false;
   tvShow: TVShow | undefined;
   error: string = '';
@@ -36,4 +36,4 @@ class TvShowStore {
   }
 }
 
-export default TvShowStore;
+export default TvShowDetailStore;

@@ -4569,6 +4569,7 @@ __metadata:
     date-fns: ^4.1.0
     eslint: ^9.27.0
     expo: ^53.0.9
+    expo-image: ^2.1.7
     framer-motion: ^12.12.1
     jest: ^29.7.0
     lottie-react-native: ^7.2.2
@@ -6777,6 +6778,21 @@ __metadata:
     expo: "*"
     react: "*"
   checksum: 1db08552d60e8fcbab6301f45e08ef382f5a8b7009348ddffd188566f7ce1e9aa5476c2d1f7dc869db85e25338acc1aea6173a85d5a2f5785b2409d5499a4886
+  languageName: node
+  linkType: hard
+
+"expo-image@npm:^2.1.7":
+  version: 2.1.7
+  resolution: "expo-image@npm:2.1.7"
+  peerDependencies:
+    expo: "*"
+    react: "*"
+    react-native: "*"
+    react-native-web: "*"
+  peerDependenciesMeta:
+    react-native-web:
+      optional: true
+  checksum: 90c3b1a34c04f0b4341ec08014b107cf07042a3778925f3ac756c0db32c0fe5b30f90f5620b27883e0e835089546f48f009253d34a997a2af22ab5f9a9585886
   languageName: node
   linkType: hard
 

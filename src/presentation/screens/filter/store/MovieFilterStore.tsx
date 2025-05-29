@@ -7,21 +7,28 @@ import {MovieFilterRequest} from '../../../../domain/movie/entities/MovieFilterR
 import {MapHelper} from '../utils/Maps';
 
 class MovieFilterStore {
-  isLoading: boolean = false;
-  pageLoading: boolean = false;
-  filteringResult: Movie[] = [];
-  error: string = '';
-  page: number = 1;
-  filterActive: boolean = false;
-  private filterStore: FilterChipsStore;
+  ui = {
+    isLoading: false,
+    pageLoading: false,
+    error: '',
+    isFilterActive: false,
+  };
 
-  constructor(filterStore: FilterChipsStore) {
+  data = {
+    movies: [] as Movie[],
+    page: 1,
+  };
+
+  constructor(private filterStore: FilterChipsStore) {
     makeAutoObservable(this);
-    this.filterStore = filterStore;
   }
 
   get filterChipLoading() {
     return this.filterStore.isLoading;
+  }
+
+  get hasError() {
+    return this.ui.error !== '';
   }
 
   onScreenLoaded() {
@@ -30,39 +37,30 @@ class MovieFilterStore {
   }
 
   async loadFilteredMovies(page: number, params?: Map<string, string>) {
-    const useCase = discoverMoviesByGenresUseCase.execute(params, page);
-
-    runInAction(() => {
-      this.isLoading = page === 1;
-      this.pageLoading = page > 1;
-    });
+    this.setLoadingState(true, page);
 
     try {
-      const data = await useCase;
+      const data = await discoverMoviesByGenresUseCase.execute(params, page);
       runInAction(() => {
-        this.filteringResult =
-          page === 1
-            ? data.results
-            : [...this.filteringResult, ...data.results];
-        this.isLoading = false;
-        this.pageLoading = false;
-        this.error = '';
+        this.data.movies =
+          page === 1 ? data.results : [...this.data.movies, ...data.results];
+        this.resetError();
       });
     } catch (error) {
       const {message} = errorHandler(error);
       runInAction(() => {
-        this.isLoading = false;
-        this.pageLoading = false;
-        this.error = message;
+        this.ui.error = message;
       });
+    } finally {
+      this.setLoadingState(false, page);
     }
   }
 
   onReachToEnd() {
     runInAction(() => {
-      this.page += 1;
+      this.data.page += 1;
     });
-    this.loadFilteredMovies(this.page);
+    this.loadFilteredMovies(this.data.page);
   }
 
   onFilterPanelDismiss() {
@@ -74,25 +72,54 @@ class MovieFilterStore {
   }
 
   onButtonApplyClicked() {
-    let filterParams = this.filterStore.selectedChipsMap;
-    if (filterParams) {
+    const filterParams = this.filterStore.selectedChipsMap;
+    const hasFilters = filterParams && filterParams.size > 0;
+
+    runInAction(() => {
+      this.ui.isFilterActive = !!hasFilters;
+    });
+
+    if (hasFilters) {
       this.filterStore.saveSelectionState();
-      this.loadFilteredMovies(1, filterParams);
-      this.filterActive = true;
     } else {
       this.filterStore.resetAllStates();
-      this.filterActive = false;
-      this.loadFilteredMovies(1);
     }
+
+    this.loadFilteredMovies(1, hasFilters ? filterParams : undefined);
+  }
+
+  onResetFilterClicked() {
+    runInAction(() => {
+      this.data.page = 1;
+      this.ui.isFilterActive = false;
+      this.filterStore.resetAllStates();
+    });
+    this.loadFilteredMovies(1);
   }
 
   resetAllStates() {
-    this.isLoading = false;
-    this.pageLoading = false;
-    this.filteringResult = [];
-    this.error = '';
-    this.page = 1;
+    runInAction(() => {
+      this.ui.isLoading = false;
+      this.ui.pageLoading = false;
+      this.data.movies = [];
+      this.ui.error = '';
+      this.data.page = 1;
+      this.ui.isFilterActive = false;
+    });
     this.filterStore.resetAllStates();
+  }
+
+  private setLoadingState(isLoading: boolean, page: number) {
+    runInAction(() => {
+      this.ui.isLoading = page === 1 ? isLoading : this.ui.isLoading;
+      this.ui.pageLoading = page > 1 ? isLoading : this.ui.pageLoading;
+    });
+  }
+
+  private resetError() {
+    runInAction(() => {
+      this.ui.error = '';
+    });
   }
 }
 

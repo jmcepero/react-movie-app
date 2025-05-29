@@ -4,6 +4,7 @@ import Skeleton from 'react-native-reanimated-skeleton';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {
   darkColor,
+  iconSecondaryColor,
   primaryRed,
   skeletonDarkColor,
   skeletonLightColor,
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(42,42,50,1)',
   },
   icon: {
-    color: '#988396',
+    color: iconSecondaryColor,
   },
   text: {
     fontFamily: getFontFamily('normal'),

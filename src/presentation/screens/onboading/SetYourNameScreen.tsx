@@ -37,7 +37,7 @@ const SetYourNameScreen = () => {
       <RNMovieButton
         onClick={() => authStore.saveDisplayName(handleOnFinish)}
         label="Continue"
-        styles={styles.button}
+        style={styles.button}
       />
     </View>
   );

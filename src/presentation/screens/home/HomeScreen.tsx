@@ -50,6 +50,7 @@ export const HomeScreen = observer(() => {
           {/* Toolbar Section */}
           <CustomToolbar
             title="Movies"
+            userPhoto={authStore.user?.photoURL}
             onUserIconClicked={() => authStore.signOut()}
           />
 
