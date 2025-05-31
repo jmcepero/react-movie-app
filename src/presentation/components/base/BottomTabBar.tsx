@@ -3,12 +3,7 @@ import {primaryRed} from '../../utils/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const {width} = Dimensions.get('window');
-const icons = [
-  'home-outline',
-  'tv-outline',
-  'navigate-circle-outline',
-  'person-outline',
-];
+const icons = ['home-outline', 'tv-outline', 'heart-outline', 'person-outline'];
 
 const BottomTabBar = ({state, navigation}: any) => {
   return (

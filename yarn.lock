@@ -4628,7 +4628,7 @@ __metadata:
     react-native-text-size: ^4.0.0-rc.1
     react-native-toast-message: ^2.3.0
     react-native-vector-icons: ^10.2.0
-    react-native-video: ^6.14.0
+    react-native-video: ^6.14.1
     react-native-webview: ^13.13.5
     react-native-youtube-iframe: ^2.3.0
     react-redux: ^9.2.0
@@ -11059,13 +11059,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-video@npm:^6.14.0":
-  version: 6.14.0
-  resolution: "react-native-video@npm:6.14.0"
+"react-native-video@npm:^6.14.1":
+  version: 6.14.1
+  resolution: "react-native-video@npm:6.14.1"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 3da3ccab377cf84926725be5263eeeba0d45368ef522de993331d9f7bb8ea6cbe9dd4cf9240901595910c3e150bda30fe9456382d58b556018e00dac33ee89bc
+  checksum: fff267341cfb6c063ae0d34095177b3aa18fcd61e411a28740f4ce145cf08115cf4cc188389cd43445e1c84dd5159adcb94be645585300bcee9ca03a8b4e6fa1
   languageName: node
   linkType: hard
 

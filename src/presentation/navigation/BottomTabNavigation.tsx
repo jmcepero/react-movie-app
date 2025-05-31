@@ -5,11 +5,12 @@ import {HomeScreen} from '../screens/home/HomeScreen';
 import TVShowScreen from '../screens/tv_show/TVShowScreen';
 import {ExploreScreen} from '../screens/explore/ExploreScreen';
 import {primaryBlackColor} from '../utils/Colors';
+import FavoriteScreen from '../screens/favorites/FavoriteScreen';
 
 export type BottomTabParams = {
   HomeScreen: undefined;
   TVShowScreen: undefined;
-  ExploreScreen: undefined;
+  FavoriteScreen: undefined;
   AccountScreen: undefined;
 };
 
@@ -28,7 +29,7 @@ export const BottomTabNavigation = () => {
       tabBar={props => <BottomTabBar {...props} />}>
       <BottomTab.Screen name="HomeScreen" component={HomeScreen} />
       <BottomTab.Screen name="TVShowScreen" component={TVShowScreen} />
-      <BottomTab.Screen name="ExploreScreen" component={ExploreScreen} />
+      <BottomTab.Screen name="FavoriteScreen" component={FavoriteScreen} />
       <BottomTab.Screen name="AccountScreen" component={AccountScreen} />
     </BottomTab.Navigator>
   );

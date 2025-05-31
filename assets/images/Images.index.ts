@@ -10,5 +10,7 @@ export const Images = {
   userPin: require('./user_pin.png'),
   cinema: require('./cinema_placeholder.jpg'),
   google: require('./google.png'),
-  noResult: require('./no_result_red.png'),
+  noResult: require('./no_result.png'),
+  conexionLost: require('./conexion_lost.png'),
+  underConstruction: require('./under_construction.png'),
 };

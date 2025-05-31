@@ -5,22 +5,22 @@ import {getFontFamily} from '../../utils/Fonts';
 import {primaryTextColor, secondaryTextColor} from '../../utils/Colors';
 import {Image} from 'expo-image';
 
-const NoResultsComponent = () => {
+const UnderConstructionComponent = () => {
   return (
     <View style={styles.container}>
       <View style={styles.graphicContainer}>
         <Image
-          source={Images.noResult}
+          source={Images.underConstruction}
           style={styles.graphicImage}
           contentFit="contain"
         />
       </View>
 
-      <Text style={styles.title}>No Results</Text>
+      <Text style={styles.title}>Construction Zone 🚧</Text>
       <Text style={styles.subtitle}>
-        Sorry, there are no results for this search.
+        Our hard-hat hamsters are still building this page!
         {'\n'}
-        Please try another phrase
+        Check back soon for something awesome.
       </Text>
     </View>
   );
@@ -57,4 +57,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NoResultsComponent;
+export default UnderConstructionComponent;

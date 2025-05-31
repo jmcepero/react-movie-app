@@ -5,22 +5,22 @@ import {getFontFamily} from '../../utils/Fonts';
 import {primaryTextColor, secondaryTextColor} from '../../utils/Colors';
 import {Image} from 'expo-image';
 
-const NoResultsComponent = () => {
+const ConexionLostComponent = () => {
   return (
     <View style={styles.container}>
       <View style={styles.graphicContainer}>
         <Image
-          source={Images.noResult}
+          source={Images.conexionLost}
           style={styles.graphicImage}
           contentFit="contain"
         />
       </View>
 
-      <Text style={styles.title}>No Results</Text>
+      <Text style={styles.title}>Oops!!</Text>
       <Text style={styles.subtitle}>
-        Sorry, there are no results for this search.
+        Seems your internet took a coffee break ☕️
         {'\n'}
-        Please try another phrase
+        Check your network and give it a nudge!
       </Text>
     </View>
   );
@@ -57,4 +57,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NoResultsComponent;
+export default ConexionLostComponent;

@@ -15,6 +15,7 @@ import Toast from 'react-native-toast-message';
 import {toastConfig} from './src/presentation/utils/ToastConfig';
 import {primaryBlackColor} from './src/presentation/utils/Colors';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import './src/presentation/utils/SuppressWarnings';
 
 const navTheme: Theme = {
   ...DefaultTheme,

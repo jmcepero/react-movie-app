@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect } from 'react';
+import {useCallback, useContext, useEffect} from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import SearchInput from '../../components/base/SearchInput';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
