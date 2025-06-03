@@ -1,11 +1,11 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import UnderConstructionComponent from '../empty_states/UnderConstructionComponent';
+import {UnderConstructionView} from '../empty_states/EmptyStates';
 
 const FavoriteScreen = () => {
   return (
     <View style={styles.container}>
-      <UnderConstructionComponent />
+      <UnderConstructionView />
     </View>
   );
 };

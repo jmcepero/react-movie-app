@@ -13,4 +13,7 @@ export const Images = {
   noResult: require('./no_result.png'),
   conexionLost: require('./conexion_lost.png'),
   underConstruction: require('./under_construction.png'),
+  pageOne: require('./page_one.png'),
+  pageTwo: require('./page_two.webp'),
+  pageThree: require('./page_three.webp'),
 };

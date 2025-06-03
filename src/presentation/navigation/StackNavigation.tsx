@@ -16,6 +16,11 @@ import SetGnresPreferences from '../screens/onboading/SetGnresPreferences';
 import GenresScreen from '../screens/genres/GenresScreen';
 import MovieFilter from '../screens/filter/MovieFilterScreen';
 import {primaryBlackColor} from '../utils/Colors';
+import OnboardingScreen from '../screens/onboarding/OnBoardingScreen';
+import OnboardingFade from '../screens/onboarding/OnBoardingFade';
+import OnboardingStackedFade from '../screens/onboarding/OnBoardingStackedFade';
+import OnboardingStackedFadeWithSwipe from '../screens/onboarding/OnboardingStackedFadeWithSwipe';
+import WelcomeScreen from '../screens/onboarding/WelcomeScreen';
 
 export interface MovieListingParams {
   title: string;
@@ -48,6 +53,7 @@ export type RootStackParams = {
   SetGnresPreferences: undefined;
   GenresScreen: undefined;
   MovieFilter: undefined;
+  OnBoardingScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParams>();
@@ -61,6 +67,24 @@ export const StackNavigation = ({
   user,
   onBoardingComplete,
 }: StackNavigationProps) => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        presentation: Platform.OS === 'android' ? 'transparentModal' : 'card',
+        contentStyle: {
+          backgroundColor: primaryBlackColor,
+        },
+        animation: 'slide_from_right',
+      }}>
+      <Stack.Screen
+        name="OnBoardingScreen"
+        component={OnboardingScreen}
+        options={{title: 'OnBoarding'}}
+      />
+    </Stack.Navigator>
+  );
+
   if (user === undefined && onBoardingComplete === undefined) {
     return null;
   }
