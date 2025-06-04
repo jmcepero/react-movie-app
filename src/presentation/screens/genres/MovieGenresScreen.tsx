@@ -1,17 +1,15 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
-import { useContext, useEffect } from 'react';
+import {FlatList, StyleSheet, View} from 'react-native';
+import {useContext, useEffect} from 'react';
 import {Toolbar} from '../../components/base/Toolbar';
-import VerticalFeedSkeleton from '../../components/base/skeleton/VerticalFeedSkeleton';
 import SquareFeedSkeleton from '../../components/base/skeleton/SquareFeedSkeleton';
 import {MobXProviderContext, observer} from 'mobx-react';
 import GenreStore from '../onboading/store/GenreStore';
-import {GenreCard} from '../../components/home/GenreCard';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {fullWidth} from '../../utils/Dimen';
 import {AnimatedGenreCard} from '../../components/home/AnimatedGenreCard';
 
-const GenresScreen = () => {
+const MovieGenresScreen = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
   const {genreStore} = useContext(MobXProviderContext) as {
     genreStore: GenreStore;
@@ -40,9 +38,8 @@ const GenresScreen = () => {
               genre={genreStore.movieGnres[index]}
               width={(fullWidth - 40) * 0.5}
               onClick={value => {
-                navigation.navigate('MovieListingScreen', {
-                  params: {type: 'byGenre', value: value.id.toString()},
-                  title: value.name,
+                navigation.navigate('MovieFilter', {
+                  genre: value.id,
                 });
               }}
               index={index}
@@ -58,7 +55,7 @@ const GenresScreen = () => {
   );
 };
 
-export default observer(GenresScreen);
+export default observer(MovieGenresScreen);
 
 const styles = StyleSheet.create({
   container: {

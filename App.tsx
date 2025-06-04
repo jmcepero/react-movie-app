@@ -39,7 +39,8 @@ const AppContent = observer(() => {
     if (
       authStore.loading !== undefined &&
       !authStore.loading &&
-      authStore.isOnBoardingComplete !== undefined
+      authStore.isOnBoardingComplete !== undefined &&
+      authStore.isFirstTimeOpeningApp !== null
     ) {
       SplashScreen.hide();
     }
@@ -53,6 +54,7 @@ const AppContent = observer(() => {
           <StackNavigation
             user={authStore.user}
             onBoardingComplete={authStore.isOnBoardingComplete}
+            isFirstTimeOpeningApp={authStore.isFirstTimeOpeningApp}
           />
         </NavigationContainer>
         <Toast config={toastConfig} />

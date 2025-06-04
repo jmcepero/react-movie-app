@@ -13,21 +13,14 @@ import LoginScreen from '../screens/auth/screens/LoginScreen';
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import SetYourNameScreen from '../screens/onboading/SetYourNameScreen';
 import SetGnresPreferences from '../screens/onboading/SetGnresPreferences';
-import GenresScreen from '../screens/genres/GenresScreen';
+import MovieGenresScreen from '../screens/genres/MovieGenresScreen';
 import MovieFilter from '../screens/filter/MovieFilterScreen';
 import {primaryBlackColor} from '../utils/Colors';
 import OnboardingScreen from '../screens/onboarding/OnBoardingScreen';
-import OnboardingFade from '../screens/onboarding/OnBoardingFade';
-import OnboardingStackedFade from '../screens/onboarding/OnBoardingStackedFade';
-import OnboardingStackedFadeWithSwipe from '../screens/onboarding/OnboardingStackedFadeWithSwipe';
-import WelcomeScreen from '../screens/onboarding/WelcomeScreen';
 
 export interface MovieListingParams {
   title: string;
-  params: {
-    type: 'byGenre' | 'byCategory';
-    value: string;
-  };
+  listType: 'popular' | 'topRated';
 }
 
 export type RootStackParams = {
@@ -52,7 +45,11 @@ export type RootStackParams = {
   SetYourNameScreen: undefined;
   SetGnresPreferences: undefined;
   GenresScreen: undefined;
-  MovieFilter: undefined;
+  MovieFilter:
+    | {
+        genre: number;
+      }
+    | undefined;
   OnBoardingScreen: undefined;
 };
 
@@ -61,32 +58,28 @@ const Stack = createNativeStackNavigator<RootStackParams>();
 interface StackNavigationProps {
   user: FirebaseAuthTypes.User | null | undefined;
   onBoardingComplete: boolean | null | undefined;
+  isFirstTimeOpeningApp: boolean | null;
 }
 
 export const StackNavigation = ({
   user,
   onBoardingComplete,
+  isFirstTimeOpeningApp,
 }: StackNavigationProps) => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-        presentation: Platform.OS === 'android' ? 'transparentModal' : 'card',
-        contentStyle: {
-          backgroundColor: primaryBlackColor,
-        },
-        animation: 'slide_from_right',
-      }}>
-      <Stack.Screen
-        name="OnBoardingScreen"
-        component={OnboardingScreen}
-        options={{title: 'OnBoarding'}}
-      />
-    </Stack.Navigator>
-  );
-
   if (user === undefined && onBoardingComplete === undefined) {
     return null;
+  }
+
+  if (isFirstTimeOpeningApp === true) {
+    return (
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen
+          name="OnBoardingScreen"
+          component={OnboardingScreen}
+          options={{title: 'Welcome'}}
+        />
+      </Stack.Navigator>
+    );
   }
 
   return (
@@ -166,7 +159,7 @@ export const StackNavigation = ({
           />
           <Stack.Screen
             name="GenresScreen"
-            component={GenresScreen}
+            component={MovieGenresScreen}
             options={{title: 'Genres'}}
           />
           <Stack.Screen

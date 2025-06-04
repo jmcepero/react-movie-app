@@ -1,7 +1,7 @@
-import { useCallback } from 'react';
+import {useCallback} from 'react';
 import {View} from 'react-native';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
+import {ParamListBase, useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {observer} from 'mobx-react';
 import {FlashList} from '@shopify/flash-list';
@@ -25,6 +25,11 @@ import {
 
 const MovieFilterScreen = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+  const route = useRoute();
+  const genreParam =
+    route.params && 'genre' in route.params
+      ? (route.params.genre as number)
+      : undefined;
 
   const {
     movieFilterStore,
@@ -34,7 +39,7 @@ const MovieFilterScreen = () => {
     handleApplyFilter,
     handleResetFilter,
     handleOnReachToEnd,
-  } = useMovieFilter();
+  } = useMovieFilter(genreParam);
 
   const renderMovieItem = useCallback(
     ({item, index}: {item: Movie; index: number}) => (

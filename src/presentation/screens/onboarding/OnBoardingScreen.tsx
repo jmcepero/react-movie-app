@@ -1,5 +1,5 @@
 // OnboardingScreen.tsx
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -24,15 +24,17 @@ import LinearGradient from 'react-native-linear-gradient';
 import {OnboardingSlide, onboardingSlides} from './Constants';
 import AnimatedSwiper from './components/AnimatedSwiper';
 import {MotiText} from 'moti';
+import {MobXProviderContext, observer} from 'mobx-react';
+import AuthStore from '../auth/store/AuthStore';
 
 const OnboardingScreen = () => {
+  const {authStore} = useContext(MobXProviderContext) as {authStore: AuthStore};
   const insets = useSafeAreaInsets();
   const [currentIndex, setCurrentIndex] = useState(0);
   const animatedPosition = useRef(new Animated.Value(0)).current;
-  const navigation = useNavigation();
 
-  const skipOnboarding = () => {
-    navigation.navigate('MainApp' as never);
+  const handleFinishOnboarding = async () => {
+    await authStore.markAppAsOpened();
   };
 
   useEffect(() => {
@@ -111,6 +113,8 @@ const OnboardingScreen = () => {
             onClick={() => {
               if (currentIndex < onboardingSlides.length - 1) {
                 setCurrentIndex(currentIndex + 1);
+              } else {
+                handleFinishOnboarding();
               }
             }}
             label={
@@ -124,7 +128,7 @@ const OnboardingScreen = () => {
         </View>
       </View>
 
-      <Pressable onPress={skipOnboarding} style={styles.skipButton}>
+      <Pressable onPress={handleFinishOnboarding} style={styles.skipButton}>
         <Text style={styles.skipButtonText}>Skip</Text>
       </Pressable>
     </View>
@@ -244,4 +248,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OnboardingScreen;
+export default observer(OnboardingScreen);

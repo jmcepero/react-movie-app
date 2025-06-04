@@ -6,6 +6,7 @@ import auth, {
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {isUserCompleteOnBoardingUseCase} from '../../../../domain/preferences/usecases/IsUserCompleteOnBoardingUseCase';
 import {defaultAppInstance} from '../../../utils/Firebase';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 GoogleSignin.configure({
   webClientId:
@@ -22,12 +23,14 @@ class AuthStore {
   loading: boolean | undefined = undefined;
   googleLoading: boolean | undefined = undefined;
   error: string | null = null;
+  isFirstTimeOpeningApp: boolean | null = null;
   isOnBoardingComplete: boolean | undefined = undefined;
   authInstance = auth(defaultAppInstance);
 
   constructor() {
     makeAutoObservable(this);
     this.authStateListener();
+    this.checkIfFirstTimeOpeningApp();
   }
 
   setUser(user: any) {
@@ -210,6 +213,32 @@ class AuthStore {
       } finally {
         onFinish();
       }
+    }
+  }
+
+  async checkIfFirstTimeOpeningApp() {
+    try {
+      const hasOpenedApp = await AsyncStorage.getItem('hasOpenedApp');
+
+      runInAction(() => {
+        this.isFirstTimeOpeningApp = hasOpenedApp === null;
+      });
+    } catch (error) {
+      console.log('Error checking first time:', error);
+      runInAction(() => {
+        this.isFirstTimeOpeningApp = false;
+      });
+    }
+  }
+
+  async markAppAsOpened() {
+    try {
+      await AsyncStorage.setItem('hasOpenedApp', 'true');
+      runInAction(() => {
+        this.isFirstTimeOpeningApp = false;
+      });
+    } catch (error) {
+      console.log('Error marking app as opened:', error);
     }
   }
 }

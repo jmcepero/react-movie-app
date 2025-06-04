@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import {useContext, useEffect} from 'react';
 import {View, ScrollView} from 'react-native';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -81,7 +81,7 @@ export const HomeScreen = observer(() => {
             }
             onSeeAllClicked={() =>
               navigation.navigate('MovieListingScreen', {
-                params: {type: 'byCategory', value: 'popular'},
+                listType: 'popular',
                 title: 'Popular',
               })
             }
@@ -93,9 +93,8 @@ export const HomeScreen = observer(() => {
             genres={movieStore.genres}
             isLoading={movieStore.isLoading}
             onClick={value => {
-              navigation.navigate('MovieListingScreen', {
-                params: {type: 'byGenre', value: value.id.toString()},
-                title: value.name,
+              navigation.navigate('MovieFilter', {
+                genre: value.id,
               });
             }}
             onSeeAllClicked={() => {
@@ -122,7 +121,7 @@ export const HomeScreen = observer(() => {
             }
             onSeeAllClicked={() =>
               navigation.navigate('MovieListingScreen', {
-                category: 'topRated',
+                listType: 'topRated',
                 title: 'Top Rated',
               })
             }

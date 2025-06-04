@@ -4,6 +4,15 @@ import {StyleSheet, View, ViewStyle} from 'react-native';
 import AnimatedSwiperItem from './AnimatedSwiperItem';
 import useSwipe from '../hook/useSwiper';
 
+/**
+ * Props for the AnimatedSwiper component.
+ * @interface AnimatedSwiperProps
+ * @property {React.ReactNode} children - Elements to display in the swiper.
+ * @property {number} [duration=300] - Animation duration in milliseconds.
+ * @property {(index: number) => void} [onIndexChange] - Callback that executes when the active index changes.
+ * @property {ViewStyle} [style] - Additional styles to apply to the container.
+ * @property {number} [currentIndex] - Externally controlled index (optional).
+ */
 interface AnimatedSwiperProps {
   children: React.ReactNode;
   duration?: number;
@@ -12,6 +21,25 @@ interface AnimatedSwiperProps {
   currentIndex?: number;
 }
 
+/**
+ * Carousel component with fade animations between elements.
+ *
+ * @component
+ * @example
+ * // Uncontrolled mode (internal index management)
+ * <AnimatedSwiper duration={600} onIndexChange={setIndex}>
+ *   {slides.map(slide => <SlideComponent key={slide.id} {...slide} />)}
+ * </AnimatedSwiper>
+ *
+ * @example
+ * // Controlled mode (externally controlled index)
+ * <AnimatedSwiper
+ *   duration={600}
+ *   currentIndex={activeIndex}
+ *   onIndexChange={setIndex}>
+ *   {slides.map(slide => <SlideComponent key={slide.id} {...slide} />)}
+ * </AnimatedSwiper>
+ */
 const AnimatedSwiper: React.FC<AnimatedSwiperProps> = ({
   children,
   duration = 300,

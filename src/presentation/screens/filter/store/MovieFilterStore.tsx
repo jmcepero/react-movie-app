@@ -1,10 +1,9 @@
-import {computed, makeAutoObservable, runInAction} from 'mobx';
+import {makeAutoObservable, runInAction} from 'mobx';
 import {Movie} from '../../../../domain/movie/entities/Movies';
 import {errorHandler} from '../../../base/errorHandler';
 import {discoverMoviesByGenresUseCase} from '../../../../domain/movie/usecases/DiscoverMoviesByGenresUseCase';
 import {FilterChipsStore} from './FilterChipsStore';
-import {MovieFilterRequest} from '../../../../domain/movie/entities/MovieFilterRequest';
-import {MapHelper} from '../utils/Maps';
+import {WITH_GENRES} from '../utils/Constant';
 
 class MovieFilterStore {
   ui = {
@@ -31,9 +30,15 @@ class MovieFilterStore {
     return this.ui.error !== '';
   }
 
-  onScreenLoaded() {
-    this.filterStore.onScreenLoaded();
-    this.loadFilteredMovies(1);
+  onScreenLoaded(preselectedGenre?: number) {
+    this.ui.isFilterActive = !!preselectedGenre;
+    this.filterStore.onScreenLoaded(preselectedGenre);
+    this.loadFilteredMovies(
+      1,
+      preselectedGenre
+        ? new Map<string, string>([[WITH_GENRES, preselectedGenre.toString()]])
+        : undefined,
+    );
   }
 
   async loadFilteredMovies(page: number, params?: Map<string, string>) {

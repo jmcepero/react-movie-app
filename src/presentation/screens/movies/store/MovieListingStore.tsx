@@ -13,27 +13,21 @@ class MovieListingStore {
   result: Item[] = [];
   page: number = 1;
   error: string = '';
-  params: MovieListingParams | undefined;
+  listType: string | undefined = undefined;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  onScreenLoaded(params: MovieListingParams) {
-    this.params = params;
+  onScreenLoaded(type: string) {
+    this.listType = type;
     this.loadMovies(this.page);
   }
 
   getUseCaseByParams(page: number): Promise<Movies> {
-    const type = this.params!!.params.type;
-    const value = this.params!!.params.value;
-    if (type === 'byCategory') {
-      return value == 'popular'
-        ? getPopularUseCase.execute(page)
-        : getTopRatedUseCase.execute(page);
-    } else {
-      return discoverMoviesByGenresUseCase.execute({withGenres: value}, page);
-    }
+    return this.listType == 'popular'
+      ? getPopularUseCase.execute(page)
+      : getTopRatedUseCase.execute(page);
   }
 
   async loadMovies(page: number) {
