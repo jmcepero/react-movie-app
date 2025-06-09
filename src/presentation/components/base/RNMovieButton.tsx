@@ -26,7 +26,7 @@ interface RNMovieButtonProps {
   leftIcon?: ImageSourcePropType | undefined;
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
-  disabled?: boolean;
+  enabled?: boolean;
   type?: ButtonType;
 }
 
@@ -37,7 +37,7 @@ export default function RNMovieButton({
   leftIcon,
   style,
   textStyle,
-  disabled,
+  enabled = true,
   type = ButtonType.PRIMARY,
 }: RNMovieButtonProps) {
   return (
@@ -46,11 +46,11 @@ export default function RNMovieButton({
       style={[
         localStyles.button,
         style,
-        disabled && localStyles.buttonDisable,
         localStyles[`${type}Button`],
+        !enabled && localStyles.buttonDisable,
       ]}
       onPress={() => onClick()}
-      disabled={disabled}>
+      disabled={!enabled}>
       {isLoading !== undefined && isLoading ? (
         <SpinnerLottie />
       ) : (
@@ -68,7 +68,6 @@ const localStyles = StyleSheet.create({
     height: 50,
     flexDirection: 'row',
     borderRadius: 12,
-    backgroundColor: primaryRed,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

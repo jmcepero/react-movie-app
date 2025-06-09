@@ -1,18 +1,13 @@
 import {StyleSheet, Text, View} from 'react-native';
-import { useEffect } from 'react';
-import GenreStore from '../store/GenreStore';
-import Chip from '../components/Chip';
+import {GnresProps} from '../movie_gnres/MovieGnres';
 import {observer} from 'mobx-react';
-import Skeleton from 'react-native-reanimated-skeleton';
-import {skeletonDarkColor, skeletonLightColor} from '../../../utils/Colors';
 import {styles} from '../components/styles/OnBoarding.style';
+import Chip from '../components/Chip';
+import {skeletonDarkColor, skeletonLightColor} from '../../../utils/Colors';
+import Skeleton from 'react-native-reanimated-skeleton';
 import {skeletonLayouts} from '../../../components/base/skeleton/ChipSkeleton';
 
-export interface GnresProps {
-  genreStore: GenreStore;
-}
-
-const MovieGnres = ({genreStore}: GnresProps) => {
+export const TVShowGnres = ({genreStore}: GnresProps) => {
   return (
     <View style={styles.container}>
       {genreStore.isLoading ? (
@@ -28,15 +23,15 @@ const MovieGnres = ({genreStore}: GnresProps) => {
         </View>
       ) : (
         <View style={styles.chipContainer}>
-          {genreStore.movieGnres.map(genre => (
+          {genreStore.tvShowGenres.map(genre => (
             <Chip
               key={genre.id}
               id={genre.id.toString()}
               label={genre.name}
-              isSelected={genreStore?.selectedMovieGenres.some(
+              isSelected={genreStore?.selectedTVShowGenres.some(
                 g => g.id === genre.id,
               )}
-              onSelect={() => genreStore?.toggleMovieGenre(genre.id)}
+              onSelect={() => genreStore?.toggleTVShowGenre(genre.id)}
             />
           ))}
         </View>
@@ -45,4 +40,4 @@ const MovieGnres = ({genreStore}: GnresProps) => {
   );
 };
 
-export default observer(MovieGnres);
+export default observer(TVShowGnres);

@@ -26,6 +26,7 @@
     "@react-navigation/stack": "^7.3.2",
     "@reduxjs/toolkit": "^2.8.2",
     "@shopify/flash-list": "^2.0.0-rc.2",
+    "@types/react-native-tab-view": "^2.3.0",
     "axios": "^1.9.0",
     "date-fns": "^4.1.0",
     "expo": "^53.0.9",

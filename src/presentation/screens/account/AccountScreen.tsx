@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import {useContext, useState} from 'react';
 import {
   ScrollView,
   View,
@@ -153,7 +153,9 @@ const AccountScreen = () => {
             <Icon name="chevron-forward-outline" size={20} color="#B0B0B0" />
           </TouchableOpacity>
           <View style={styles.separator} />
-          <TouchableOpacity style={styles.listItem}>
+          <TouchableOpacity
+            style={styles.listItem}
+            onPress={() => authStore.signOut()}>
             <View style={styles.listItemContent}>
               <Icon
                 name="log-out-outline"

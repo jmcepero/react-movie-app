@@ -72,26 +72,4 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  headerTitle: {
-    fontFamily: 'Archivo-Regular',
-    fontSize: 18,
-    color: 'rgba(251,246,248,0.7)',
-  },
-  button: {
-    fontFamily: 'Archivo-Regular',
-    fontSize: 16,
-    color: '#553081',
-    alignSelf: 'center',
-  },
-  movieTitle: {
-    fontFamily: 'Archivo-Black',
-    fontSize: 12,
-    color: 'rgba(251,246,248,1)',
-  },
-  yearTitle: {
-    fontFamily: 'Archivo-Thin',
-    fontSize: 12,
-    color: 'rgba(251,246,248,0.7)',
-    marginHorizontal: 4,
-  },
 });

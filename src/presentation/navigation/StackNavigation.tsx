@@ -11,8 +11,8 @@ import {PersonDetailScreen} from '../screens/person/PersonDetailScreen';
 import RegisterScreen from '../screens/auth/screens/RegisterScreen';
 import LoginScreen from '../screens/auth/screens/LoginScreen';
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import SetYourNameScreen from '../screens/onboading/SetYourNameScreen';
-import SetGnresPreferences from '../screens/onboading/SetGnresPreferences';
+import SetYourNameScreen from '../screens/preferences/SetYourNameScreen';
+import SetGnresPreferencesScreen from '../screens/preferences/SetGnresPreferencesScreen';
 import MovieGenresScreen from '../screens/genres/MovieGenresScreen';
 import MovieFilter from '../screens/filter/MovieFilterScreen';
 import {primaryBlackColor} from '../utils/Colors';
@@ -116,7 +116,7 @@ export const StackNavigation = ({
           )}
           <Stack.Screen
             name="SetGnresPreferences"
-            component={SetGnresPreferences}
+            component={SetGnresPreferencesScreen}
             options={{title: 'SetGnresPreferences'}}
           />
         </>

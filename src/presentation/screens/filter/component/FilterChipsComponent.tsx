@@ -1,8 +1,8 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import { useContext } from 'react';
+import {useContext} from 'react';
 import {MobXProviderContext, observer} from 'mobx-react';
 import {FilterChipsStore} from '../store/FilterChipsStore';
-import Chip from '../../onboading/components/Chip';
+import Chip from '../../preferences/components/Chip';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {primaryTextColor} from '../../../utils/Colors';
 import {getFontFamily} from '../../../utils/Fonts';

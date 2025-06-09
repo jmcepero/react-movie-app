@@ -1,33 +1,24 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
-import { useContext, useEffect } from 'react';
-import {primaryBackgroundColor, primaryRed} from '../../../utils/Colors';
-import {getFontFamily} from '../../../utils/Fonts';
-import EmailInput from '../components/EmailInput';
-import PasswordInput from '../components/PasswordInput';
-import {fullWidth} from '../../../utils/Dimen';
+import {Text, View, ScrollView, TouchableOpacity} from 'react-native';
+import {useContext, useEffect} from 'react';
 import {Images} from '../../../../../assets/images/Images.index';
-import NameInput from '../components/NameInput';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {MobXProviderContext, observer} from 'mobx-react';
-import AuthStore from '../store/AuthStore';
 import RNInput from '../../../components/base/RNInput';
 import {Controller, useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {loginSchema} from '../components/form/LoginSchema';
+import {loginSchema, registerSchema} from '../components/form/LoginSchema';
 import RNMovieButton from '../../../components/base/RNMovieButton';
+import RegisterStore from '../store/RegisterStore';
+import LoginStore from '../store/LoginStore';
+import {styles} from '../styles/RegisterScreen.styles';
+import Toast from 'react-native-toast-message';
 
-const RegisterScreen = observer(() => {
-  const {authStore} = useContext(MobXProviderContext) as {
-    authStore: AuthStore;
+const RegisterScreen = () => {
+  const {registerStore, loginStore} = useContext(MobXProviderContext) as {
+    registerStore: RegisterStore;
+    loginStore: LoginStore;
   };
   const {
     control,
@@ -35,12 +26,27 @@ const RegisterScreen = observer(() => {
   } = useForm({
     resolver: yupResolver(loginSchema),
     defaultValues: {
-      email: authStore.registerEmail,
-      password: authStore.registerPassword,
+      email: registerStore.email,
+      password: registerStore.password,
     },
     mode: 'onChange',
   });
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+
+  useEffect(() => {
+    if (registerStore.error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Register Failed!',
+        text2: registerStore.error,
+        visibilityTime: 6000,
+        topOffset: 70,
+        onHide: () => {
+          registerStore.onErrorHide();
+        },
+      });
+    }
+  }, [registerStore.error]);
 
   return (
     <View style={{flex: 1}}>
@@ -69,7 +75,7 @@ const RegisterScreen = observer(() => {
                   textValue={value}
                   onChange={value => {
                     onChange(value);
-                    authStore.onRegisterEmailChange(value);
+                    registerStore.onEmailChange(value);
                   }}
                   error={error}
                   iconName="mail"
@@ -89,7 +95,7 @@ const RegisterScreen = observer(() => {
                   textValue={value}
                   onChange={value => {
                     onChange(value);
-                    authStore.onRegisterPasswordChange(value);
+                    registerStore.onPasswordChange(value);
                   }}
                   error={error}
                   iconName="lock-closed"
@@ -99,11 +105,11 @@ const RegisterScreen = observer(() => {
               )}
             />
             <RNMovieButton
-              isLoading={authStore.loading}
-              onClick={() => authStore.registerWithEmail()}
+              isLoading={registerStore.loading}
+              onClick={() => registerStore.registerWithEmail()}
               label="Sign up"
               style={styles.buttonProvider}
-              disabled={!isValid}
+              enabled={isValid}
             />
           </View>
 
@@ -113,8 +119,8 @@ const RegisterScreen = observer(() => {
           </View>
 
           <RNMovieButton
-            isLoading={authStore.googleLoading}
-            onClick={() => authStore.signInWithGoogle()}
+            isLoading={loginStore.googleLoading}
+            onClick={() => loginStore.signInWithGoogle()}
             label="Sign up with Googgle"
             style={styles.buttonGoogle}
             leftIcon={Images.google}
@@ -140,127 +146,6 @@ const RegisterScreen = observer(() => {
       </TouchableOpacity>
     </View>
   );
-});
+};
 
-export default RegisterScreen;
-
-const styles = StyleSheet.create({
-  inputContainer: {
-    marginTop: 16,
-    gap: 8,
-  },
-  textRNContainer: {
-    alignSelf: 'center',
-  },
-  textRN: {
-    color: primaryRed,
-    fontFamily: getFontFamily('bold'),
-    fontSize: 68,
-  },
-  textMovie: {
-    color: 'white',
-    fontFamily: getFontFamily('bold'),
-    fontSize: 28,
-    top: -13,
-    start: 4,
-    letterSpacing: 3.3,
-  },
-  buttonProvider: {
-    marginTop: 24,
-    marginHorizontal: 16,
-  },
-  buttonText: {
-    fontFamily: 'Archivo-Medium',
-    fontSize: 18,
-    color: 'white',
-    padding: 16,
-    textAlign: 'center',
-    flex: 1,
-  },
-  textOr: {
-    position: 'absolute',
-    color: '#988396',
-    fontFamily: getFontFamily('normal'),
-    fontSize: 12,
-    backgroundColor: primaryBackgroundColor,
-    width: 30,
-    textAlign: 'center',
-  },
-  containerOr: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'center',
-    marginHorizontal: 42,
-    marginVertical: 24,
-    justifyContent: 'center',
-  },
-  line: {
-    height: 0.6,
-    flex: 1,
-    backgroundColor: '#988396',
-    opacity: 0.3,
-  },
-  buttonGoogle: {
-    borderColor: primaryRed,
-    borderWidth: 0.5,
-    backgroundColor: 'rgba(19,20,24,1)',
-    marginHorizontal: 16,
-  },
-  googleTextContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  googleIcon: {
-    width: 22,
-    height: 22,
-  },
-  googleText: {
-    fontFamily: 'Archivo-Medium',
-    fontSize: 18,
-    color: 'white',
-    padding: 16,
-    textAlign: 'center',
-  },
-  signUpContainer: {
-    flexDirection: 'row',
-    alignSelf: 'center',
-    marginTop: 16,
-  },
-  dontHaveAccountText: {
-    color: '#988396',
-    fontFamily: getFontFamily('normal'),
-    fontSize: 12,
-    textAlign: 'center',
-  },
-  signUpText: {
-    color: primaryRed,
-    fontFamily: getFontFamily('bold'),
-    fontSize: 12,
-    textAlign: 'center',
-    marginStart: 4,
-  },
-  buttonSquare: {
-    position: 'absolute',
-    borderRadius: 8,
-    width: 40,
-    height: 40,
-    overflow: 'hidden',
-    alignItems: 'center',
-    justifyContent: 'center',
-    top: 16,
-    start: 16,
-  },
-  blurView: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    opacity: 0.8,
-    backgroundColor: 'rgba(46,35,49, 0.9)',
-  },
-  icon: {
-    color: 'white',
-  },
-});
+export default observer(RegisterScreen);

@@ -17,8 +17,6 @@ export const preferenceRemoteDataSource: PreferenceRemoteDataSource = {
     tvShowGenres: CustomGenre[],
   ): Promise<void> {
     const db = getDatabase();
-
-    // Convertir el arreglo de géneros a un objeto
     const movieGenresObject = movieGenres.reduce(
       (acc, genre) => {
         acc[genre.id] = {name: genre.name, image: genre.image};
@@ -35,22 +33,11 @@ export const preferenceRemoteDataSource: PreferenceRemoteDataSource = {
       {} as Record<string, {name: string; image: string | undefined}>,
     );
 
-    // Guardar el objeto de géneros en la base de datos
-    try {
-      await set(ref(db, `users/${userId}/preferences/`), {
-        onBoardingComplete: true,
-        movieGenres: movieGenresObject,
-        tvShowGenres: tvShowGenresObject,
-      });
-      console.log(
-        'Preferencias de géneros de películas actualizadas con éxito.',
-      );
-    } catch (error) {
-      console.error(
-        'Error al actualizar preferencias de géneros de películas:',
-        error,
-      );
-    }
+    await set(ref(db, `users/${userId}/preferences/`), {
+      onBoardingComplete: true,
+      movieGenres: movieGenresObject,
+      tvShowGenres: tvShowGenresObject,
+    });
   },
   userCompleteOnBoarding: async function (userId: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -65,7 +52,6 @@ export const preferenceRemoteDataSource: PreferenceRemoteDataSource = {
           if (snapshot.exists()) {
             resolve(snapshot.val());
           } else {
-            // Si no existe el valor, asumimos que el onboarding no está completado
             resolve(false);
           }
         })

@@ -3,7 +3,7 @@ import {useContext, useEffect} from 'react';
 import {Toolbar} from '../../components/base/Toolbar';
 import SquareFeedSkeleton from '../../components/base/skeleton/SquareFeedSkeleton';
 import {MobXProviderContext, observer} from 'mobx-react';
-import GenreStore from '../onboading/store/GenreStore';
+import GenreStore from '../preferences/store/GenreStore';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {fullWidth} from '../../utils/Dimen';
@@ -31,11 +31,11 @@ const MovieGenresScreen = () => {
           columnWrapperStyle={{
             gap: 8,
           }}
-          data={genreStore.movieGnres}
+          data={genreStore.movieGenres}
           showsVerticalScrollIndicator={false}
           renderItem={({index}) => (
             <AnimatedGenreCard
-              genre={genreStore.movieGnres[index]}
+              genre={genreStore.movieGenres[index]}
               width={(fullWidth - 40) * 0.5}
               onClick={value => {
                 navigation.navigate('MovieFilter', {

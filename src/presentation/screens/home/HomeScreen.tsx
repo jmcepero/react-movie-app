@@ -51,7 +51,9 @@ export const HomeScreen = observer(() => {
           <CustomToolbar
             title="Movies"
             userPhoto={authStore.user?.photoURL}
-            onUserIconClicked={() => authStore.signOut()}
+            onUserIconClicked={() => {
+              navigation.navigate('AccountScreen');
+            }}
           />
 
           {/* Search Section */}

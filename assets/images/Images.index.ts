@@ -16,4 +16,5 @@ export const Images = {
   pageOne: require('./page_one.png'),
   pageTwo: require('./page_two.webp'),
   pageThree: require('./page_three.webp'),
+  kid: require('./kid_popcorn.png'),
 };

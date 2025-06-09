@@ -4181,6 +4181,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-native-tab-view@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "@types/react-native-tab-view@npm:2.3.0"
+  dependencies:
+    react-native-tab-view: "*"
+  checksum: b39bf62aa901113507c3b3dcee5bc1bcb3df618762ed1cb6c954e4ec8318414dd255bf55a146ec813a7f12fbabc1ffb170f126b099bc1e3d52f5963740cb47c9
+  languageName: node
+  linkType: hard
+
 "@types/react-native-vector-icons@npm:^6.4.18":
   version: 6.4.18
   resolution: "@types/react-native-vector-icons@npm:6.4.18"
@@ -4588,6 +4597,7 @@ __metadata:
     "@types/jest": ^29.5.14
     "@types/react": ^19.0.0
     "@types/react-native-snap-carousel": ^3.8.11
+    "@types/react-native-tab-view": ^2.3.0
     "@types/react-native-vector-icons": ^6.4.18
     "@types/react-test-renderer": ^19.0.0
     axios: ^1.9.0
@@ -11009,6 +11019,19 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: b0fe20a00c5640ec98efb80c4441c0b38ea9fd7c87289be588bd27ff2553f4e5e2d3c9df9e4c752c7f6bcc135c7a848eea37c94e97259dd3f4e47de8e84d0de5
+  languageName: node
+  linkType: hard
+
+"react-native-tab-view@npm:*":
+  version: 4.1.1
+  resolution: "react-native-tab-view@npm:4.1.1"
+  dependencies:
+    use-latest-callback: ^0.2.3
+  peerDependencies:
+    react: ">= 18.2.0"
+    react-native: "*"
+    react-native-pager-view: ">= 6.0.0"
+  checksum: b79002182ce7ab662353d137c056a3aee662054a70ec244dcc8345bfbf9d45a148fecad2b9cc0169066044a2e8c48f2e8925d237265cc34564042ff63afb7026
   languageName: node
   linkType: hard
 

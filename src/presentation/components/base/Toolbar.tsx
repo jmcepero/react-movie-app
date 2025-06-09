@@ -28,7 +28,13 @@ export const Toolbar = ({
         </TouchableOpacity>
       )}
 
-      <Text style={customStyle.title}>{title}</Text>
+      <Text
+        style={[
+          customStyle.title,
+          showBackArrow ? {marginHorizontal: 16} : undefined,
+        ]}>
+        {title}
+      </Text>
 
       <View style={customStyle.rightContainer}>
         {rightComponent ? rightComponent : <View style={customStyle.spacer} />}
@@ -49,7 +55,6 @@ const customStyle = StyleSheet.create({
     fontFamily: getFontFamily('bold'),
     fontSize: 20,
     color: 'white',
-    marginHorizontal: 16,
   },
   spacer: {
     width: 40,

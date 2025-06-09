@@ -1,18 +1,22 @@
 import {StyleSheet, Text, useWindowDimensions, View} from 'react-native';
-import { useState, useContext, useEffect } from 'react';
+import {useState, useContext, useEffect} from 'react';
 import {Toolbar} from '../../components/base/Toolbar';
 import {getFontFamily} from '../../utils/Fonts';
 import {MobXProviderContext, observer} from 'mobx-react';
 import GenreStore from './store/GenreStore';
-import {Route, TabBar, TabView} from 'react-native-tab-view';
+import {Route, TabView} from 'react-native-tab-view';
 import MovieGnres from './movie_gnres/MovieGnres';
 import TVShowGnres from './tv_show_gnres/TVShowGnres';
 import RNMovieButton, {ButtonType} from '../../components/base/RNMovieButton';
 import AuthStore from '../auth/store/AuthStore';
-import {darkColor, secondaryBackgroundColor} from '../../utils/Colors';
+import {primaryBlackColor, secondaryBackgroundColor} from '../../utils/Colors';
+import {CustomTabBarRendererProps, renderTabBar} from './components/CustomTab';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 
-const SetGnresPreferences = observer(() => {
+const SetGnresPreferencesScreen = () => {
   const layout = useWindowDimensions();
+  const {bottom} = useSafeAreaInsets();
   const {genreStore, authStore} = useContext(MobXProviderContext) as {
     genreStore: GenreStore;
     authStore: AuthStore;
@@ -34,17 +38,35 @@ const SetGnresPreferences = observer(() => {
     }
   };
 
-  const handleOnFinish = () => {
-    authStore.setIsOnBoardingComplete(true);
-  };
-
   useEffect(() => {
     genreStore.onScreenLoaded();
-  }, [genreStore]);
+  }, []);
+
+  useEffect(() => {
+    if (genreStore.error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Oops!',
+        text2: genreStore.error,
+        visibilityTime: 6000,
+        bottomOffset: bottom + 90,
+        position: 'bottom',
+        onHide: () => {
+          genreStore.onErrorHide();
+        },
+      });
+    }
+  }, [genreStore.error]);
+
+  const handleContinueSuccess = (success: boolean) => {
+    if (success) {
+      authStore.setIsOnBoardingComplete(true);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <Toolbar title={'Choose your interest'} showBackArrow={true} />
+      <Toolbar title={'Choose your interest'} showBackArrow={false} />
       <Text style={styles.descriptionText}>
         Choose your interests and get the best movie and TV shows
         recommendations. Don't worry, you can always change it later
@@ -55,31 +77,9 @@ const SetGnresPreferences = observer(() => {
         onIndexChange={setIndex}
         initialLayout={{width: layout.width}}
         style={{backgroundColor: secondaryBackgroundColor, marginTop: 16}}
-        renderTabBar={props => (
-          <TabBar
-            {...props}
-            indicatorStyle={{backgroundColor: 'white'}}
-            style={{
-              backgroundColor: darkColor,
-              height: 40,
-            }}
-            renderLabel={({route, color}) => (
-              <Text
-                key={route.key}
-                style={{
-                  color,
-                  bottom: 4,
-                  fontFamily: getFontFamily('bold'),
-                  fontSize: 12,
-                  textTransform: 'uppercase',
-                }}>
-                {route.title}
-              </Text>
-            )}
-          />
-        )}
+        renderTabBar={props => renderTabBar(props as CustomTabBarRendererProps)}
       />
-      <View style={styles.buttonContainer}>
+      <View style={[styles.buttonContainer, {bottom}]}>
         <RNMovieButton
           onClick={() => {}}
           label="Skip"
@@ -88,21 +88,19 @@ const SetGnresPreferences = observer(() => {
         />
         <RNMovieButton
           onClick={() =>
-            genreStore.onContinueButtonClicked(
-              authStore.user?.uid,
-              handleOnFinish,
-            )
+            genreStore.onContinueButtonClicked('.', handleContinueSuccess)
           }
           label="Continue"
           style={styles.container}
-          disabled={!genreStore.canContinue}
+          enabled={genreStore.canContinue}
+          isLoading={genreStore.saveLoading}
         />
       </View>
     </View>
   );
-});
+};
 
-export default SetGnresPreferences;
+export default observer(SetGnresPreferencesScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -119,8 +117,6 @@ const styles = StyleSheet.create({
     padding: 16,
     flexDirection: 'row',
     gap: 6,
-    backgroundColor: darkColor,
-    borderTopWidth: 0.5,
-    borderTopColor: 'rgba(12,15,22,1)',
+    backgroundColor: primaryBlackColor,
   },
 });
