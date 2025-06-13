@@ -1,12 +1,12 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {useEffect} from 'react';
-import GenreStore from '../store/GenreStore';
-import Chip from '../components/Chip';
+import GenreStore from '../../store/GenreStore';
+import Chip from '../Chip';
 import {observer} from 'mobx-react';
 import Skeleton from 'react-native-reanimated-skeleton';
-import {skeletonDarkColor, skeletonLightColor} from '../../../utils/Colors';
-import {styles} from '../components/styles/OnBoarding.style';
-import {skeletonLayouts} from '../../../components/base/skeleton/ChipSkeleton';
+import {skeletonDarkColor, skeletonLightColor} from '../../../../utils/Colors';
+import {styles} from '../styles/OnBoarding.style';
+import {skeletonLayouts} from '../../../../components/base/skeleton/ChipSkeleton';
 
 export interface GnresProps {
   genreStore: GenreStore;

@@ -80,6 +80,19 @@ const AccountScreen = () => {
             </View>
             <Icon name="chevron-forward-outline" size={20} color="#B0B0B0" />
           </TouchableOpacity>
+          <View style={styles.separator} />
+          <TouchableOpacity style={styles.listItem}>
+            <View style={styles.listItemContent}>
+              <Icon
+                name="shapes-outline"
+                size={24}
+                color={iconSecondaryColor}
+                style={styles.listItemIcon}
+              />
+              <Text style={styles.listItemText}>Generes</Text>
+            </View>
+            <Icon name="chevron-forward-outline" size={20} color="#B0B0B0" />
+          </TouchableOpacity>
         </View>
       </View>
 

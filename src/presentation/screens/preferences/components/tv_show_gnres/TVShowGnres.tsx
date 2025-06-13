@@ -1,11 +1,11 @@
-import {StyleSheet, Text, View} from 'react-native';
-import {GnresProps} from '../movie_gnres/MovieGnres';
+import {Text, View} from 'react-native';
 import {observer} from 'mobx-react';
-import {styles} from '../components/styles/OnBoarding.style';
-import Chip from '../components/Chip';
-import {skeletonDarkColor, skeletonLightColor} from '../../../utils/Colors';
 import Skeleton from 'react-native-reanimated-skeleton';
-import {skeletonLayouts} from '../../../components/base/skeleton/ChipSkeleton';
+import {GnresProps} from '../movie_gnres/MovieGnres';
+import {styles} from '../styles/OnBoarding.style';
+import {skeletonLayouts} from '../../../../components/base/skeleton/ChipSkeleton';
+import {skeletonDarkColor, skeletonLightColor} from '../../../../utils/Colors';
+import Chip from '../Chip';
 
 export const TVShowGnres = ({genreStore}: GnresProps) => {
   return (

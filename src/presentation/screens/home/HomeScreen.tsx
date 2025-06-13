@@ -2,19 +2,19 @@ import {useContext, useEffect} from 'react';
 import {View, ScrollView} from 'react-native';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import CustomToolbar from '../../components/home/CustomToolbar';
-import {GenresFeed} from '../../components/home/GenresFeed';
-import {MainCarousel} from '../../components/home/MainCarousel';
-import {HorizontalFeed} from '../../components/HorizontalFeed';
-import {SearchBar} from '../../components/home/SearchBar';
+import CustomToolbar from '@components/home/CustomToolbar';
+import {GenresFeed} from '@components/home/GenresFeed';
+import {MainCarousel} from '@components/home/MainCarousel';
+import {HorizontalFeed} from '@components/HorizontalFeed';
+import {SearchBar} from '@components/home/SearchBar';
 import {Snackbar} from '@react-native-material/core';
 import {RefreshControl} from 'react-native-gesture-handler';
 import MovieStore from './store/MovieStore';
 import {styles} from './styles/HomeScreen.style';
-import {movieOption} from '../../utils/Constants';
+import {movieOption} from '@utils/Constants';
 import {MobXProviderContext, observer} from 'mobx-react';
-import AuthStore from '../auth/store/AuthStore';
-import {primaryRed} from '../../utils/Colors';
+import AuthStore from '@screens/auth/store/AuthStore';
+import {primaryRed} from '@utils/Colors';
 
 export const HomeScreen = observer(() => {
   const {authStore, movieStore} = useContext(MobXProviderContext) as {

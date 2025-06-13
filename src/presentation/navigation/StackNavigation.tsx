@@ -17,6 +17,10 @@ import MovieGenresScreen from '../screens/genres/MovieGenresScreen';
 import MovieFilter from '../screens/filter/MovieFilterScreen';
 import {primaryBlackColor} from '../utils/Colors';
 import OnboardingScreen from '../screens/onboarding/OnBoardingScreen';
+import TMDBAccountScreen from '../screens/preferences/TMDBAccountScreen';
+import TMDBWebviewScreen, {
+  TMDBWebviewProps,
+} from '../components/webview/TMDBWebviewScreen';
 
 export interface MovieListingParams {
   title: string;
@@ -51,6 +55,9 @@ export type RootStackParams = {
       }
     | undefined;
   OnBoardingScreen: undefined;
+  TMDBAccountConexionScreen: undefined;
+  TMDBAccountScreen: undefined;
+  TMDBWebviewScreen: TMDBWebviewProps;
 };
 
 const Stack = createNativeStackNavigator<RootStackParams>();
@@ -66,6 +73,21 @@ export const StackNavigation = ({
   onBoardingComplete,
   isFirstTimeOpeningApp,
 }: StackNavigationProps) => {
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen
+        name="TMDBAccountScreen"
+        component={TMDBAccountScreen}
+        options={{title: 'Welcome'}}
+      />
+      <Stack.Screen
+        name="TMDBWebviewScreen"
+        component={TMDBWebviewScreen}
+        options={{title: 'Webview'}}
+      />
+    </Stack.Navigator>
+  );
+
   if (user === undefined && onBoardingComplete === undefined) {
     return null;
   }

@@ -4,10 +4,12 @@ import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Spacer, Text} from '@react-native-material/core';
 import {getFontFamily} from '../../utils/Fonts';
+import {darkColor} from '../../utils/Colors';
 
 interface Props {
   title: string;
   showBackArrow?: boolean;
+  onBackArrowPress?: () => void;
   rightComponent?: React.ReactNode;
 }
 
@@ -17,13 +19,22 @@ export const Toolbar = ({
   title,
   showBackArrow = true,
   rightComponent,
+  onBackArrowPress,
 }: Props) => {
   const navigation = useNavigation();
+
+  const handleBackPress = () => {
+    if (onBackArrowPress) {
+      onBackArrowPress();
+    } else {
+      navigation.goBack();
+    }
+  };
 
   return (
     <View style={customStyle.row}>
       {showBackArrow && (
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={handleBackPress}>
           <Icon color={'white'} name="arrow-back-outline" size={24} />
         </TouchableOpacity>
       )}
@@ -49,6 +60,7 @@ const customStyle = StyleSheet.create({
     height: APPBAR_HEIGHT,
     alignItems: 'center',
     paddingHorizontal: 16,
+    backgroundColor: darkColor,
   },
   title: {
     flex: 1,

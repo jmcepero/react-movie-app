@@ -5,14 +5,14 @@ import {getFontFamily} from '../../utils/Fonts';
 import {MobXProviderContext, observer} from 'mobx-react';
 import GenreStore from './store/GenreStore';
 import {Route, TabView} from 'react-native-tab-view';
-import MovieGnres from './movie_gnres/MovieGnres';
-import TVShowGnres from './tv_show_gnres/TVShowGnres';
+import MovieGnres from './components/movie_gnres/MovieGnres';
 import RNMovieButton, {ButtonType} from '../../components/base/RNMovieButton';
 import AuthStore from '../auth/store/AuthStore';
 import {primaryBlackColor, secondaryBackgroundColor} from '../../utils/Colors';
 import {CustomTabBarRendererProps, renderTabBar} from './components/CustomTab';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
+import TVShowGnres from './components/tv_show_gnres/TVShowGnres';
 
 const SetGnresPreferencesScreen = () => {
   const layout = useWindowDimensions();
@@ -88,7 +88,10 @@ const SetGnresPreferencesScreen = () => {
         />
         <RNMovieButton
           onClick={() =>
-            genreStore.onContinueButtonClicked('.', handleContinueSuccess)
+            genreStore.onContinueButtonClicked(
+              authStore.user?.uid,
+              handleContinueSuccess,
+            )
           }
           label="Continue"
           style={styles.container}

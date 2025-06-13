@@ -17,4 +17,5 @@ export const Images = {
   pageTwo: require('./page_two.webp'),
   pageThree: require('./page_three.webp'),
   kid: require('./kid_popcorn.png'),
+  tmdbLogo: require('./tmdb.png'),
 };

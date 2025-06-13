@@ -14,6 +14,8 @@ import {TVShowStore} from '../screens/tv_show/store/TvShowStore';
 import LoginStore from '../screens/auth/store/LoginStore';
 import RegisterStore from '../screens/auth/store/RegisterStore';
 import UserNameStore from '../screens/preferences/store/UserNameStore';
+import TMDBAccountStore from '../screens/preferences/store/TMDBAccountStore';
+import TMDBWebviewStore from '../components/webview/TMDBWebviewStore';
 
 class RootStore {
   searchStore: SearchStore;
@@ -30,6 +32,8 @@ class RootStore {
   loginStore: LoginStore;
   registerStore: RegisterStore;
   userNameStore: UserNameStore;
+  tmdbAccountStore: TMDBAccountStore;
+  tmdbWebviewStore: TMDBWebviewStore;
 
   constructor() {
     this.authStore = new AuthStore();
@@ -46,6 +50,8 @@ class RootStore {
     this.loginStore = new LoginStore();
     this.registerStore = new RegisterStore();
     this.userNameStore = new UserNameStore();
+    this.tmdbWebviewStore = new TMDBWebviewStore();
+    this.tmdbAccountStore = new TMDBAccountStore(this.tmdbWebviewStore);
   }
 }
 
