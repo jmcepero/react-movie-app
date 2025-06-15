@@ -9,6 +9,7 @@
       "@components/*": ["presentation/components/*"],
       "@screens/*": ["presentation/screens/*"],
       "@utils/*": ["presentation/utils/*"],
-    }
+    },
+    "skipLibCheck": true // Temporal para resolver warning de Vector- Icons
   }
 }

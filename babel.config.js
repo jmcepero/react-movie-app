@@ -1,5 +1,5 @@
 module.exports = {
-  presets: [['babel-preset-expo', {jsxRuntime: 'automatic'}]],
+  presets: [['babel-preset-expo', { jsxRuntime: 'automatic' }]],
   plugins: [
     [
       'module-resolver',

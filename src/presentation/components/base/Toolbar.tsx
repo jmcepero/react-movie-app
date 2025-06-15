@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {Spacer, Text} from '@react-native-material/core';
-import {getFontFamily} from '../../utils/Fonts';
-import {darkColor} from '../../utils/Colors';
+import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
+import Icon from '@react-native-vector-icons/ionicons';
+import { Text } from '@react-native-material/core';
+import { getFontFamily } from '../../utils/Fonts';
+import { darkColor } from '../../utils/Colors';
+import { useNavigation } from '@react-navigation/native';
 
 interface Props {
   title: string;
@@ -42,8 +42,9 @@ export const Toolbar = ({
       <Text
         style={[
           customStyle.title,
-          showBackArrow ? {marginHorizontal: 16} : undefined,
-        ]}>
+          showBackArrow ? { marginHorizontal: 16 } : undefined,
+        ]}
+      >
         {title}
       </Text>
 

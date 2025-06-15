@@ -1,4 +1,5 @@
-import {StyleSheet} from 'react-native';
+import { darkBlueColor } from '@presentation/utils/Colors';
+import { StyleSheet } from 'react-native';
 
 export const movieStyle = StyleSheet.create({
   container: {
@@ -50,5 +51,13 @@ export const movieStyle = StyleSheet.create({
   },
   movieContainer: {
     paddingVertical: 8,
+  },
+  iconFav: {
+    position: 'absolute',
+    backgroundColor: 'rgba(19,20,24,0.8)',
+    borderRadius: 12,
+    padding: 5,
+    bottom: 50,
+    right: 6,
   },
 });

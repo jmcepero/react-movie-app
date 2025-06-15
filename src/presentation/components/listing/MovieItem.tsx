@@ -1,10 +1,11 @@
-import {View, Text} from 'react-native';
-import {Movie} from '../../../domain/movie/entities/Movies';
-import {strDateToYear} from '../../extensions/StringDate';
-import {ValorationView} from '../base/ValorationView';
-import {ImageCard} from '../MovieCard';
-import {movieStyle} from './MovieItem.style';
-import {fullWidth} from '../../utils/Dimen';
+import { View, Text } from 'react-native';
+import { Movie } from '../../../domain/movie/entities/Movies';
+import { strDateToYear } from '../../extensions/StringDate';
+import { ValorationView } from '../base/ValorationView';
+import { ImageCard } from '../MovieCard';
+import { movieStyle } from './MovieItem.style';
+import { fullWidth } from '../../utils/Dimen';
+import Icon from '@react-native-vector-icons/ionicons';
 
 export enum CardType {
   Carousel,
@@ -28,8 +29,9 @@ const MovieItem = ({
 }: MovieItemProps) => {
   return (
     <View
-      style={[movieStyle.movieContainer, {width: width}]}
-      key={`MovieItem_${movie.id.toString()}`}>
+      style={[movieStyle.movieContainer, { width: width }]}
+      key={`MovieItem_${movie.id.toString()}`}
+    >
       <ImageCard
         itemId={movie.id.toString()}
         imageID={{
@@ -43,12 +45,19 @@ const MovieItem = ({
           onClick?.(movie);
         }}
       />
+      <Icon
+        color={'white'}
+        name="heart-outline"
+        size={22}
+        style={movieStyle.iconFav}
+      />
       <View style={movieStyle.movieTitleContainer}>
         <Text
           key={`MovieTitle_${movie.id.toString()}`}
           style={movieStyle.movieTitle}
           numberOfLines={1}
-          ellipsizeMode={'tail'}>
+          ellipsizeMode={'tail'}
+        >
           {movie.title}
         </Text>
         <ValorationView average={movie.voteAverage} iconSize={12} />
@@ -56,7 +65,8 @@ const MovieItem = ({
 
       <Text
         style={movieStyle.yearTitle}
-        key={`MovieYear_${movie.id.toString()}`}>
+        key={`MovieYear_${movie.id.toString()}`}
+      >
         {strDateToYear(movie.releaseDate)}
       </Text>
     </View>
