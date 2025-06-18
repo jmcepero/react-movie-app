@@ -9,10 +9,10 @@ import {
   TextInputFocusEventData,
   TouchableOpacity,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; // Asegúrate de tener esta librería o cambia por tu ícono de preferencia
-import {FieldError} from 'react-hook-form'; // Asumiendo el uso de react-hook-form
-import {onyxColor, primaryRed} from '../../utils/Colors';
-import {getFontFamily} from '../../utils/Fonts';
+import Icon from '@react-native-vector-icons/ionicons';
+import { FieldError } from 'react-hook-form';
+import { onyxColor, primaryRed } from '../../utils/Colors';
+import { getFontFamily } from '../../utils/Fonts';
 
 interface Props {
   textValue: string;
@@ -24,7 +24,7 @@ interface Props {
   error?: FieldError | undefined;
   placeholder: string;
   secureTextEntry?: boolean; // Para manejar inputs de contraseña
-  iconName: string; // Nombre del ícono a usar
+  iconName: React.ComponentProps<typeof Icon>['name']; // Nombre del ícono a usar
   iconColor?: string; // Color del ícono
   placeholderTextColor?: string; // Color del placeholder
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters'; // Control de auto-capitalización
@@ -62,7 +62,8 @@ const RNInput = ({
         styles.textContainer,
         style,
         error ? styles.textInputError : null,
-      ]}>
+      ]}
+    >
       <Icon style={styles.icon} name={iconName} size={18} color={iconColor} />
       <TextInput
         value={textValue}
@@ -77,7 +78,8 @@ const RNInput = ({
       {secureTextEntry && (
         <TouchableOpacity
           onPress={togglePasswordVisibility}
-          style={styles.iconRight}>
+          style={styles.iconRight}
+        >
           <Icon
             name={isPasswordVisible ? 'eye-off' : 'eye'}
             size={18}

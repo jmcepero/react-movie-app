@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef } from 'react';
 import * as React from 'react';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import {mapStyle} from '../../utils/GoogleMapsStyle';
-import {MobXProviderContext, observer} from 'mobx-react';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { mapStyle } from '../../utils/GoogleMapsStyle';
+import { MobXProviderContext, observer } from 'mobx-react';
 import ExploreStore from './store/ExploreStore';
 import {
   Dimensions,
@@ -11,22 +11,22 @@ import {
   NativeScrollEvent,
   StyleSheet,
 } from 'react-native';
-import {View} from 'react-native';
-import {LoadingView} from '../../components/base/LoadingView';
-import {Images} from '../../../../assets/images/Images.index';
-import {Place} from '../../../domain/places/entities/PlacesInterface';
-import {Text} from 'react-native';
-import {darkColor, secondaryTextColor} from '../../utils/Colors';
-import {NativeSyntheticEvent} from 'react-native';
-import {ValorationView} from '../../components/base/ValorationView';
-import _Icon from 'react-native-vector-icons/Ionicons';
+import { View } from 'react-native';
+import { LoadingView } from '../../components/base/LoadingView';
+import { Images } from '../../../../assets/images/Images.index';
+import { Place } from '../../../domain/places/entities/PlacesInterface';
+import { Text } from 'react-native';
+import { darkColor, secondaryTextColor } from '../../utils/Colors';
+import { NativeSyntheticEvent } from 'react-native';
+import { ValorationView } from '../../components/base/ValorationView';
+import _Icon from '@react-native-vector-icons/ionicons';
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const ITEM_WIDTH = width * 0.7;
 const ITEM_MARGIN = 4;
 
 export const ExploreScreen = observer(() => {
-  const {exploreStore} = useContext(MobXProviderContext) as {
+  const { exploreStore } = useContext(MobXProviderContext) as {
     exploreStore: ExploreStore;
   };
   const mapRef = useRef<MapView>(null);
@@ -56,10 +56,10 @@ export const ExploreScreen = observer(() => {
     }
   };
 
-  const renderItem = ({item}: {item: Place}) => (
+  const renderItem = ({ item }: { item: Place }) => (
     <View style={styles.card}>
       <Image
-        source={item.photoUrl ? {uri: item.photoUrl} : Images.cinema}
+        source={item.photoUrl ? { uri: item.photoUrl } : Images.cinema}
         style={styles.image}
         resizeMode="cover"
       />
@@ -69,7 +69,7 @@ export const ExploreScreen = observer(() => {
       </View>
 
       <View style={styles.addressContainer}>
-        <Icon name="locate" size={14} style={{color: 'rgb(160,241,176)'}} />
+        <Icon name="locate" size={14} style={{ color: 'rgb(160,241,176)' }} />
         <Text style={styles.address}>{item.address}</Text>
       </View>
 
@@ -103,18 +103,23 @@ export const ExploreScreen = observer(() => {
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         customMapStyle={mapStyle}
-        initialRegion={{...exploreStore.location}}
-        onMapReady={() => exploreStore.onMapReady()}>
-        <Marker coordinate={{...exploreStore.location}}>
-          <Image source={Images.userPin} style={{width: 35, height: 35}} />
+        initialRegion={{ ...exploreStore.location }}
+        onMapReady={() => exploreStore.onMapReady()}
+      >
+        <Marker coordinate={{ ...exploreStore.location }}>
+          <Image source={Images.userPin} style={{ width: 35, height: 35 }} />
         </Marker>
 
         {exploreStore.places.map(place => (
           <Marker
             key={place.id}
-            coordinate={{latitude: place.latitude, longitude: place.longitude}}
-            title={place.name}>
-            <Image source={Images.pin} style={{width: 35, height: 35}} />
+            coordinate={{
+              latitude: place.latitude,
+              longitude: place.longitude,
+            }}
+            title={place.name}
+          >
+            <Image source={Images.pin} style={{ width: 35, height: 35 }} />
           </Marker>
         ))}
       </MapView>
@@ -162,7 +167,7 @@ const styles = StyleSheet.create({
     backgroundColor: darkColor,
     borderRadius: 16,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,

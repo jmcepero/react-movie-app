@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import * as React from 'react';
-import {StyleProp, StyleSheet, TextInput, View} from 'react-native';
-import _Icon from 'react-native-vector-icons/Ionicons';
-import {ViewStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
+import { StyleProp, StyleSheet, TextInput, View } from 'react-native';
+import _Icon from '@react-native-vector-icons/ionicons';
+import { ViewStyle } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 interface Props {
   textValue: string;
@@ -10,7 +10,7 @@ interface Props {
   style?: StyleProp<ViewStyle>;
 }
 
-const NameInput = ({textValue, onChange, style}: Props) => {
+const NameInput = ({ textValue, onChange, style }: Props) => {
   const Icon = _Icon as React.ElementType;
 
   const onChangeText = useCallback((value: string) => {

@@ -1,11 +1,16 @@
-import {View, Pressable, Dimensions, StyleSheet} from 'react-native';
-import {primaryRed} from '../../utils/Colors';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { View, Pressable, Dimensions, StyleSheet } from 'react-native';
+import { primaryRed } from '../../utils/Colors';
+import Icon from '@react-native-vector-icons/ionicons';
 
-const {width} = Dimensions.get('window');
-const icons = ['home-outline', 'tv-outline', 'heart-outline', 'person-outline'];
+const { width } = Dimensions.get('window');
+const icons: string[] = [
+  'home-outline',
+  'tv-outline',
+  'heart-outline',
+  'person-outline',
+];
 
-const BottomTabBar = ({state, navigation}: any) => {
+const BottomTabBar = ({ state, navigation }: any) => {
   return (
     <View style={styles.root}>
       <View style={styles.mainContainer}>
@@ -31,7 +36,8 @@ const BottomTabBar = ({state, navigation}: any) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     flex: 1,
-                  }}>
+                  }}
+                >
                   <Icon
                     name={icons[index]}
                     size={24}

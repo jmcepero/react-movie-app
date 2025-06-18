@@ -1,4 +1,4 @@
-import {preferenceRemoteDataSource} from '../../../data/preferences/remote/PreferenceRemoteDataSource';
+import { preferenceRemoteDataSource } from '../../../data/preferences/remote/PreferenceRemoteDataSource';
 
 export const saveUserTMDBSessionUseCase = {
   async execute(userId: string, session: string): Promise<void> {

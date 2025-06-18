@@ -1,6 +1,5 @@
-import {Movies} from '../entities/Movies';
-import {movieRepository} from '../../../data/movie/MovieRepository';
-import {MovieFilterRequest} from '../entities/MovieFilterRequest';
+import { Movies } from '../entities/Movies';
+import { movieRepository } from '../../../data/movie/MovieRepository';
 
 export const discoverMoviesByGenresUseCase = {
   async execute(

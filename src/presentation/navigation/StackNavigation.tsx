@@ -21,6 +21,7 @@ import TMDBAccountScreen from '../screens/preferences/TMDBAccountScreen';
 import TMDBWebviewScreen, {
   TMDBWebviewProps,
 } from '../components/webview/TMDBWebviewScreen';
+import React from 'react';
 
 export interface MovieListingParams {
   title: string;
@@ -63,16 +64,22 @@ export type RootStackParams = {
 const Stack = createNativeStackNavigator<RootStackParams>();
 
 interface StackNavigationProps {
+  isAppInitialized: boolean;
   user: FirebaseAuthTypes.User | null | undefined;
   onBoardingComplete: boolean | null | undefined;
   isFirstTimeOpeningApp: boolean | null;
 }
 
-export const StackNavigation = ({
+const StackNavigationComponent = ({
+  isAppInitialized,
   user,
   onBoardingComplete,
   isFirstTimeOpeningApp,
 }: StackNavigationProps) => {
+  if (!isAppInitialized) {
+    return null;
+  }
+
   if (user === undefined && onBoardingComplete === undefined) {
     return null;
   }
@@ -180,3 +187,5 @@ export const StackNavigation = ({
     </Stack.Navigator>
   );
 };
+
+export const StackNavigation = React.memo(StackNavigationComponent);

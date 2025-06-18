@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react';
+import { useContext, useState } from 'react';
 import {
   ScrollView,
   View,
@@ -9,11 +9,11 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {Images} from '../../../../assets/images/Images.index';
-import {MobXProviderContext, observer} from 'mobx-react';
+import Icon from '@react-native-vector-icons/ionicons';
+import { Images } from '../../../../assets/images/Images.index';
+import { MobXProviderContext, observer } from 'mobx-react';
 import AuthStore from './../auth/store/AuthStore';
-import {getFontFamily} from '../../utils/Fonts';
+import { getFontFamily } from '../../utils/Fonts';
 import {
   darkBlueColor,
   darkBlueColorLighter,
@@ -24,11 +24,11 @@ import {
 } from '../../utils/Colors';
 
 const AccountScreen = () => {
-  const {authStore} = useContext(MobXProviderContext) as {
+  const { authStore } = useContext(MobXProviderContext) as {
     authStore: AuthStore;
   };
   const userPhoto = authStore.user?.photoURL
-    ? {uri: authStore.user?.photoURL}
+    ? { uri: authStore.user?.photoURL }
     : Images.user;
 
   const [pushNotificationsEnabled, setPushNotificationsEnabled] =
@@ -143,7 +143,7 @@ const AccountScreen = () => {
               <Text style={styles.listItemText}>Dark Theme</Text>
             </View>
             <Switch
-              trackColor={{false: '#E0E0E0', true: primaryRed}}
+              trackColor={{ false: '#E0E0E0', true: primaryRed }}
               thumbColor={pushNotificationsEnabled ? '#FFFFFF' : '#f4f3f4'}
               ios_backgroundColor="#E0E0E0"
               onValueChange={() =>
@@ -168,7 +168,8 @@ const AccountScreen = () => {
           <View style={styles.separator} />
           <TouchableOpacity
             style={styles.listItem}
-            onPress={() => authStore.signOut()}>
+            onPress={() => authStore.signOut()}
+          >
             <View style={styles.listItemContent}>
               <Icon
                 name="log-out-outline"

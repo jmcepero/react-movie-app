@@ -1,4 +1,4 @@
-import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import {
   Dimensions,
   StyleSheet,
@@ -7,20 +7,20 @@ import {
   Text,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {RootStackParams} from '../../navigation/StackNavigation';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
-import _Icon from 'react-native-vector-icons/Ionicons';
-import {ScrollView} from 'react-native-gesture-handler';
-import {LoadingView} from '../../components/base/LoadingView';
-import {CastFeed} from '../../components/detail/feed/CastFeed';
-import {ReviewFeed} from '../../components/detail/ReviewFeed';
-import {TrailerCard} from '../../components/detail/TrailerCard';
-import {YearDirector} from '../../components/detail/YearDirector';
-import {useMovieDetail} from '../../hooks/useMovieDetail';
-import {Snackbar} from '@react-native-material/core';
-import {primaryRed} from '../../utils/Colors';
-import {Image} from 'expo-image';
-import {getFontFamily} from '../../utils/Fonts';
+import { RootStackParams } from '../../navigation/StackNavigation';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import _Icon from '@react-native-vector-icons/ionicons';
+import { ScrollView } from 'react-native-gesture-handler';
+import { LoadingView } from '../../components/base/LoadingView';
+import { CastFeed } from '../../components/detail/feed/CastFeed';
+import { ReviewFeed } from '../../components/detail/ReviewFeed';
+import { TrailerCard } from '../../components/detail/TrailerCard';
+import { YearDirector } from '../../components/detail/YearDirector';
+import { useMovieDetail } from '../../hooks/useMovieDetail';
+import { Snackbar } from '@react-native-material/core';
+import { primaryRed } from '../../utils/Colors';
+import { Image } from 'expo-image';
+import { getFontFamily } from '../../utils/Fonts';
 import RNMovieButton from '../../components/base/RNMovieButton';
 
 const height = Dimensions.get('window').height;
@@ -28,11 +28,11 @@ const width = Dimensions.get('window').width;
 
 interface Props extends StackScreenProps<RootStackParams, 'DetailScreen'> {}
 
-export const DetailScreen = ({route}: Props) => {
+export const DetailScreen = ({ route }: Props) => {
   const Icon = _Icon as React.ElementType;
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
   const movie = route.params;
-  const {isLoading, detail, error, image} = useMovieDetail(movie.movieId);
+  const { isLoading, detail, error, image } = useMovieDetail(movie.movieId);
   const releaseDate = new Date(detail?.releaseDate || '');
 
   if (isLoading) {
@@ -41,7 +41,8 @@ export const DetailScreen = ({route}: Props) => {
         style={{
           ...styles.container,
           justifyContent: 'center',
-        }}>
+        }}
+      >
         <LoadingView />
       </View>
     );
@@ -53,14 +54,16 @@ export const DetailScreen = ({route}: Props) => {
         contentContainerStyle={{
           paddingBottom: 80,
         }}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         <View>
           <View
             style={{
               height: height * 0.62,
-            }}>
+            }}
+          >
             <Image
-              source={{uri: image}}
+              source={{ uri: image }}
               style={styles.image}
               transition={1000}
             />
@@ -75,7 +78,8 @@ export const DetailScreen = ({route}: Props) => {
             />
             <TouchableOpacity
               onPress={() => navigation.goBack()}
-              style={styles.buttonSquare}>
+              style={styles.buttonSquare}
+            >
               <View style={styles.blurView} />
               <Icon style={styles.icon} name="arrow-back-outline" size={28} />
             </TouchableOpacity>
@@ -98,7 +102,7 @@ export const DetailScreen = ({route}: Props) => {
               <Text style={styles.valorationTitle}>
                 {detail?.voteAverage.toFixed(1) || 0.0}
               </Text>
-              <Icon name="star" size={18} style={{color: '#dcb189'}} />
+              <Icon name="star" size={18} style={{ color: '#dcb189' }} />
             </View>
           </View>
           {/* Year Director Section */}

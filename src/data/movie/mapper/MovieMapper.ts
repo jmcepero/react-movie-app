@@ -1,6 +1,10 @@
-import {MoviesResponse, MovieDetailResponse} from '../entities/MovieInterface';
-import {Movies, Movie} from '../../../domain/movie/entities/Movies';
-import {Valoration, valorations} from '../../../presentation/utils/Constants';
+import {
+  MoviesResponse,
+  MovieDetailResponse,
+  MovieResponse,
+} from '../entities/MovieInterface';
+import { Movies, Movie } from '../../../domain/movie/entities/Movies';
+import { Valoration, valorations } from '../../../presentation/utils/Constants';
 
 export const moviesResponseToDomain = (
   moviesResponse: MoviesResponse,
@@ -106,4 +110,28 @@ export const getValorationById = (id: string): Valoration | undefined => {
   return valorations.filter(value => {
     return value.id.toString() === id;
   })[0];
+};
+
+export const moviesResponseArrayToDomain = (
+  movies: MovieResponse[],
+): Movie[] => {
+  return movies
+    .filter(movie => movie.poster_path)
+    .map(movie => {
+      return {
+        adult: movie.adult,
+        backdropPath: movie.backdrop_path,
+        genreIds: [],
+        id: movie.id,
+        originalTitle: movie.original_title,
+        overview: movie.overview,
+        popularity: movie.popularity,
+        posterPath: movie.poster_path,
+        releaseDate: movie.release_date,
+        title: movie.title,
+        video: movie.video,
+        voteAverage: movie.vote_average,
+        voteCount: movie.vote_count,
+      };
+    });
 };

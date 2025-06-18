@@ -6,10 +6,11 @@ import {
   set,
   update,
 } from '@react-native-firebase/database';
-import {CustomGenre} from '../../genre';
+import { CustomGenre } from '../../genre';
 import movieDB from '../../api/movieDB';
-import {RequestTokenResponse} from '../entities/RequestTokenResponse';
-import {TMDBSessionResponse} from '../entities/TMDBSessionResponse';
+import { RequestTokenResponse } from '../entities/RequestTokenResponse';
+import { TMDBSessionResponse } from '../entities/TMDBSessionResponse';
+import { TMDBAccountDetailsResponse } from '../entities/TMDBAccountDetailsResponse';
 
 export interface PreferenceRemoteDataSource {
   saveFavoriteGenres(
@@ -22,6 +23,7 @@ export interface PreferenceRemoteDataSource {
   saveUserTMDBSession(userId: string, session: string | null): Promise<void>;
   getTMDBRequestToken(): Promise<string>;
   createTMDBSession(approvedToken: string): Promise<string>;
+  getTMDBAccountDetails(sessionId: string): Promise<TMDBAccountDetailsResponse>;
 }
 
 export const preferenceRemoteDataSource: PreferenceRemoteDataSource = {
@@ -33,18 +35,18 @@ export const preferenceRemoteDataSource: PreferenceRemoteDataSource = {
     const db = getDatabase();
     const movieGenresObject = movieGenres.reduce(
       (acc, genre) => {
-        acc[genre.id] = {name: genre.name, image: genre.image};
+        acc[genre.id] = { name: genre.name, image: genre.image };
         return acc;
       },
-      {} as Record<string, {name: string; image: string | undefined}>,
+      {} as Record<string, { name: string; image: string | undefined }>,
     );
 
     const tvShowGenresObject = tvShowGenres.reduce(
       (acc, genre) => {
-        acc[genre.id] = {name: genre.name, image: genre.image};
+        acc[genre.id] = { name: genre.name, image: genre.image };
         return acc;
       },
-      {} as Record<string, {name: string; image: string | undefined}>,
+      {} as Record<string, { name: string; image: string | undefined }>,
     );
 
     await set(ref(db, `users/${userId}/preferences/`), {
@@ -116,12 +118,22 @@ export const preferenceRemoteDataSource: PreferenceRemoteDataSource = {
   },
   createTMDBSession: async function (approvedToken: string): Promise<string> {
     let url = `authentication/session/new`;
-    const params = JSON.stringify({request_token: approvedToken});
+    const params = JSON.stringify({ request_token: approvedToken });
     const result = await movieDB.post<TMDBSessionResponse>(url, params, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
     return result.data.session_id;
+  },
+  getTMDBAccountDetails: async function (
+    sessionId: string,
+  ): Promise<TMDBAccountDetailsResponse> {
+    const response = await movieDB.get<TMDBAccountDetailsResponse>(`/account`, {
+      params: {
+        session_id: sessionId,
+      },
+    });
+    return response.data;
   },
 };

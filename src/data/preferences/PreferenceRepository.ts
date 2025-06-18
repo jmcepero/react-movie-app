@@ -1,5 +1,5 @@
-import {CustomGenre} from '../genre/local/CustomGenres';
-import {preferenceRemoteDataSource} from './remote/PreferenceRemoteDataSource';
+import { CustomGenre } from '../genre/local/CustomGenres';
+import { preferenceRemoteDataSource } from './remote/PreferenceRemoteDataSource';
 
 export interface PreferenceDataSource {
   saveFavoriteGenres(
@@ -12,6 +12,7 @@ export interface PreferenceDataSource {
   saveUserTMDBSession(userId: string, session: string | null): Promise<void>;
   getTMDBRequestToken(): Promise<string>;
   createTMDBSession(approbedToken: string): Promise<string>;
+  getTMDBAccountId(sessionId: string): Promise<string>;
 }
 
 export const preferenceDataSource: PreferenceDataSource = {
@@ -46,5 +47,10 @@ export const preferenceDataSource: PreferenceDataSource = {
   },
   createTMDBSession: async function (approbedToken: string): Promise<string> {
     return await preferenceRemoteDataSource.createTMDBSession(approbedToken);
+  },
+  getTMDBAccountId: async function (sessionId: string): Promise<string> {
+    return (
+      await preferenceRemoteDataSource.getTMDBAccountDetails(sessionId)
+    ).id.toString();
   },
 };

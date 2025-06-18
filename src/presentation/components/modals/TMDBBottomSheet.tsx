@@ -1,15 +1,15 @@
-import React, {useMemo, useCallback, forwardRef} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import React, { useMemo, useCallback, forwardRef } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import {
   BottomSheetModal,
   BottomSheetBackdrop,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
 import RNMovieButton from '../base/RNMovieButton'; // Ajusta la ruta si es necesario
-import {getFontFamily} from '../../utils/Fonts';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {Image} from 'expo-image';
-import {Images} from '../../../../assets/images/Images.index';
+import { getFontFamily } from '../../utils/Fonts';
+import Icon from '@react-native-vector-icons/ionicons';
+import { Image } from 'expo-image';
+import { Images } from '../../../../assets/images/Images.index';
 import {
   darkBlueColor,
   darkBlueColorLighter,
@@ -27,7 +27,7 @@ interface TMDBModalProps {
 }
 
 const TMDBBottomSheet = forwardRef<BottomSheetModal, TMDBModalProps>(
-  ({onDismiss, onPositiveButtonClicked, loading = false}, ref) => {
+  ({ onDismiss, onPositiveButtonClicked, loading = false }, ref) => {
     const renderBackdrop = useCallback(
       (props: any) => (
         <BottomSheetBackdrop
@@ -47,12 +47,14 @@ const TMDBBottomSheet = forwardRef<BottomSheetModal, TMDBModalProps>(
         backdropComponent={renderBackdrop}
         handleIndicatorStyle={styles.modalHandle}
         backgroundStyle={styles.modalBackground}
-        handleStyle={styles.handle}>
+        handleStyle={styles.handle}
+      >
         <BottomSheetView style={styles.modalContentContainer}>
           <TouchableOpacity
             style={styles.closeButton}
             onPress={onDismiss}
-            activeOpacity={0.7}>
+            activeOpacity={0.7}
+          >
             <Icon name="close-outline" size={24} color={primaryTextColor} />
           </TouchableOpacity>
 

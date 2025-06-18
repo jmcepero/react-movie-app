@@ -1,5 +1,5 @@
 import { memo, useCallback, useState } from 'react';
-import {FieldError} from 'react-hook-form';
+import { FieldError } from 'react-hook-form';
 import {
   NativeSyntheticEvent,
   StyleProp,
@@ -9,9 +9,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {ViewStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
-import {primaryRed} from '../../../utils/Colors';
+import Icon from '@react-native-vector-icons/ionicons';
+import { ViewStyle } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
+import { primaryRed } from '../../../utils/Colors';
 
 interface Props {
   textValue: string;
@@ -46,7 +46,8 @@ const PasswordInput = ({
         style,
         styles.textContainer,
         passwordError ? styles.textInputError : null,
-      ]}>
+      ]}
+    >
       <Icon
         style={styles.icon}
         name="lock-closed"
@@ -65,7 +66,8 @@ const PasswordInput = ({
       />
       <TouchableOpacity
         onPress={togglePasswordVisibility}
-        style={styles.iconRight}>
+        style={styles.iconRight}
+      >
         <Icon
           name={isPasswordVisible ? 'eye-off' : 'eye'}
           size={18}
