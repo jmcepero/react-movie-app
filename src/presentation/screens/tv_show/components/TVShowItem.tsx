@@ -1,9 +1,14 @@
-import {StyleSheet, Text, View} from 'react-native';
-import {TVShow} from '../../../../domain/tv_shows/entities/TVShows';
-import {ValorationView} from '../../../components/base/ValorationView';
-import {CardType, ImageCard} from '../../../components/MovieCard';
-import {fullWidth} from '../../../utils/Dimen';
-import {movieStyle} from '../../../components/listing/MovieItem.style';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { TVShow } from '../../../../domain/tv_shows/entities/TVShows';
+import { ValorationView } from '../../../components/base/ValorationView';
+import { CardType, ImageCard } from '../../../components/MovieCard';
+import { fullWidth } from '../../../utils/Dimen';
+import { movieStyle } from '../../../components/listing/MovieItem.style';
+import { useContext } from 'react';
+import { FavoritesStore } from '@presentation/screens/favorites/store/FavoritesStore';
+import { MobXProviderContext, observer } from 'mobx-react';
+import Icon from '@react-native-vector-icons/ionicons';
+import { primaryRed } from '@presentation/utils/Colors';
 
 interface TVShowItemProps {
   tvShow: TVShow;
@@ -13,16 +18,26 @@ interface TVShowItemProps {
   type?: CardType;
 }
 
-export const TVShowItem = ({
+const TVShowItem = ({
   tvShow,
   onTVShowClicked,
   width = fullWidth,
   height = 220,
   type = CardType.Feed,
 }: TVShowItemProps) => {
+  const { favoritesStore } = useContext(MobXProviderContext) as {
+    favoritesStore: FavoritesStore;
+  };
+
+  const isFavorite = favoritesStore.isFavorite(tvShow.id, 'tv');
+  const handleToggleFavorite = () => {
+    favoritesStore.toggleFavorite(tvShow.id, 'tv');
+  };
+
   return (
-    <View style={[movieStyle.movieContainer, {width: width}]}>
+    <View style={[movieStyle.movieContainer, { width: width }]}>
       <ImageCard
+        itemId={tvShow.id.toString()}
         imageID={{
           backdropPath: tvShow?.backdropPath,
           posterPath: tvShow.posterPath,
@@ -32,11 +47,25 @@ export const TVShowItem = ({
         type={type}
         onClick={() => onTVShowClicked(tvShow)}
       />
+
+      <TouchableOpacity
+        style={movieStyle.iconFavContainer}
+        onPress={handleToggleFavorite}
+        activeOpacity={0.9}
+      >
+        <Icon
+          name={isFavorite ? 'heart' : 'heart-outline'}
+          color={isFavorite ? primaryRed : 'white'}
+          size={22}
+        />
+      </TouchableOpacity>
+
       <View style={movieStyle.movieTitleContainer}>
         <Text
           style={movieStyle.movieTitle}
           numberOfLines={1}
-          ellipsizeMode={'tail'}>
+          ellipsizeMode={'tail'}
+        >
           {tvShow.name}
         </Text>
         <ValorationView average={tvShow.voteAverage} iconSize={12} />
@@ -48,6 +77,8 @@ export const TVShowItem = ({
     </View>
   );
 };
+
+export default observer(TVShowItem);
 
 const styles = StyleSheet.create({
   headerContainer: {

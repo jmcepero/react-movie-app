@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, forwardRef } from 'react';
+import React, { useCallback, forwardRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import {
   BottomSheetModal,
@@ -11,13 +11,10 @@ import Icon from '@react-native-vector-icons/ionicons';
 import { Image } from 'expo-image';
 import { Images } from '../../../../assets/images/Images.index';
 import {
-  darkBlueColor,
-  darkBlueColorLighter,
   darkColor,
   primaryRed,
   primaryTextColor,
   secondaryTextColor,
-  tabColor,
 } from '../../utils/Colors';
 
 interface TMDBModalProps {

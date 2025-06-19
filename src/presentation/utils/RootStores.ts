@@ -17,6 +17,7 @@ import UserNameStore from '../screens/preferences/store/UserNameStore';
 import TMDBAccountStore from '../screens/preferences/store/TMDBAccountStore';
 import TMDBWebviewStore from '../components/webview/TMDBWebviewStore';
 import { FavoritesStore } from '@presentation/screens/favorites/store/FavoritesStore';
+import FavoritesListStore from '@presentation/screens/favorites/store/FavoritesListStore';
 
 class RootStore {
   searchStore: SearchStore;
@@ -36,6 +37,7 @@ class RootStore {
   tmdbAccountStore: TMDBAccountStore;
   tmdbWebviewStore: TMDBWebviewStore;
   favoritesStore: FavoritesStore;
+  favoritesListStore: FavoritesListStore;
 
   constructor() {
     this.authStore = new AuthStore();
@@ -55,6 +57,7 @@ class RootStore {
     this.tmdbWebviewStore = new TMDBWebviewStore();
     this.tmdbAccountStore = new TMDBAccountStore(this.tmdbWebviewStore);
     this.favoritesStore = new FavoritesStore(this.tmdbAccountStore);
+    this.favoritesListStore = new FavoritesListStore();
   }
 }
 

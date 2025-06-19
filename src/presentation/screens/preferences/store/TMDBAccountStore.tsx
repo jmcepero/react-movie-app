@@ -14,6 +14,7 @@ class TMDBAccountStore {
   tmdbRequestToken: string | null = null;
   error: string | null = null;
   userId: string | undefined = undefined;
+  showModal: boolean = false;
 
   constructor(private tmdbWebviewStore: TMDBWebviewStore) {
     makeAutoObservable(this);
@@ -40,16 +41,24 @@ class TMDBAccountStore {
     this._loadRequestToken();
   }
 
+  onShowModalClicked() {
+    this.showModal = true;
+  }
+
+  onModalDismissed() {
+    this.showModal = false;
+  }
+
+  canAddToFavorite() {
+    return this.tmdbSessionId !== null && this.tmdbAccountId !== null;
+  }
+
   private _setLoading(value: boolean) {
     this.loading = value;
   }
 
   private _setError(value: string | null) {
     this.error = value;
-  }
-
-  private _setTmdbSessionId(value: string | null) {
-    this.tmdbSessionId = value;
   }
 
   private _setTmdbRequestToken(value: string | null) {

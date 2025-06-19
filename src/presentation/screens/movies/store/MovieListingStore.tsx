@@ -1,11 +1,9 @@
-import {makeAutoObservable, runInAction} from 'mobx';
-import {errorHandler} from '../../../base/errorHandler';
-import {getTopRatedUseCase} from '../../../../domain/movie/usecases/GeTopRatedUseCase';
-import {getPopularUseCase} from '../../../../domain/movie/usecases/GetPopularUseCase';
-import {Item} from '../../../../domain/base/Item';
-import {MovieListingParams} from '../../../navigation/StackNavigation';
-import {Movies} from '../../../../domain/movie/entities/Movies';
-import {discoverMoviesByGenresUseCase} from '../../../../domain/movie/usecases/DiscoverMoviesByGenresUseCase';
+import { makeAutoObservable, runInAction } from 'mobx';
+import { errorHandler } from '../../../base/errorHandler';
+import { getTopRatedUseCase } from '../../../../domain/movie/usecases/GeTopRatedUseCase';
+import { getPopularUseCase } from '../../../../domain/movie/usecases/GetPopularUseCase';
+import { Item } from '../../../../domain/base/Item';
+import { Movies } from '../../../../domain/movie/entities/Movies';
 
 class MovieListingStore {
   isLoading: boolean = false;
@@ -48,7 +46,7 @@ class MovieListingStore {
         this.error = '';
       });
     } catch (error) {
-      const {message} = errorHandler(error);
+      const { message } = errorHandler(error);
       runInAction(() => {
         this.isLoading = false;
         this.pageLoading = false;

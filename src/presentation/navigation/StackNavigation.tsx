@@ -56,7 +56,6 @@ export type RootStackParams = {
       }
     | undefined;
   OnBoardingScreen: undefined;
-  TMDBAccountConexionScreen: undefined;
   TMDBAccountScreen: undefined;
   TMDBWebviewScreen: TMDBWebviewProps;
 };
@@ -181,6 +180,11 @@ const StackNavigationComponent = ({
             name="MovieFilter"
             component={MovieFilter}
             options={{ title: 'MovieFilter' }}
+          />
+          <Stack.Screen
+            name="TMDBWebviewScreen"
+            component={TMDBWebviewScreen}
+            options={{ title: 'TMDBWebviewScreen' }}
           />
         </>
       )}

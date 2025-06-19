@@ -31,6 +31,12 @@ export class FavoritesStore {
   }
 
   toggleFavorite(mediaId: number, mediaType: 'movie' | 'tv') {
+    if (!this.tmdbAccountStore.canAddToFavorite()) {
+      console.log('No TMDB session/account ID, skipping favorite sync.');
+      this.tmdbAccountStore.onShowModalClicked();
+      return;
+    }
+
     const isCurrentlyFavorite = this.isFavorite(mediaId, mediaType);
     const newFavoriteState = !isCurrentlyFavorite;
 
@@ -61,14 +67,6 @@ export class FavoritesStore {
 
   async triggerSync() {
     if (this.isSyncing || this.pendingActions.length === 0) {
-      return;
-    }
-
-    if (
-      !this.tmdbAccountStore.tmdbSessionId ||
-      !this.tmdbAccountStore.tmdbAccountId
-    ) {
-      console.warn('No TMDB session/account ID, skipping favorite sync.');
       return;
     }
 

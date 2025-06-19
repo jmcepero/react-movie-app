@@ -1,26 +1,26 @@
 import * as React from 'react';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {Item} from '../../../domain/base/Item';
-import {Movie} from '../../../domain/movie/entities/Movies';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Item } from '../../../domain/base/Item';
+import { Movie } from '../../../domain/movie/entities/Movies';
 import MovieItem from './MovieItem';
-import {ParamListBase} from '@react-navigation/native';
-import {TVShow} from '../../../domain/tv_shows/entities/TVShows';
-import {TVShowItem} from '../../screens/tv_show/components/TVShowItem';
-import {fractionWidth} from '../../utils/Dimen';
-import {People} from '../../../domain/people/entities/People';
+import { ParamListBase } from '@react-navigation/native';
+import { TVShow } from '../../../domain/tv_shows/entities/TVShows';
+import TVShowItem from '../../screens/tv_show/components/TVShowItem';
+import { fractionWidth } from '../../utils/Dimen';
+import { People } from '../../../domain/people/entities/People';
 import PeopleItem from './PeopleItem';
-import {Cast} from '../../../data/people/entities/PeopleInterfaces';
+import { Cast } from '../../../data/people/entities/PeopleInterfaces';
 import CastItem from './CastItem';
 
 const ItemRenderer: React.FC<{
   item: Item;
   navigation: StackNavigationProp<ParamListBase>;
-}> = ({item, navigation}) => {
+}> = ({ item, navigation }) => {
   if ((item as Movie).title) {
     return (
       <MovieItem
         movie={item as Movie}
-        onClick={_ => navigation.navigate('DetailScreen', {movieId: item.id})}
+        onClick={_ => navigation.navigate('DetailScreen', { movieId: item.id })}
         width={fractionWidth}
       />
     );

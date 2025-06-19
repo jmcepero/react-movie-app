@@ -1,32 +1,30 @@
-import {useCallback, useContext, useEffect} from 'react';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
-import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
-import {StyleSheet, View} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
-import {Toolbar} from '../../components/base/Toolbar';
-import {RootStackParams} from '../../navigation/StackNavigation';
-import {Movie} from '../../../domain/movie/entities/Movies';
+import { useCallback, useContext, useEffect } from 'react';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { StyleSheet, View } from 'react-native';
+import { Toolbar } from '../../components/base/Toolbar';
+import { Movie } from '../../../domain/movie/entities/Movies';
 import MovieListingStore from './store/MovieListingStore';
 import ItemRenderer from '../../components/listing/ItemRenderer';
 import VerticalFeedSkeleton from '../../components/base/skeleton/VerticalFeedSkeleton';
-import {ListFooterComponent} from '../search/components/ListFooterComponent';
-import {MobXProviderContext, observer} from 'mobx-react';
-import {useMovieListingParams} from './hooks/useMovieListingParams';
+import { ListFooterComponent } from '../search/components/ListFooterComponent';
+import { MobXProviderContext, observer } from 'mobx-react';
+import { useMovieListingParams } from './hooks/useMovieListingParams';
 import {
   itemContainer,
   listStyles,
 } from '../filter/styles/MovieFilterScreenStyles';
-import {FlashList} from '@shopify/flash-list';
+import { FlashList } from '@shopify/flash-list';
 
 const MovieListingScreen = () => {
-  const {movieListingStore} = useContext(MobXProviderContext) as {
+  const { movieListingStore } = useContext(MobXProviderContext) as {
     movieListingStore: MovieListingStore;
   };
-  const {title, type} = useMovieListingParams();
+  const { title, type } = useMovieListingParams();
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
   const renderMovieItem = useCallback(
-    ({item, index}: {item: Movie; index: number}) => (
+    ({ item, index }: { item: Movie; index: number }) => (
       <View style={itemContainer(index)}>
         <ItemRenderer item={item} navigation={navigation} />
       </View>
