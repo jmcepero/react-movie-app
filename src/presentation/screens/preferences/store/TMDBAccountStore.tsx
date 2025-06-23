@@ -1,14 +1,15 @@
 import { makeAutoObservable, reaction, runInAction } from 'mobx';
-import { getUserTMDBSessionUseCase } from '../../../../domain/preferences/usecases/GetUserTMDBSessionUseCase';
-import { errorHandler } from '../../../base/errorHandler';
-import { getTMDBRequestTokenUseCase } from '../../../../domain/preferences/usecases/GetTMDBRequestTokenUseCase';
-import TMDBWebviewStore from '../../../components/webview/TMDBWebviewStore';
-import { createTMDBSessionUseCase } from '../../../../domain/preferences/usecases/CreateTMDBSessionUseCase';
-import { saveUserTMDBSessionUseCase } from '../../../../domain/preferences/usecases/SaveUserTMDBSessionUseCase';
+import { getUserTMDBSessionUseCase } from '@domain/preferences/usecases/GetUserTMDBSessionUseCase';
+import { errorHandler } from '@presentation/base/errorHandler';
+import { getTMDBRequestTokenUseCase } from '@domain/preferences/usecases/GetTMDBRequestTokenUseCase';
+import TMDBWebviewStore from '@components/webview/TMDBWebviewStore';
+import { createTMDBSessionUseCase } from '@domain/preferences/usecases/CreateTMDBSessionUseCase';
+import { saveUserTMDBSessionUseCase } from '@domain/preferences/usecases/SaveUserTMDBSessionUseCase';
 import { getTMDBAccountDetailsUseCase } from '@domain/preferences/usecases/GetTMDBAccountDetailsUseCase';
 
 class TMDBAccountStore {
   loading: boolean = false;
+  isDisconnecting: boolean = false;
   tmdbSessionId: string | undefined | null = undefined;
   tmdbAccountId: string | undefined | null = undefined;
   tmdbRequestToken: string | null = null;
@@ -51,6 +52,32 @@ class TMDBAccountStore {
 
   canAddToFavorite() {
     return this.tmdbSessionId !== null && this.tmdbAccountId !== null;
+  }
+
+  async disconnect() {
+    if (this.userId) {
+      this.isDisconnecting = true;
+      try {
+        await saveUserTMDBSessionUseCase.execute(this.userId, null);
+        this.cleanup();
+      } catch (error) {
+        console.error('Failed to disconnect from TMDB', error);
+      } finally {
+        runInAction(() => {
+          this.isDisconnecting = false;
+        });
+      }
+    }
+  }
+
+  cleanup() {
+    this.loading = false;
+    this.tmdbSessionId = undefined;
+    this.tmdbAccountId = undefined;
+    this.tmdbRequestToken = null;
+    this.error = null;
+    this.userId = undefined;
+    this.showModal = false;
   }
 
   private _setLoading(value: boolean) {
@@ -116,7 +143,7 @@ class TMDBAccountStore {
       }
     } catch (error) {
       const { message } = errorHandler(error);
-      console.log(error);
+      console.log(message);
       this._setError(message);
     } finally {
       this._setLoading(false);

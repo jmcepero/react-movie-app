@@ -1,6 +1,6 @@
 // Para estado en construcción
-import {once} from 'mobx/dist/internal';
-import {Images} from '../../../../assets/images/Images.index';
+import { once } from 'mobx/dist/internal';
+import { Images } from '../../../assets/images/Images.index';
 import EmptyStateView from './EmptyStateView';
 
 export const UnderConstructionView = () => (

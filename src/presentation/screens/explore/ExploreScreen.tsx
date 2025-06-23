@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { View } from 'react-native';
 import { LoadingView } from '../../components/base/LoadingView';
-import { Images } from '../../../../assets/images/Images.index';
+import { Images } from '../../../assets/images/Images.index';
 import { Place } from '../../../domain/places/entities/PlacesInterface';
 import { Text } from 'react-native';
 import { darkColor, secondaryTextColor } from '../../utils/Colors';

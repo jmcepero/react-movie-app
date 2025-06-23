@@ -1,7 +1,5 @@
-import {View, Text} from 'react-native';
-import { useMemo } from 'react';
 import Lottie from 'lottie-react-native';
-import {LottieJson} from '../../../../assets/lottie/LottieJson.index';
+import { LottieJson } from '../../../assets/lottie/LottieJson.index';
 
 export default function SpinnerLottie() {
   return (

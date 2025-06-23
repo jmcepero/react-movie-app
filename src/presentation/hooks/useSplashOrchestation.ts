@@ -19,8 +19,9 @@ export const useSplashOrchestation = () => {
   const [tmdbStoreReady, setTmdbStoreReady] = useState(false);
   const [favoritesStoreReady, setFavoritesStoreReady] = useState(false);
 
-  // Etapa 1: AuthStore Initialization
+  // Level 1: AuthStore Initialization
   useEffect(() => {
+    if (isAppInitialized) return;
     if (
       authStore.loading === false &&
       authStore.isOnBoardingComplete !== undefined &&
@@ -30,17 +31,17 @@ export const useSplashOrchestation = () => {
       setAuthStoreReady(true);
     }
   }, [
+    isAppInitialized,
     authStore.loading,
     authStore.isOnBoardingComplete,
     authStore.isFirstTimeOpeningApp,
   ]);
 
-  // Etapa 2: TMDBAccountStore Initialization (después de AuthStore)
+  // Level 2: TMDBAccountStore Initialization
   useEffect(() => {
-    if (!authStoreReady) return;
+    if (isAppInitialized || !authStoreReady) return;
 
     if (authStore.user && authStore.user.uid) {
-      // Solo llamar si TMDB no ha sido inicializado o está en su estado inicial
       if (
         tmdbAccountStore.tmdbSessionId === undefined &&
         !tmdbAccountStore.loading
@@ -48,45 +49,35 @@ export const useSplashOrchestation = () => {
         console.log('AppInitHook: Triggering TMDBAccountStore initialization.');
         tmdbAccountStore.onScreenLoaded(authStore.user.uid);
       }
-      // Esperar a que TMDBAccountStore termine de cargar
+
       if (
         tmdbAccountStore.loading === false &&
         tmdbAccountStore.tmdbSessionId !== undefined
       ) {
-        // tmdbSessionId puede ser string o null, undefined significa que no ha terminado el proceso
         console.log('AppInitHook: TMDBAccountStore is ready.');
         setTmdbStoreReady(true);
       }
     } else {
-      // No hay usuario, por lo tanto, no hay sesión TMDB que cargar.
       console.log('AppInitHook: TMDBAccountStore skipped (no user).');
       setTmdbStoreReady(true);
     }
   }, [
+    isAppInitialized,
     authStoreReady,
     tmdbAccountStore.loading,
-    tmdbAccountStore.tmdbSessionId, // Reaccionar a cuando tmdbSessionId se establece
+    tmdbAccountStore.tmdbSessionId,
   ]);
 
-  // Etapa 3: FavoritesStore Initialization (después de TMDBAccountStore)
+  // Level 3: FavoritesStore Initialization
   useEffect(() => {
-    if (!tmdbStoreReady) return; // Esperar a que TMDBAccountStore esté listo
+    if (isAppInitialized || !tmdbStoreReady) return;
 
     if (tmdbAccountStore.tmdbSessionId && tmdbAccountStore.tmdbAccountId) {
-      // Solo llamar si Favorites no ha sido inicializado o está en su estado inicial
-      if (favoritesStore.isLoadingInitialFavorites === undefined) {
-        // Esta condición es para evitar recargar si ya tiene datos,
-        // aunque fetchInitialFavorites tiene su propio guard `isLoadingInitialFavorites`
-        console.log('AppInitHook: Triggering FavoritesStore initialization.');
-        favoritesStore.fetchInitialFavorites();
-      }
-      // Esperar a que FavoritesStore termine de cargar
       if (favoritesStore.isLoadingInitialFavorites === false) {
         console.log('AppInitHook: FavoritesStore is ready.');
         setFavoritesStoreReady(true);
       }
     } else {
-      // No hay sesión TMDB o accountId, no se pueden cargar favoritos.
       console.log(
         'AppInitHook: FavoritesStore skipped (no TMDB session/accountId).',
       );
@@ -101,11 +92,12 @@ export const useSplashOrchestation = () => {
 
   // Etapa Final: Marcar la aplicación como inicializada
   useEffect(() => {
+    if (isAppInitialized) return;
     if (authStoreReady && tmdbStoreReady && favoritesStoreReady) {
       console.log('AppInitHook: All stores initialized. App is ready.');
       setIsAppInitialized(true);
     }
-  }, [authStoreReady, tmdbStoreReady, favoritesStoreReady]);
+  }, [isAppInitialized, authStoreReady, tmdbStoreReady, favoritesStoreReady]);
 
   return {
     isAppInitialized,

@@ -18,7 +18,7 @@ import { TrailerCard } from '../../components/detail/TrailerCard';
 import { YearDirector } from '../../components/detail/YearDirector';
 import { useMovieDetail } from '../../hooks/useMovieDetail';
 import { Snackbar } from '@react-native-material/core';
-import { primaryRed } from '../../utils/Colors';
+import { primaryBlackColor, primaryRed } from '../../utils/Colors';
 import { Image } from 'expo-image';
 import { getFontFamily } from '../../utils/Fonts';
 import RNMovieButton from '../../components/base/RNMovieButton';
@@ -73,7 +73,7 @@ export const DetailScreen = ({ route }: Props) => {
                 height: '100%',
                 position: 'absolute',
               }}
-              colors={['transparent', 'rgba(23, 24, 27, 1)']}
+              colors={['transparent', primaryBlackColor]}
               locations={[0.5, 0.9]}
             />
             <TouchableOpacity
@@ -158,7 +158,7 @@ export const DetailScreen = ({ route }: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(23, 24, 27, 1)',
+    backgroundColor: primaryBlackColor,
   },
   image: {
     flex: 1,

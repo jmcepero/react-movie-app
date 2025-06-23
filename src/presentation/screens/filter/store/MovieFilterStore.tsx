@@ -1,9 +1,9 @@
-import {makeAutoObservable, runInAction} from 'mobx';
-import {Movie} from '../../../../domain/movie/entities/Movies';
-import {errorHandler} from '../../../base/errorHandler';
-import {discoverMoviesByGenresUseCase} from '../../../../domain/movie/usecases/DiscoverMoviesByGenresUseCase';
-import {FilterChipsStore} from './FilterChipsStore';
-import {WITH_GENRES} from '../utils/Constant';
+import { makeAutoObservable, runInAction } from 'mobx';
+import { Movie } from '../../../../domain/movie/entities/Movies';
+import { errorHandler } from '../../../base/errorHandler';
+import { discoverMoviesByGenresUseCase } from '../../../../domain/movie/usecases/DiscoverMoviesByGenresUseCase';
+import { FilterChipsStore } from './FilterChipsStore';
+import { WITH_GENRES } from '../utils/Constant';
 
 class MovieFilterStore {
   ui = {
@@ -52,7 +52,7 @@ class MovieFilterStore {
         this.resetError();
       });
     } catch (error) {
-      const {message} = errorHandler(error);
+      const { message } = errorHandler(error);
       runInAction(() => {
         this.ui.error = message;
       });

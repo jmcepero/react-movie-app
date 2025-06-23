@@ -1,6 +1,26 @@
-import { View, Pressable, Dimensions, StyleSheet } from 'react-native';
-import { primaryRed } from '../../utils/Colors';
+import {
+  View,
+  Pressable,
+  Dimensions,
+  StyleSheet,
+  Animated,
+} from 'react-native';
+import {
+  darkBlueColor,
+  darkBlueColorLighter,
+  darkColor,
+  onyxColor,
+  primaryBlackColor,
+  primaryRed,
+  secondaryBackgroundColor,
+} from '../../utils/Colors';
 import Icon from '@react-native-vector-icons/ionicons';
+import { useContext } from 'react';
+import {
+  ScrollAnimationContext,
+  TAB_BAR_HEIGHT,
+} from '@presentation/utils/ScrollAnimationContext';
+import { MotiView } from 'moti';
 
 const { width } = Dimensions.get('window');
 const icons: string[] = [
@@ -11,8 +31,19 @@ const icons: string[] = [
 ];
 
 const BottomTabBar = ({ state, navigation }: any) => {
+  const { isTabBarVisible } = useContext(ScrollAnimationContext);
+
   return (
-    <View style={styles.root}>
+    <MotiView
+      style={styles.root}
+      animate={{
+        translateY: isTabBarVisible ? 0 : TAB_BAR_HEIGHT,
+      }}
+      transition={{
+        type: 'timing',
+        duration: 250,
+      }}
+    >
       <View style={styles.mainContainer}>
         {state.routes.map((route: any, index: number) => {
           const isFocused = state.index === index;
@@ -51,7 +82,7 @@ const BottomTabBar = ({ state, navigation }: any) => {
           );
         })}
       </View>
-    </View>
+    </MotiView>
   );
 };
 
@@ -64,8 +95,18 @@ const styles = StyleSheet.create({
     right: 0,
     borderRadius: 25,
     marginHorizontal: width * 0.1,
-    overflow: 'hidden',
-    backgroundColor: 'rgba(33,25,32,1)',
+
+    backgroundColor: darkBlueColor,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.6,
+    shadowRadius: 8,
+
+    // Propiedad de elevación para Android
     elevation: 16,
   },
   mainContainer: {

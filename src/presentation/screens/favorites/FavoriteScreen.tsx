@@ -8,6 +8,7 @@ import FavoritesListStore from './store/FavoritesListStore';
 import TMDBAccountStore from '../preferences/store/TMDBAccountStore';
 import {
   primaryBackgroundColor,
+  primaryBlackColor,
   primaryRed,
   primaryTextColor,
   secondaryTextColor,
@@ -16,6 +17,7 @@ import {
   CustomTabBarRendererProps,
   renderTabBar,
 } from '../preferences/components/CustomTab';
+import { useFocusEffect } from '@react-navigation/native';
 
 const FavoriteScreen = () => {
   const { favoritesListStore, tmdbAccountStore } = useContext(
@@ -56,14 +58,16 @@ const FavoriteScreen = () => {
     }
   }, [tmdbAccountId, tmdbSessionId, favoritesListStore]);
 
-  useEffect(() => {
-    loadMovies();
+  useFocusEffect(
+    useCallback(() => {
+      loadMovies();
 
-    // Limpieza al desmontar el componente
-    return () => {
-      favoritesListStore.cleanup();
-    };
-  }, []);
+      return () => {
+        console.log('FavoriteScreen lost focus, cleaning up...');
+        favoritesListStore.cleanup();
+      };
+    }, [loadMovies]),
+  );
 
   useEffect(() => {
     if (index === 1 && favoritesListStore.tvShows.result.length === 0) {
@@ -89,7 +93,7 @@ export default observer(FavoriteScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: primaryBackgroundColor,
+    backgroundColor: primaryBlackColor,
   },
   tabBar: {
     backgroundColor: primaryBackgroundColor,

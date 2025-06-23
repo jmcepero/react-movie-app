@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Animated } from 'react-native';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import CustomToolbar from '@components/home/CustomToolbar';
@@ -16,8 +16,10 @@ import { MobXProviderContext, observer } from 'mobx-react';
 import AuthStore from '@screens/auth/store/AuthStore';
 import { primaryRed } from '@utils/Colors';
 import { TMDBModalOrchestrator } from '@presentation/components/base/TMDBModalOrchestrator';
+import { ScrollAnimationContext } from '@presentation/utils/ScrollAnimationContext';
 
 export const HomeScreen = observer(() => {
+  const { scrollY } = useContext(ScrollAnimationContext);
   const { authStore, movieStore } = useContext(MobXProviderContext) as {
     authStore: AuthStore;
     movieStore: MovieStore;
@@ -35,7 +37,7 @@ export const HomeScreen = observer(() => {
   return (
     <TMDBModalOrchestrator>
       <View style={{ flex: 1 }}>
-        <ScrollView
+        <Animated.ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             paddingBottom: 80,
@@ -47,6 +49,11 @@ export const HomeScreen = observer(() => {
               tintColor={primaryRed}
             />
           }
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+            { useNativeDriver: true },
+          )}
+          scrollEventThrottle={16}
         >
           <View>
             {/* Toolbar Section */}
@@ -116,10 +123,10 @@ export const HomeScreen = observer(() => {
               isLoading={movieStore.isLoading}
             />
 
-            {/* Top Rated */}
+            {/* Upcoming */}
             <HorizontalFeed
-              title="Top Rated"
-              movies={movieStore.topRated}
+              title="Upcoming"
+              movies={movieStore.upcoming}
               onMovieClicked={movie =>
                 navigation.navigate('DetailScreen', { movieId: movie.id })
               }
@@ -131,8 +138,24 @@ export const HomeScreen = observer(() => {
               }
               isLoading={movieStore.isLoading}
             />
+
+            {/* Top Rated */}
+            <HorizontalFeed
+              title="Top Rated"
+              movies={movieStore.topRated}
+              onMovieClicked={movie =>
+                navigation.navigate('DetailScreen', { movieId: movie.id })
+              }
+              onSeeAllClicked={() =>
+                navigation.navigate('MovieListingScreen', {
+                  listType: 'upcoming',
+                  title: 'Upcoming',
+                })
+              }
+              isLoading={movieStore.isLoading}
+            />
           </View>
-        </ScrollView>
+        </Animated.ScrollView>
 
         {movieStore.error && (
           <Snackbar message={movieStore.error} style={styles.toast} />

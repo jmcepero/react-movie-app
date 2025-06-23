@@ -1,18 +1,18 @@
-import {StyleSheet, Text, View} from 'react-native';
-import {useContext, useEffect} from 'react';
-import {MobXProviderContext, observer} from 'mobx-react';
-import {Toolbar} from '../../components/base/Toolbar';
-import {getFontFamily} from '../../utils/Fonts';
+import { StyleSheet, Text, View } from 'react-native';
+import { useContext, useEffect } from 'react';
+import { MobXProviderContext, observer } from 'mobx-react';
+import { Toolbar } from '../../components/base/Toolbar';
+import { getFontFamily } from '../../utils/Fonts';
 import RNInput from '../../components/base/RNInput';
 import AuthStore from '../auth/store/AuthStore';
 import RNMovieButton from '../../components/base/RNMovieButton';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import UserNameStore from './store/UserNameStore';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {Image} from 'expo-image';
-import {Images} from '../../../../assets/images/Images.index';
-import {fullHeight, fullWidth} from '../../utils/Dimen';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Image } from 'expo-image';
+import { Images } from '../../../assets/images/Images.index';
+import { fullHeight, fullWidth } from '../../utils/Dimen';
 import {
   darkBlueColor,
   darkColor,
@@ -21,8 +21,8 @@ import {
 } from '../../utils/Colors';
 
 const SetYourNameScreen = () => {
-  const {bottom} = useSafeAreaInsets();
-  const {userNameStore, authStore} = useContext(MobXProviderContext) as {
+  const { bottom } = useSafeAreaInsets();
+  const { userNameStore, authStore } = useContext(MobXProviderContext) as {
     userNameStore: UserNameStore;
     authStore: AuthStore;
   };
@@ -59,7 +59,7 @@ const SetYourNameScreen = () => {
         <RNMovieButton
           onClick={() => userNameStore.saveDisplayName(handleOnFinish)}
           label="Continue"
-          style={{marginBottom: bottom}}
+          style={{ marginBottom: bottom }}
           isLoading={userNameStore.loading}
         />
       </View>
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     backgroundColor: darkColor,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: -10},
+    shadowOffset: { width: 0, height: -10 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 5,

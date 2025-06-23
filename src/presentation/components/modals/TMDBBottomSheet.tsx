@@ -9,7 +9,7 @@ import RNMovieButton from '../base/RNMovieButton'; // Ajusta la ruta si es neces
 import { getFontFamily } from '../../utils/Fonts';
 import Icon from '@react-native-vector-icons/ionicons';
 import { Image } from 'expo-image';
-import { Images } from '../../../../assets/images/Images.index';
+import { Images } from '../../../assets/images/Images.index';
 import {
   darkColor,
   primaryRed,

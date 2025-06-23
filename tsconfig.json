@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./src", // O '.' si tus alias parten de la raíz del proyecto
     "paths": {
+      "@assets/*": ["assets/*"],
       "@domain/*": ["domain/*"],
       "@data/*": ["data/*"],
       "@presentation/*": ["presentation/*"],

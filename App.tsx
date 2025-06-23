@@ -16,6 +16,7 @@ import { primaryBlackColor } from './src/presentation/utils/Colors';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import './src/presentation/utils/SuppressWarnings';
 import { useSplashOrchestation } from '@presentation/hooks/useSplashOrchestation';
+import { globalStyles } from '@presentation/components/base/global/Global.styles';
 
 const navTheme: Theme = {
   ...DefaultTheme,
@@ -55,7 +56,7 @@ const AppContent = observer(() => {
   return (
     <>
       <MyStatusBar backgroundColor={primaryBlackColor} />
-      <GestureHandlerRootView style={{ flex: 1 }}>
+      <GestureHandlerRootView style={globalStyles.container}>
         <NavigationContainer theme={navTheme}>
           <StackNavigation {...stackNavigationProps} />
         </NavigationContainer>

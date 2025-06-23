@@ -1,6 +1,6 @@
 import Lottie from 'lottie-react-native';
-import {LottieJson} from '../../../../assets/lottie/LottieJson.index';
-import {View} from 'react-native';
+import { LottieJson } from '../../../assets/lottie/LottieJson.index';
+import { View } from 'react-native';
 
 export const LoadingView = () => {
   return (
@@ -8,7 +8,8 @@ export const LoadingView = () => {
       style={{
         flex: 1,
         justifyContent: 'center',
-      }}>
+      }}
+    >
       <Lottie
         style={{
           width: 80,

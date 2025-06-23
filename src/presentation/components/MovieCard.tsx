@@ -1,6 +1,7 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { FadeInImage } from './base/FadeImage';
 import Icon from '@react-native-vector-icons/ionicons';
+import { Image } from 'expo-image';
 
 export enum CardType {
   Carousel,
@@ -46,7 +47,13 @@ export const ImageCard = ({
           height: height,
         }}
       >
-        <FadeInImage uri={uri} style={styles.image} id={itemId} />
+        <Image
+          transition={500}
+          source={uri}
+          style={styles.image}
+          id={itemId}
+          contentFit="cover"
+        />
       </View>
     </TouchableOpacity>
   );
@@ -75,7 +82,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     borderRadius: 15,
-    resizeMode: 'cover',
   },
   gradient: {
     width: '100%',

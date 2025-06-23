@@ -54,12 +54,12 @@
 	<string>We need your location to show nearby places.</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Ionicons.ttf</string>
 		<string>ArchivoBlack.ttf</string>
 		<string>ArchivoLight.ttf</string>
 		<string>ArchivoMedium.ttf</string>
 		<string>ArchivoRegular.ttf</string>
 		<string>ArchivoThin.ttf</string>
-		<string>Ionicons.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>SplashScreen</string>

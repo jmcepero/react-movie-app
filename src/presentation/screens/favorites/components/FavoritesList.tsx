@@ -58,7 +58,7 @@ const FavoritesList = ({ mediaType, onEndReached }: FavoritesListProps) => {
 
   return (
     <FlashList
-      contentContainerStyle={listStyles.contentContainer}
+      contentContainerStyle={{ ...listStyles.contentContainer, paddingTop: 8 }}
       data={data}
       numColumns={2}
       keyExtractor={item => `${mediaType}-${item.id}`}

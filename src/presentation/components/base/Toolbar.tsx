@@ -3,7 +3,12 @@ import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from '@react-native-vector-icons/ionicons';
 import { Text } from '@react-native-material/core';
 import { getFontFamily } from '../../utils/Fonts';
-import { darkColor } from '../../utils/Colors';
+import {
+  darkBlueColor,
+  darkColor,
+  primaryBackgroundColor,
+  primaryBlackColor,
+} from '../../utils/Colors';
 import { useNavigation } from '@react-navigation/native';
 
 interface Props {
@@ -61,7 +66,7 @@ const customStyle = StyleSheet.create({
     height: APPBAR_HEIGHT,
     alignItems: 'center',
     paddingHorizontal: 16,
-    backgroundColor: darkColor,
+    backgroundColor: primaryBlackColor,
   },
   title: {
     flex: 1,

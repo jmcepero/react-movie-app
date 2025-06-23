@@ -7,39 +7,39 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0164E6013CA149B598BDED79 /* ArchivoThin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A37A9C895A5341D688040A65 /* ArchivoThin.ttf */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		25C5F79057E2402B86D81656 /* ArchivoRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5EB930C43AF541FEB5A5D73B /* ArchivoRegular.ttf */; };
+		2C511E09FEC9404AADA85FC8 /* ArchivoRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BF56C4BA6E594CDEB1F0F4C0 /* ArchivoRegular.ttf */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
+		4A86E19B21FC489788725607 /* ArchivoBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E9236AF06D2149DF8D58A93C /* ArchivoBlack.ttf */; };
 		4AECB912005764520474E7CB /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042ED8E3F02E7B6B229B587 /* ExpoModulesProvider.swift */; };
-		4E98BC01BC2B4D76A367CA05 /* ArchivoLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08786485B2D8412DBC90443B /* ArchivoLight.ttf */; };
-		54332AE27DEA4CBB987657E5 /* ArchivoMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA47E3527C4141709C695F36 /* ArchivoMedium.ttf */; };
 		5B99419A00A4A180C6744618 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 9D6BAF8B3FB0B82E02BB93FB /* PrivacyInfo.xcprivacy */; };
-		7ABDC31C5D8045D086378872 /* ArchivoBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 018EF78F61C4482F82A27B5A /* ArchivoBlack.ttf */; };
+		5CC3B08D313B4A59855EEE0E /* ArchivoThin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75DB57D5EEE2414D8EE06F58 /* ArchivoThin.ttf */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		BBE2086DA3F2CBD8B649146A /* Pods_MovieApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 518EA1565A2DC7ED338F3CF0 /* Pods_MovieApp.framework */; };
 		BC9D96372DDB80D50061223A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC9D96362DDB80D50061223A /* GoogleService-Info.plist */; };
+		D86CAD4F22254D9C98D995F2 /* ArchivoMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A04C3ECDC4141C485A77360 /* ArchivoMedium.ttf */; };
+		E90474E956AA4C74927DEEA5 /* ArchivoLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0BC6E5FBC81B4D5C8A21973F /* ArchivoLight.ttf */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		018EF78F61C4482F82A27B5A /* ArchivoBlack.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ArchivoBlack.ttf; path = ../assets/fonts/ArchivoBlack.ttf; sourceTree = "<group>"; };
-		08786485B2D8412DBC90443B /* ArchivoLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ArchivoLight.ttf; path = ../assets/fonts/ArchivoLight.ttf; sourceTree = "<group>"; };
+		0BC6E5FBC81B4D5C8A21973F /* ArchivoLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ArchivoLight.ttf; path = ../src/assets/fonts/ArchivoLight.ttf; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* MovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MovieApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MovieApp/Info.plist; sourceTree = "<group>"; };
 		518EA1565A2DC7ED338F3CF0 /* Pods_MovieApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5EB930C43AF541FEB5A5D73B /* ArchivoRegular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ArchivoRegular.ttf; path = ../assets/fonts/ArchivoRegular.ttf; sourceTree = "<group>"; };
+		6A04C3ECDC4141C485A77360 /* ArchivoMedium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ArchivoMedium.ttf; path = ../src/assets/fonts/ArchivoMedium.ttf; sourceTree = "<group>"; };
+		75DB57D5EEE2414D8EE06F58 /* ArchivoThin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ArchivoThin.ttf; path = ../src/assets/fonts/ArchivoThin.ttf; sourceTree = "<group>"; };
 		8042ED8E3F02E7B6B229B587 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-MovieApp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		81AC94B61EAB6213C129E4E4 /* Pods-MovieApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieApp.debug.xcconfig"; path = "Target Support Files/Pods-MovieApp/Pods-MovieApp.debug.xcconfig"; sourceTree = "<group>"; };
 		873711C847C94BFFBC4920A4 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = ../assets/fonts/Ionicons.ttf; sourceTree = "<group>"; };
 		9D6BAF8B3FB0B82E02BB93FB /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = MovieApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		A37A9C895A5341D688040A65 /* ArchivoThin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ArchivoThin.ttf; path = ../assets/fonts/ArchivoThin.ttf; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = MovieApp/SplashScreen.storyboard; sourceTree = "<group>"; };
-		BA47E3527C4141709C695F36 /* ArchivoMedium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ArchivoMedium.ttf; path = ../assets/fonts/ArchivoMedium.ttf; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		BC9D96362DDB80D50061223A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BF56C4BA6E594CDEB1F0F4C0 /* ArchivoRegular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ArchivoRegular.ttf; path = ../src/assets/fonts/ArchivoRegular.ttf; sourceTree = "<group>"; };
 		D984A2C2F96F842E8173462E /* Pods-MovieApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieApp.release.xcconfig"; path = "Target Support Files/Pods-MovieApp/Pods-MovieApp.release.xcconfig"; sourceTree = "<group>"; };
+		E9236AF06D2149DF8D58A93C /* ArchivoBlack.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ArchivoBlack.ttf; path = ../src/assets/fonts/ArchivoBlack.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = MovieApp/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* MovieApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MovieApp-Bridging-Header.h"; path = "MovieApp/MovieApp-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -91,12 +91,12 @@
 		67060C314BC5428AAE698DCB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				018EF78F61C4482F82A27B5A /* ArchivoBlack.ttf */,
-				08786485B2D8412DBC90443B /* ArchivoLight.ttf */,
-				BA47E3527C4141709C695F36 /* ArchivoMedium.ttf */,
-				5EB930C43AF541FEB5A5D73B /* ArchivoRegular.ttf */,
-				A37A9C895A5341D688040A65 /* ArchivoThin.ttf */,
 				873711C847C94BFFBC4920A4 /* Ionicons.ttf */,
+				E9236AF06D2149DF8D58A93C /* ArchivoBlack.ttf */,
+				0BC6E5FBC81B4D5C8A21973F /* ArchivoLight.ttf */,
+				6A04C3ECDC4141C485A77360 /* ArchivoMedium.ttf */,
+				BF56C4BA6E594CDEB1F0F4C0 /* ArchivoRegular.ttf */,
+				75DB57D5EEE2414D8EE06F58 /* ArchivoThin.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -226,11 +226,11 @@
 				BC9D96372DDB80D50061223A /* GoogleService-Info.plist in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
 				5B99419A00A4A180C6744618 /* PrivacyInfo.xcprivacy in Resources */,
-				7ABDC31C5D8045D086378872 /* ArchivoBlack.ttf in Resources */,
-				4E98BC01BC2B4D76A367CA05 /* ArchivoLight.ttf in Resources */,
-				54332AE27DEA4CBB987657E5 /* ArchivoMedium.ttf in Resources */,
-				25C5F79057E2402B86D81656 /* ArchivoRegular.ttf in Resources */,
-				0164E6013CA149B598BDED79 /* ArchivoThin.ttf in Resources */,
+				4A86E19B21FC489788725607 /* ArchivoBlack.ttf in Resources */,
+				E90474E956AA4C74927DEEA5 /* ArchivoLight.ttf in Resources */,
+				D86CAD4F22254D9C98D995F2 /* ArchivoMedium.ttf in Resources */,
+				2C511E09FEC9404AADA85FC8 /* ArchivoRegular.ttf in Resources */,
+				5CC3B08D313B4A59855EEE0E /* ArchivoThin.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

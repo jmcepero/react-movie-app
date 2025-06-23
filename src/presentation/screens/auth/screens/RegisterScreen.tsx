@@ -1,6 +1,6 @@
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { useContext, useEffect } from 'react';
-import { Images } from '../../../../../assets/images/Images.index';
+import { Images } from '../../../../assets/images/Images.index';
 import Icon from '@react-native-vector-icons/ionicons';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';

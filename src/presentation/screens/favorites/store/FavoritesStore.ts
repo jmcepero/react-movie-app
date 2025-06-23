@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from 'mobx';
+import { makeAutoObservable, reaction, runInAction } from 'mobx';
 import TMDBAccountStore from '../../preferences/store/TMDBAccountStore';
 import { getFavoriteMoviesUseCase } from '@domain/favorites/GetFavoriteMoviesUseCase';
 import { getFavoriteTvShowsUseCase } from '@domain/favorites/GetFavoriteTvShowsUseCase';
@@ -24,10 +24,19 @@ export class FavoritesStore {
   pendingActions: FavoriteAction[] = [];
   isSyncing = false;
   isLoadingInitialFavorites: boolean | undefined = undefined;
+  numberOfIntent: number = 0;
 
   constructor(private tmdbAccountStore: TMDBAccountStore) {
     makeAutoObservable(this);
     this.loadPendingActions();
+    reaction(
+      () => this.tmdbAccountStore.tmdbSessionId,
+      sessionId => {
+        if (sessionId) {
+          this.fetchInitialFavorites();
+        }
+      },
+    );
   }
 
   toggleFavorite(mediaId: number, mediaType: 'movie' | 'tv') {
@@ -91,12 +100,13 @@ export class FavoritesStore {
         this.savePendingActions();
       });
     } catch (error) {
-      console.error('Failed to sync favorite action:', error);
+      console.log('Failed to sync favorite action:', error);
     } finally {
       runInAction(() => {
         this.isSyncing = false;
       });
-      if (this.pendingActions.length > 0) {
+      if (this.pendingActions.length > 0 && this.numberOfIntent < 2) {
+        this.numberOfIntent++;
         this.triggerSync();
       }
     }
@@ -171,6 +181,15 @@ export class FavoritesStore {
     return mediaType === 'movie'
       ? this.favoriteMovieIds.has(mediaId)
       : this.favoriteTvShowIds.has(mediaId);
+  }
+
+  cleanup() {
+    this.favoriteMovieIds.clear();
+    this.favoriteTvShowIds.clear();
+    this.pendingActions = [];
+    this.isSyncing = false;
+    this.isLoadingInitialFavorites = undefined;
+    AsyncStorage.removeItem(PENDING_FAVORITES_KEY);
   }
 
   private _setLoadingFavorite(value: boolean) {

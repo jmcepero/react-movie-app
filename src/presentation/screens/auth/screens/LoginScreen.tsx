@@ -1,26 +1,26 @@
-import {Text, View, ScrollView, TouchableOpacity} from 'react-native';
-import {useContext, useEffect} from 'react';
-import {Images} from '../../../../../assets/images/Images.index';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {MobXProviderContext, observer} from 'mobx-react';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { useContext, useEffect } from 'react';
+import { Images } from '../../../../assets/images/Images.index';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { MobXProviderContext, observer } from 'mobx-react';
 import RNMovieButton from '../../../components/base/RNMovieButton';
-import {yupResolver} from '@hookform/resolvers/yup';
-import {loginSchema} from '../components/form/LoginSchema';
-import {Controller, useForm} from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { loginSchema } from '../components/form/LoginSchema';
+import { Controller, useForm } from 'react-hook-form';
 import Toast from 'react-native-toast-message';
 import RNInput from '../../../components/base/RNInput';
 import LoginStore from '../store/LoginStore';
-import {styles} from '../styles/LoginScreen.styles';
+import { styles } from '../styles/LoginScreen.styles';
 
 const LoginScreen = () => {
-  const {loginStore} = useContext(MobXProviderContext) as {
+  const { loginStore } = useContext(MobXProviderContext) as {
     loginStore: LoginStore;
   };
 
   const {
     control,
-    formState: {isValid},
+    formState: { isValid },
   } = useForm({
     resolver: yupResolver(loginSchema),
     defaultValues: {
@@ -52,7 +52,8 @@ const LoginScreen = () => {
       contentContainerStyle={{
         flexGrow: 1,
         justifyContent: 'center',
-      }}>
+      }}
+    >
       <View>
         <View style={styles.textRNContainer}>
           <Text style={styles.textRN}>RN</Text>
@@ -64,8 +65,8 @@ const LoginScreen = () => {
             control={control}
             name="email"
             render={({
-              field: {onChange, onBlur, value},
-              fieldState: {error},
+              field: { onChange, onBlur, value },
+              fieldState: { error },
             }) => (
               <RNInput
                 onBlur={onBlur}
@@ -85,8 +86,8 @@ const LoginScreen = () => {
             control={control}
             name="password"
             render={({
-              field: {onChange, onBlur, value},
-              fieldState: {error},
+              field: { onChange, onBlur, value },
+              fieldState: { error },
             }) => (
               <RNInput
                 onBlur={onBlur}
@@ -129,7 +130,8 @@ const LoginScreen = () => {
           <Text style={styles.dontHaveAccountText}>Don't have an account?</Text>
           <TouchableOpacity
             activeOpacity={1}
-            onPress={() => navigation.navigate('RegisterScreen')}>
+            onPress={() => navigation.navigate('RegisterScreen')}
+          >
             <Text style={styles.signUpText}>Sign up</Text>
           </TouchableOpacity>
         </View>
