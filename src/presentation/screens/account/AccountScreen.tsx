@@ -1,19 +1,18 @@
 import { useContext, useState } from 'react';
 import {
-  ScrollView,
   View,
   Text,
-  Image,
   TouchableOpacity,
   Switch,
   StyleSheet,
   Platform,
+  ActivityIndicator,
+  Animated,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {Images} from '../../../../assets/images/Images.index';
-import {MobXProviderContext, observer} from 'mobx-react';
-import AuthStore from './../auth/store/AuthStore';
-import {getFontFamily} from '../../utils/Fonts';
+import Icon from '@react-native-vector-icons/ionicons';
+import { observer } from 'mobx-react';
+import { Image } from 'expo-image';
+import { getFontFamily } from '@utils/Fonts';
 import {
   darkBlueColor,
   darkBlueColorLighter,
@@ -21,26 +20,45 @@ import {
   primaryRed,
   primaryTextColor,
   secondaryTextColor,
-} from '../../utils/Colors';
+  warningColor,
+} from '@utils/Colors';
+import { useAccountPreferences } from '@screens/account/hooks/useAccountPreferences';
+import { ScrollAnimationContext } from '@presentation/utils/ScrollAnimationContext';
+import { Images } from '../../../assets/images/Images.index';
 
 const AccountScreen = () => {
-  const {authStore} = useContext(MobXProviderContext) as {
-    authStore: AuthStore;
-  };
-  const userPhoto = authStore.user?.photoURL
-    ? {uri: authStore.user?.photoURL}
-    : Images.user;
+  const { scrollY } = useContext(ScrollAnimationContext);
+  const {
+    user,
+    isTMDBConnected,
+    isConnecting,
+    isDisconnecting,
+    favoriteMoviesCount,
+    favoriteTvShowsCount,
+    handleConnectTMDB,
+    handleDisconnectTMDB,
+    handleLogout,
+  } = useAccountPreferences();
+
+  const userPhoto = user?.photoURL ? { uri: user?.photoURL } : Images.user;
 
   const [pushNotificationsEnabled, setPushNotificationsEnabled] =
     useState(true);
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+    <Animated.ScrollView
+      contentContainerStyle={styles.scrollViewContent}
+      onScroll={Animated.event(
+        [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+        { useNativeDriver: true },
+      )}
+      scrollEventThrottle={16}
+    >
       {/* Profile Header */}
       <View style={styles.profileHeader}>
         <Image source={userPhoto} style={styles.avatar} />
-        <Text style={styles.profileName}>{authStore.user?.displayName}</Text>
-        <Text style={styles.profileEmail}>{authStore.user?.email}</Text>
+        <Text style={styles.profileName}>{user?.displayName}</Text>
+        <Text style={styles.profileEmail}>{user?.email}</Text>
         <TouchableOpacity style={styles.editProfileButton}>
           <Text style={styles.editProfileButtonText}>Edit profile</Text>
         </TouchableOpacity>
@@ -61,9 +79,11 @@ const AccountScreen = () => {
               <Text style={styles.listItemText}>Movies</Text>
             </View>
             <View style={styles.listItemRightContent}>
-              <View style={styles.badge}>
-                <Text style={styles.badgeText}>2</Text>
-              </View>
+              {favoriteMoviesCount > 0 && (
+                <View style={styles.badge}>
+                  <Text style={styles.badgeText}>{favoriteMoviesCount}</Text>
+                </View>
+              )}
               <Icon name="chevron-forward-outline" size={20} color="#B0B0B0" />
             </View>
           </TouchableOpacity>
@@ -77,6 +97,26 @@ const AccountScreen = () => {
                 style={styles.listItemIcon}
               />
               <Text style={styles.listItemText}>TV Shows</Text>
+            </View>
+            <View style={styles.listItemRightContent}>
+              {favoriteTvShowsCount > 0 && (
+                <View style={styles.badge}>
+                  <Text style={styles.badgeText}>{favoriteTvShowsCount}</Text>
+                </View>
+              )}
+              <Icon name="chevron-forward-outline" size={20} color="#B0B0B0" />
+            </View>
+          </TouchableOpacity>
+          <View style={styles.separator} />
+          <TouchableOpacity style={styles.listItem}>
+            <View style={styles.listItemContent}>
+              <Icon
+                name="shapes-outline"
+                size={24}
+                color={iconSecondaryColor}
+                style={styles.listItemIcon}
+              />
+              <Text style={styles.listItemText}>Generes</Text>
             </View>
             <Icon name="chevron-forward-outline" size={20} color="#B0B0B0" />
           </TouchableOpacity>
@@ -130,7 +170,7 @@ const AccountScreen = () => {
               <Text style={styles.listItemText}>Dark Theme</Text>
             </View>
             <Switch
-              trackColor={{false: '#E0E0E0', true: primaryRed}}
+              trackColor={{ false: '#E0E0E0', true: primaryRed }}
               thumbColor={pushNotificationsEnabled ? '#FFFFFF' : '#f4f3f4'}
               ios_backgroundColor="#E0E0E0"
               onValueChange={() =>
@@ -153,7 +193,53 @@ const AccountScreen = () => {
             <Icon name="chevron-forward-outline" size={20} color="#B0B0B0" />
           </TouchableOpacity>
           <View style={styles.separator} />
-          <TouchableOpacity style={styles.listItem}>
+
+          {isTMDBConnected ? (
+            <TouchableOpacity
+              style={styles.listItem}
+              onPress={handleDisconnectTMDB}
+              disabled={isDisconnecting}
+            >
+              <View style={styles.listItemContent}>
+                <Image
+                  source={Images.tmdbIcon}
+                  style={styles.listItemImage}
+                  tintColor={warningColor}
+                />
+                <Text style={[styles.listItemText, { color: warningColor }]}>
+                  Disconnect from TMDB
+                </Text>
+              </View>
+              {isDisconnecting && (
+                <ActivityIndicator
+                  size="small"
+                  color={warningColor}
+                  style={styles.indicator}
+                />
+              )}
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.listItem}
+              onPress={handleConnectTMDB}
+              disabled={isConnecting}
+            >
+              <View style={styles.listItemContent}>
+                <Image
+                  source={Images.tmdbIcon}
+                  style={styles.listItemImage}
+                  tintColor={iconSecondaryColor}
+                />
+                <Text style={styles.listItemText}>Connect to TMDB</Text>
+              </View>
+              {isConnecting && (
+                <ActivityIndicator size="small" style={styles.indicator} />
+              )}
+            </TouchableOpacity>
+          )}
+
+          <View style={styles.separator} />
+          <TouchableOpacity style={styles.listItem} onPress={handleLogout}>
             <View style={styles.listItemContent}>
               <Icon
                 name="log-out-outline"
@@ -169,7 +255,7 @@ const AccountScreen = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </ScrollView>
+    </Animated.ScrollView>
   );
 };
 
@@ -241,8 +327,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 14,
-    paddingHorizontal: 15,
-    backgroundColor: 'transparent', // Items are on the card background
+    paddingHorizontal: 16,
   },
   listItemContent: {
     flexDirection: 'row',
@@ -297,5 +382,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+  },
+  listItemImage: {
+    height: 22,
+    marginRight: 15,
+    width: 22, // Ensure consistent icon spacing
+    textAlign: 'center',
+  },
+  indicator: {
+    alignItems: 'flex-end',
+    alignSelf: 'flex-end',
   },
 });

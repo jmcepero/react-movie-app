@@ -1,3 +1,16 @@
 {
-  "extends": "@react-native/typescript-config/tsconfig.json"
+  "extends": "@react-native/typescript-config",
+  "compilerOptions": {
+    "baseUrl": "./src", // O '.' si tus alias parten de la raíz del proyecto
+    "paths": {
+      "@assets/*": ["assets/*"],
+      "@domain/*": ["domain/*"],
+      "@data/*": ["data/*"],
+      "@presentation/*": ["presentation/*"],
+      "@components/*": ["presentation/components/*"],
+      "@screens/*": ["presentation/screens/*"],
+      "@utils/*": ["presentation/utils/*"],
+    },
+    "skipLibCheck": true // Temporal para resolver warning de Vector- Icons
+  }
 }

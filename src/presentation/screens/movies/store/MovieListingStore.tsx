@@ -1,11 +1,9 @@
-import {makeAutoObservable, runInAction} from 'mobx';
-import {errorHandler} from '../../../base/errorHandler';
-import {getTopRatedUseCase} from '../../../../domain/movie/usecases/GeTopRatedUseCase';
-import {getPopularUseCase} from '../../../../domain/movie/usecases/GetPopularUseCase';
-import {Item} from '../../../../domain/base/Item';
-import {MovieListingParams} from '../../../navigation/StackNavigation';
-import {Movies} from '../../../../domain/movie/entities/Movies';
-import {discoverMoviesByGenresUseCase} from '../../../../domain/movie/usecases/DiscoverMoviesByGenresUseCase';
+import { makeAutoObservable, runInAction } from 'mobx';
+import { errorHandler } from '../../../base/errorHandler';
+import { getTopRatedUseCase } from '../../../../domain/movie/usecases/GeTopRatedUseCase';
+import { getPopularUseCase } from '../../../../domain/movie/usecases/GetPopularUseCase';
+import { Item } from '../../../../domain/base/Item';
+import { Movies } from '../../../../domain/movie/entities/Movies';
 
 class MovieListingStore {
   isLoading: boolean = false;
@@ -13,27 +11,21 @@ class MovieListingStore {
   result: Item[] = [];
   page: number = 1;
   error: string = '';
-  params: MovieListingParams | undefined;
+  listType: string | undefined = undefined;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  onScreenLoaded(params: MovieListingParams) {
-    this.params = params;
+  onScreenLoaded(type: string) {
+    this.listType = type;
     this.loadMovies(this.page);
   }
 
   getUseCaseByParams(page: number): Promise<Movies> {
-    const type = this.params!!.params.type;
-    const value = this.params!!.params.value;
-    if (type === 'byCategory') {
-      return value == 'popular'
-        ? getPopularUseCase.execute(page)
-        : getTopRatedUseCase.execute(page);
-    } else {
-      return discoverMoviesByGenresUseCase.execute({withGenres: value}, page);
-    }
+    return this.listType == 'popular'
+      ? getPopularUseCase.execute(page)
+      : getTopRatedUseCase.execute(page);
   }
 
   async loadMovies(page: number) {
@@ -54,7 +46,7 @@ class MovieListingStore {
         this.error = '';
       });
     } catch (error) {
-      const {message} = errorHandler(error);
+      const { message } = errorHandler(error);
       runInAction(() => {
         this.isLoading = false;
         this.pageLoading = false;

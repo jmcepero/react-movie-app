@@ -13,3 +13,13 @@ export const loginSchema = yup.object().shape({
     .min(8, 'La contraseña debe tener al menos 8 caracteres')
     .required('La contraseña es requerida'),
 });
+
+export const registerSchema = loginSchema.concat(
+  yup.object().shape({
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref('password')], 'Passwords must match')
+      .min(8, 'La contraseña debe tener al menos 8 caracteres')
+      .required('La contraseña es requerida'),
+  }),
+);

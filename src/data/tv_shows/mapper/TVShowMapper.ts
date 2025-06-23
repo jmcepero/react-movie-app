@@ -2,8 +2,9 @@ import {
   TVShowsResponse,
   TVGenresResponse,
   TVShowDetailResponse,
+  TVShowResponse,
 } from '../entities/TVShowsInterface';
-import {TVShows, TVShow} from '../../../domain/tv_shows/entities/TVShows';
+import { TVShows, TVShow } from '../../../domain/tv_shows/entities/TVShows';
 
 export const tvShowsResponseToDomain = (
   tvShowsResponse: TVShowsResponse,
@@ -120,4 +121,28 @@ export const tvShowDetailResponseToDomain = (
       seasonNumber: item.season_number,
     })),
   };
+};
+
+export const tvShowResponseArrayToDomain = (
+  tvShows: TVShowResponse[],
+): TVShow[] => {
+  return tvShows
+    .filter(item => item.poster_path)
+    .map(tvShow => {
+      return {
+        backdropPath: tvShow.backdrop_path || '',
+        firstAirDate: tvShow.first_air_date,
+        genreIds: [],
+        id: tvShow.id,
+        name: tvShow.name,
+        originCountry: tvShow.origin_country,
+        originalLanguage: tvShow.original_language,
+        originalName: tvShow.original_name,
+        overview: tvShow.overview,
+        popularity: tvShow.popularity,
+        posterPath: tvShow.poster_path,
+        voteAverage: tvShow.vote_average,
+        voteCount: tvShow.vote_count,
+      };
+    });
 };

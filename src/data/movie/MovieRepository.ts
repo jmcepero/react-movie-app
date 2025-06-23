@@ -2,17 +2,18 @@ import {
   movieDetailResponseToDetail,
   moviesResponseToDomain,
 } from './mapper/MovieMapper';
-import {Movie, Movies} from '../../domain/movie/entities/Movies';
-import {movieRemoteDataSource} from './remote/MovieRemoteDataSource';
-import {get, getDatabase, ref, set} from '@react-native-firebase/database';
-import {MovieFilterRequest} from '../../domain/movie/entities/MovieFilterRequest';
-import {isolateGlobalState} from 'mobx/dist/internal';
-import {WITH_GENRES} from '../../presentation/screens/filter/utils/Constant';
+import { Movie, Movies } from '../../domain/movie/entities/Movies';
+import { movieRemoteDataSource } from './remote/MovieRemoteDataSource';
+import { get, getDatabase, ref, set } from '@react-native-firebase/database';
+import { MovieFilterRequest } from '../../domain/movie/entities/MovieFilterRequest';
+import { isolateGlobalState } from 'mobx/dist/internal';
+import { WITH_GENRES } from '../../presentation/screens/filter/utils/Constant';
 
 export interface MovieDataSource {
   getNowPlaying(page?: number): Promise<Movies>;
   getPopular(page?: number): Promise<Movies>;
   getTopRated(page?: number): Promise<Movies>;
+  getUpcoming(page?: number): Promise<Movies>;
   findMovies(term: string, page: number): Promise<Movies>;
   getMovieDetail(movieId: string): Promise<Movie>;
   userMoviesByGenres(userId: string, page?: number): Promise<Movies>;
@@ -40,6 +41,13 @@ export const movieRepository: MovieDataSource = {
   async getTopRated(page?: number): Promise<Movies> {
     const resp = await movieRemoteDataSource.getMoviesByClasification(
       'top_rated',
+      page,
+    );
+    return moviesResponseToDomain(resp);
+  },
+  async getUpcoming(page?: number): Promise<Movies> {
+    const resp = await movieRemoteDataSource.getMoviesByClasification(
+      'upcoming',
       page,
     );
     return moviesResponseToDomain(resp);

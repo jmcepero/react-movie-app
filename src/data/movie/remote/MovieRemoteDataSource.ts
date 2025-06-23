@@ -1,8 +1,10 @@
-import {MovieFilterRequest} from '../../../domain/movie/entities/MovieFilterRequest';
-import {VOTE_AVERAGE_GTE} from '../../../presentation/screens/filter/utils/Constant';
+import { VOTE_AVERAGE_GTE } from '../../../presentation/screens/filter/utils/Constant';
 import movieDB from '../../api/movieDB';
-import {MoviesResponse, MovieDetailResponse} from '../entities/MovieInterface';
-import {getValorationById} from '../mapper/MovieMapper';
+import {
+  MoviesResponse,
+  MovieDetailResponse,
+} from '../entities/MovieInterface';
+import { getValorationById } from '../mapper/MovieMapper';
 
 export interface MovieRemoteDataSource {
   getMoviesByClasification(
@@ -66,7 +68,7 @@ export const movieRemoteDataSource: MovieRemoteDataSource = {
       }),
     };
 
-    const resp = await movieDB.get<MoviesResponse>(url, {params});
+    const resp = await movieDB.get<MoviesResponse>(url, { params });
     return resp.data;
   },
 };

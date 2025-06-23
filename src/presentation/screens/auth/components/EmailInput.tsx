@@ -1,10 +1,10 @@
 import { memo, useCallback } from 'react';
-import {FieldError} from 'react-hook-form';
-import {NativeSyntheticEvent, TextInputFocusEventData} from 'react-native';
-import {StyleProp, StyleSheet, TextInput, View} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {ViewStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
-import {onyxColor, primaryRed} from '../../../utils/Colors';
+import { FieldError } from 'react-hook-form';
+import { NativeSyntheticEvent, TextInputFocusEventData } from 'react-native';
+import { StyleProp, StyleSheet, TextInput, View } from 'react-native';
+import Icon from '@react-native-vector-icons/ionicons';
+import { ViewStyle } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
+import { onyxColor, primaryRed } from '../../../utils/Colors';
 
 interface Props {
   textValue: string;
@@ -33,7 +33,8 @@ const EmailInput = ({
         style,
         styles.textContainer,
         emailError ? styles.textInputError : null,
-      ]}>
+      ]}
+    >
       <Icon style={styles.icon} name="mail" size={18} color={'#988396'} />
       <TextInput
         value={textValue}

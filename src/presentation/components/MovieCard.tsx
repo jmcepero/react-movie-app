@@ -1,6 +1,7 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import {FadeInImage} from './base/FadeImage';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { FadeInImage } from './base/FadeImage';
+import Icon from '@react-native-vector-icons/ionicons';
+import { Image } from 'expo-image';
 
 export enum CardType {
   Carousel,
@@ -37,18 +38,22 @@ export const ImageCard = ({
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={() => onClick?.()}
-      style={styles.container}>
+      style={styles.container}
+    >
       <View
         style={{
           ...styles.imageContainer,
           width: width,
           height: height,
-        }}>
-        <LinearGradient
-          style={[styles.gradient]}
-          colors={['#211920', '#382c3e']}
+        }}
+      >
+        <Image
+          transition={500}
+          source={uri}
+          style={styles.image}
+          id={itemId}
+          contentFit="cover"
         />
-        <FadeInImage uri={uri} style={styles.image} id={itemId} />
       </View>
     </TouchableOpacity>
   );
@@ -77,7 +82,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     borderRadius: 15,
-    resizeMode: 'cover',
   },
   gradient: {
     width: '100%',

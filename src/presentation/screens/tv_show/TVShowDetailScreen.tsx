@@ -1,28 +1,28 @@
-import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
-import {useContext, useEffect} from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {ScrollView} from 'react-native-gesture-handler';
-import {RootStackParams} from '../../navigation/StackNavigation';
-import {LoadingView} from '../../components/base/LoadingView';
-import {YearDirector} from '../../components/detail/YearDirector';
-import {CastFeed} from '../../components/detail/feed/CastFeed';
-import {TrailerCard} from '../../components/detail/TrailerCard';
-import {ReviewFeed} from '../../components/detail/ReviewFeed';
-import {styles} from './style/TvShow.style';
-import {strDateToYear} from '../../extensions/StringDate';
-import {DetailImage} from '../../components/detail/DetailImage';
-import {NO_DESCRIPTION_TEXT} from '../../utils/Constants';
-import {CurrentSeason} from './components/CurrentSeason';
-import {MobXProviderContext, observer} from 'mobx-react';
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
+import { useContext, useEffect } from 'react';
+import { View, TouchableOpacity, Text } from 'react-native';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import Icon from '@react-native-vector-icons/ionicons';
+import { ScrollView } from 'react-native-gesture-handler';
+import { RootStackParams } from '../../navigation/StackNavigation';
+import { LoadingView } from '../../components/base/LoadingView';
+import { YearDirector } from '../../components/detail/YearDirector';
+import { CastFeed } from '../../components/detail/feed/CastFeed';
+import { TrailerCard } from '../../components/detail/TrailerCard';
+import { ReviewFeed } from '../../components/detail/ReviewFeed';
+import { styles } from './style/TvShow.style';
+import { strDateToYear } from '../../extensions/StringDate';
+import { DetailImage } from '../../components/detail/DetailImage';
+import { NO_DESCRIPTION_TEXT } from '../../utils/Constants';
+import { CurrentSeason } from './components/CurrentSeason';
+import { MobXProviderContext, observer } from 'mobx-react';
 import TvShowDetailStore from './store/TvShowDetailStore';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'TVShowDetailScreen'> {}
 
-export const TVShowDetailScreen = observer(({route}: Props) => {
-  const {tvShowStore} = useContext(MobXProviderContext) as {
+export const TVShowDetailScreen = observer(({ route }: Props) => {
+  const { tvShowStore } = useContext(MobXProviderContext) as {
     tvShowStore: TvShowDetailStore;
   };
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
@@ -39,7 +39,8 @@ export const TVShowDetailScreen = observer(({route}: Props) => {
         style={{
           ...styles.container,
           ...styles.center,
-        }}>
+        }}
+      >
         <LoadingView />
       </View>
     );
@@ -63,7 +64,7 @@ export const TVShowDetailScreen = observer(({route}: Props) => {
               <Text style={styles.valorationTitle}>
                 {tvShowStore.tvShow?.voteAverage.toFixed(1) || 0.0}
               </Text>
-              <Icon name="star" size={18} style={{color: '#dcb189'}} />
+              <Icon name="star" size={18} style={{ color: '#dcb189' }} />
             </View>
           </View>
 
@@ -107,7 +108,8 @@ export const TVShowDetailScreen = observer(({route}: Props) => {
             itemId: tvShowStore.tvShow?.id,
             itemType: 'tvShow',
           });
-        }}>
+        }}
+      >
         <Text style={styles.buttonText}>Watch</Text>
       </TouchableOpacity>
     </View>

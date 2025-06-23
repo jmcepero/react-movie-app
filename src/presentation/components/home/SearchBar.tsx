@@ -1,6 +1,6 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Skeleton from 'react-native-reanimated-skeleton';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from '@react-native-vector-icons/ionicons';
 import {
   darkColor,
   iconSecondaryColor,
@@ -8,7 +8,7 @@ import {
   skeletonDarkColor,
   skeletonLightColor,
 } from '../../utils/Colors';
-import {getFontFamily} from '../../utils/Fonts';
+import { getFontFamily } from '../../utils/Fonts';
 
 interface Props {
   onClick: () => void;
@@ -16,7 +16,7 @@ interface Props {
   isLoading: boolean;
 }
 
-export const SearchBar = ({onClick, onFilterClicked, isLoading}: Props) => {
+export const SearchBar = ({ onClick, onFilterClicked, isLoading }: Props) => {
   return !isLoading ? (
     <View style={styles.barRow}>
       <TouchableOpacity style={styles.container} onPress={onClick}>
@@ -30,7 +30,7 @@ export const SearchBar = ({onClick, onFilterClicked, isLoading}: Props) => {
   ) : (
     <View>
       <Skeleton
-        containerStyle={{flex: 1, marginHorizontal: 16}}
+        containerStyle={{ flex: 1, marginHorizontal: 16 }}
         isLoading={isLoading}
         layout={[
           {

@@ -1,4 +1,4 @@
-import {Images} from '../../../../assets/images/Images.index';
+import { Images } from '../../../assets/images/Images.index';
 
 export interface CustomGenre {
   id: number;

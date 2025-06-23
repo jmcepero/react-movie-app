@@ -7,8 +7,8 @@ import {
   ViewStyle,
 } from 'react-native';
 import { useEffect } from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {primaryRed, primaryTextColor} from '../../../utils/Colors';
+import Icon from '@react-native-vector-icons/ionicons';
+import { primaryRed, primaryTextColor } from '../../../utils/Colors';
 
 interface FilterButtonProps {
   onFilterClicked: () => void;
@@ -28,7 +28,8 @@ const FilterButton = ({
         customStyle,
         isFilterActive ? styles.filterButtonActive : undefined,
       ]}
-      onPress={onFilterClicked}>
+      onPress={onFilterClicked}
+    >
       <Icon
         style={[
           styles.iconFilterNeutral,

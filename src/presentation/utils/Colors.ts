@@ -12,6 +12,7 @@ export const secondaryBackgroundColor = 'rgba(24,25,31,1)';
 export const primaryBlackColor = 'rgba(19,20,24,1)';
 export const darkBlueColor = 'rgba(34,35,42,1)';
 export const darkBlueColorLighter = 'rgba(44, 45, 52, 1)';
+export const warningColor = '#FFA500';
 
 // Search Barc
 export const iconSecondaryColor = '#988396';

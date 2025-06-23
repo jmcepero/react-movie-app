@@ -1,11 +1,7 @@
-import {Text, TouchableOpacity} from 'react-native';
-import {StyleSheet, View} from 'react-native';
-import {CustomGenre} from '../../../data/genre/local/CustomGenres';
-import {CustomImage} from '../base/CustomImage';
-import {FadeInImage} from '../base/FadeImage';
-import {Images} from '../../../../assets/images/Images.index';
-import {MotiView} from 'moti';
-import {GenreCard} from './GenreCard';
+import { StyleSheet } from 'react-native';
+import { CustomGenre } from '../../../data/genre/local/CustomGenres';
+import { MotiView } from 'moti';
+import { GenreCard } from './GenreCard';
 
 interface Props {
   genre: CustomGenre;
@@ -25,10 +21,11 @@ export const AnimatedGenreCard = ({
   const delay = index * 100;
   return (
     <MotiView
-      from={{opacity: 0, translateY: 30}}
-      animate={{opacity: 1, translateY: 0}}
-      transition={{type: 'timing', duration: 300, delay}}
-      style={{width: width, height: height}}>
+      from={{ opacity: 0, translateY: 30 }}
+      animate={{ opacity: 1, translateY: 0 }}
+      transition={{ type: 'timing', duration: 300, delay }}
+      style={{ width: width, height: height }}
+    >
       <GenreCard
         genre={genre}
         width={width}

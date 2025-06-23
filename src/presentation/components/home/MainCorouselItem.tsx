@@ -1,10 +1,12 @@
-import {StyleSheet, View} from 'react-native';
-import {ImageCard} from '../MovieCard';
-import {Movie} from '../../../domain/movie/entities/Movies';
-import {Text} from '@react-native-material/core';
-import {ValorationView} from '../base/ValorationView';
-import {strDateToYear} from '../../extensions/StringDate';
-import {getFontFamily} from '../../utils/Fonts';
+import { StyleSheet, View } from 'react-native';
+import { ImageCard } from '../MovieCard';
+import { Movie } from '../../../domain/movie/entities/Movies';
+import { Text } from '@react-native-material/core';
+import { ValorationView } from '../base/ValorationView';
+import { strDateToYear } from '../../extensions/StringDate';
+import { getFontFamily } from '../../utils/Fonts';
+import { movieStyle } from '../listing/MovieItem.style';
+import Icon from '@react-native-vector-icons/ionicons';
 
 interface MainCarouselItemProps {
   movie: Movie;
@@ -20,6 +22,7 @@ export const MainCorouselItem = ({
   return (
     <View style={customStyle.container}>
       <ImageCard
+        itemId={movie.id.toString()}
         imageID={{
           backdropPath: movie.backdropPath,
           posterPath: movie.posterPath,
@@ -27,12 +30,19 @@ export const MainCorouselItem = ({
         width={cardWidth}
         onClick={() => onMovieClicked(movie)}
       />
+      <Icon
+        color={'white'}
+        name="heart-outline"
+        size={26}
+        style={customStyle.iconFav}
+      />
       <View style={customStyle.infoContainer}>
         <View style={customStyle.titleContainer}>
           <Text
             style={customStyle.movieTitle}
             numberOfLines={1}
-            ellipsizeMode="tail">
+            ellipsizeMode="tail"
+          >
             {movie.originalTitle}
           </Text>
           <Text style={customStyle.yearTitle}>
@@ -73,5 +83,13 @@ const customStyle = StyleSheet.create({
     fontSize: 12,
     color: 'rgba(251,246,248,0.7)',
     marginTop: 4,
+  },
+  iconFav: {
+    position: 'absolute',
+    backgroundColor: 'rgba(19,20,24,0.8)',
+    borderRadius: 12,
+    padding: 6,
+    top: 8,
+    right: 6,
   },
 });

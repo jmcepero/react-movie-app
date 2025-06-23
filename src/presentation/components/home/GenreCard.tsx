@@ -1,9 +1,7 @@
-import {Text, TouchableOpacity} from 'react-native';
-import {StyleSheet, View} from 'react-native';
-import {CustomGenre} from '../../../data/genre/local/CustomGenres';
-import {CustomImage} from '../base/CustomImage';
-import {FadeInImage} from '../base/FadeImage';
-import {Images} from '../../../../assets/images/Images.index';
+import { Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { CustomGenre } from '../../../data/genre/local/CustomGenres';
+import { Image } from 'expo-image';
 
 interface Props {
   genre: CustomGenre;
@@ -20,11 +18,11 @@ export const GenreCard = ({
 }: Props) => {
   return (
     <TouchableOpacity style={styles.container} onPress={() => onClick?.(genre)}>
-      <FadeInImage
-        uri={genre.image ? genre.image : ''}
-        style={[styles.image, {width: width, height: height}]}
+      <Image
+        source={genre.image ? genre.image : ''}
+        style={[styles.image, { width: width, height: height }]}
       />
-      <View style={[styles.overlay, {width: width, height: height}]}></View>
+      <View style={[styles.overlay, { width: width, height: height }]}></View>
       <Text style={styles.genereTitle} numberOfLines={2} ellipsizeMode="tail">
         {genre.name}
       </Text>

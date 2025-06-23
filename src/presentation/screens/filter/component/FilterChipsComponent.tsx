@@ -1,32 +1,33 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useContext } from 'react';
-import {MobXProviderContext, observer} from 'mobx-react';
-import {FilterChipsStore} from '../store/FilterChipsStore';
-import Chip from '../../onboading/components/Chip';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {primaryTextColor} from '../../../utils/Colors';
-import {getFontFamily} from '../../../utils/Fonts';
+import { MobXProviderContext, observer } from 'mobx-react';
+import { FilterChipsStore } from '../store/FilterChipsStore';
+import Chip from '../../preferences/components/Chip';
+import Icon from '@react-native-vector-icons/ionicons';
+import { primaryTextColor } from '../../../utils/Colors';
+import { getFontFamily } from '../../../utils/Fonts';
 
 const FilterChipsComponent = () => {
-  const {filterChipsStore} = useContext(MobXProviderContext) as {
+  const { filterChipsStore } = useContext(MobXProviderContext) as {
     filterChipsStore: FilterChipsStore;
   };
 
   return (
-    <View style={{width: '100%'}}>
+    <View style={{ width: '100%' }}>
       {filterChipsStore.sections.map(section => (
         <View key={section.id}>
           <TouchableOpacity
             activeOpacity={0.9}
             style={styles.header}
-            onPress={() => filterChipsStore.toggleSection(section.id)}>
+            onPress={() => filterChipsStore.toggleSection(section.id)}
+          >
             <View style={styles.headerRow}>
               <View style={styles.headerColumn}>
                 <Text style={styles.headerTitle}>{section.title}</Text>
                 {section.expanded == false &&
                   (filterChipsStore.getSelectedChipsBySection(section.id) || [])
                     .length > 0 && (
-                    <Text style={{color: 'white'}}>
+                    <Text style={{ color: 'white' }}>
                       {filterChipsStore
                         .getSelectedChipsBySection(section.id)
                         ?.map(chip => chip.label)

@@ -1,38 +1,31 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { useContext, useEffect } from 'react';
-import {primaryBackgroundColor, primaryRed} from '../../../utils/Colors';
-import {getFontFamily} from '../../../utils/Fonts';
-import {Images} from '../../../../../assets/images/Images.index';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {MobXProviderContext, observer} from 'mobx-react';
-import AuthStore from '../store/AuthStore';
+import { Images } from '../../../../assets/images/Images.index';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { MobXProviderContext, observer } from 'mobx-react';
 import RNMovieButton from '../../../components/base/RNMovieButton';
-import {yupResolver} from '@hookform/resolvers/yup';
-import {loginSchema} from '../components/form/LoginSchema';
-import {Controller, useForm} from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { loginSchema } from '../components/form/LoginSchema';
+import { Controller, useForm } from 'react-hook-form';
 import Toast from 'react-native-toast-message';
 import RNInput from '../../../components/base/RNInput';
+import LoginStore from '../store/LoginStore';
+import { styles } from '../styles/LoginScreen.styles';
 
-const LoginScreen = observer(() => {
-  const {authStore} = useContext(MobXProviderContext) as {
-    authStore: AuthStore;
+const LoginScreen = () => {
+  const { loginStore } = useContext(MobXProviderContext) as {
+    loginStore: LoginStore;
   };
 
   const {
     control,
-    formState: {isValid},
+    formState: { isValid },
   } = useForm({
     resolver: yupResolver(loginSchema),
     defaultValues: {
-      email: authStore.loginEmail,
-      password: authStore.loginPassword,
+      email: loginStore.email,
+      password: loginStore.password,
     },
     mode: 'onChange',
   });
@@ -40,17 +33,18 @@ const LoginScreen = observer(() => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
   useEffect(() => {
-    if (authStore.error) {
+    if (loginStore.error) {
       Toast.show({
         type: 'error',
-        text1: 'Invalid credentials',
-        text2: authStore.error,
+        text1: 'Login Failed!',
+        text2: loginStore.error,
+        visibilityTime: 6000,
         onHide: () => {
-          authStore.onErrorHide();
+          loginStore.onErrorHide();
         },
       });
     }
-  }, [authStore.error]);
+  }, [loginStore.error]);
 
   return (
     <ScrollView
@@ -58,7 +52,8 @@ const LoginScreen = observer(() => {
       contentContainerStyle={{
         flexGrow: 1,
         justifyContent: 'center',
-      }}>
+      }}
+    >
       <View>
         <View style={styles.textRNContainer}>
           <Text style={styles.textRN}>RN</Text>
@@ -70,15 +65,15 @@ const LoginScreen = observer(() => {
             control={control}
             name="email"
             render={({
-              field: {onChange, onBlur, value},
-              fieldState: {error},
+              field: { onChange, onBlur, value },
+              fieldState: { error },
             }) => (
               <RNInput
                 onBlur={onBlur}
                 textValue={value}
                 onChange={value => {
                   onChange(value);
-                  authStore.onEmailChange(value);
+                  loginStore.onEmailChange(value);
                 }}
                 error={error}
                 iconName="mail"
@@ -91,15 +86,15 @@ const LoginScreen = observer(() => {
             control={control}
             name="password"
             render={({
-              field: {onChange, onBlur, value},
-              fieldState: {error},
+              field: { onChange, onBlur, value },
+              fieldState: { error },
             }) => (
               <RNInput
                 onBlur={onBlur}
                 textValue={value}
                 onChange={value => {
                   onChange(value);
-                  authStore.onPasswordChange(value);
+                  loginStore.onPasswordChange(value);
                 }}
                 error={error}
                 iconName="lock-closed"
@@ -110,11 +105,11 @@ const LoginScreen = observer(() => {
           />
 
           <RNMovieButton
-            isLoading={authStore.loading}
-            onClick={() => authStore.signInWithEmail()}
+            isLoading={loginStore.loading}
+            onClick={() => loginStore.signInWithEmail()}
             label="Sign in"
             style={styles.buttonProvider}
-            disabled={!isValid}
+            enabled={isValid}
           />
         </View>
 
@@ -124,8 +119,8 @@ const LoginScreen = observer(() => {
         </View>
 
         <RNMovieButton
-          isLoading={authStore.googleLoading}
-          onClick={() => authStore.signInWithGoogle()}
+          isLoading={loginStore.googleLoading}
+          onClick={() => loginStore.signInWithGoogle()}
           label="Continue with Google"
           style={styles.buttonGoogle}
           leftIcon={Images.google}
@@ -135,113 +130,14 @@ const LoginScreen = observer(() => {
           <Text style={styles.dontHaveAccountText}>Don't have an account?</Text>
           <TouchableOpacity
             activeOpacity={1}
-            onPress={() => navigation.navigate('RegisterScreen')}>
+            onPress={() => navigation.navigate('RegisterScreen')}
+          >
             <Text style={styles.signUpText}>Sign up</Text>
           </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
   );
-});
+};
 
-export default LoginScreen;
-
-const styles = StyleSheet.create({
-  inputContainer: {
-    marginTop: 16,
-    gap: 8,
-  },
-  textRNContainer: {
-    alignSelf: 'center',
-  },
-  textRN: {
-    color: primaryRed,
-    fontFamily: getFontFamily('bold'),
-    fontSize: 68,
-  },
-  textMovie: {
-    color: 'white',
-    fontFamily: getFontFamily('bold'),
-    fontSize: 28,
-    top: -13,
-    start: 4,
-    letterSpacing: 3.3,
-  },
-  buttonProvider: {
-    marginTop: 24,
-    marginHorizontal: 16,
-  },
-  buttonText: {
-    fontFamily: 'Archivo-Medium',
-    fontSize: 18,
-    color: 'white',
-    padding: 16,
-    textAlign: 'center',
-    flex: 1,
-  },
-  textOr: {
-    position: 'absolute',
-    color: '#988396',
-    fontFamily: getFontFamily('normal'),
-    fontSize: 12,
-    backgroundColor: primaryBackgroundColor,
-    width: 30,
-    textAlign: 'center',
-  },
-  containerOr: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'center',
-    marginHorizontal: 42,
-    marginVertical: 24,
-    justifyContent: 'center',
-  },
-  line: {
-    height: 0.6,
-    flex: 1,
-    backgroundColor: '#988396',
-    opacity: 0.3,
-  },
-  buttonGoogle: {
-    borderColor: primaryRed,
-    borderWidth: 0.5,
-    backgroundColor: 'rgba(19,20,24,1)',
-    marginHorizontal: 16,
-  },
-  googleTextContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  googleIcon: {
-    width: 22,
-    height: 22,
-  },
-  googleText: {
-    fontFamily: 'Archivo-Medium',
-    fontSize: 18,
-    color: 'white',
-    padding: 16,
-    textAlign: 'center',
-  },
-  signUpContainer: {
-    flexDirection: 'row',
-    alignSelf: 'center',
-    marginTop: 16,
-  },
-  dontHaveAccountText: {
-    color: '#988396',
-    fontFamily: getFontFamily('normal'),
-    fontSize: 12,
-    textAlign: 'center',
-  },
-  signUpText: {
-    color: primaryRed,
-    fontFamily: getFontFamily('bold'),
-    fontSize: 12,
-    textAlign: 'center',
-    marginStart: 4,
-  },
-});
+export default observer(LoginScreen);

@@ -1,5 +1,5 @@
-import { useCallback, useContext, useEffect } from 'react';
-import {View, StyleSheet, FlatList} from 'react-native';
+import {useCallback, useContext, useEffect} from 'react';
+import {View, StyleSheet} from 'react-native';
 import SearchInput from '../../components/base/SearchInput';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
@@ -11,12 +11,11 @@ import ItemRenderer from '../../components/listing/ItemRenderer';
 import {MobXProviderContext, observer} from 'mobx-react';
 import SearchStore from './store/SearchStore';
 import VerticalFeedSkeleton from '../../components/base/skeleton/VerticalFeedSkeleton';
-import {Movie} from '../../../domain/movie/entities/Movies';
 import {itemContainer} from '../filter/styles/MovieFilterScreenStyles';
 import {FlashList} from '@shopify/flash-list';
-import NoResultsComponent from '../empty_states/NoResultsComponent';
 import {Toolbar} from '../../components/base/Toolbar';
 import {Item} from '../../../domain/base/Item';
+import {NoResultsView} from '../empty_states/EmptyStates';
 
 export interface SearchScreenProps
   extends StackScreenProps<RootStackParams, 'SearchScreen'> {}
@@ -78,7 +77,7 @@ export const SearchScreen = observer(({route}: SearchScreenProps) => {
               hasError={searchStore.hasError}
             />
           }
-          ListEmptyComponent={<NoResultsComponent />}
+          ListEmptyComponent={<NoResultsView />}
           onEndReachedThreshold={0.5}
           onEndReached={() => searchStore.onReachToBottom()}
         />

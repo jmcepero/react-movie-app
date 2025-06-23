@@ -1,10 +1,16 @@
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {TVShow} from '../../../../domain/tv_shows/entities/TVShows';
-import {TVShowItem} from './TVShowItem';
-import {fullWidth} from '../../../utils/Dimen';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { TVShow } from '../../../../domain/tv_shows/entities/TVShows';
+import TVShowItem from './TVShowItem';
+import { fullWidth } from '../../../utils/Dimen';
 import HorizontalFeedSkeleton from '../../../components/base/skeleton/HorizontalFeedSkeleton';
-import {getFontFamily} from '../../../utils/Fonts';
-import {primaryRed} from '../../../utils/Colors';
+import { getFontFamily } from '../../../utils/Fonts';
+import { primaryRed } from '../../../utils/Colors';
 
 interface Props {
   title?: string;
@@ -37,7 +43,7 @@ export const TVShowHorizontalFeed = ({
           gap: 8,
         }}
         data={tvShows}
-        renderItem={({index}) => (
+        renderItem={({ index }) => (
           <TVShowItem
             tvShow={tvShows[index]}
             onTVShowClicked={onTVShowClicked}

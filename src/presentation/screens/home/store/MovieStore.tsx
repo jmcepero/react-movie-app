@@ -1,12 +1,13 @@
-import {makeAutoObservable, runInAction} from 'mobx';
-import {CustomGenre} from '../../../../data/genre/local/CustomGenres';
-import {Movie, Movies} from '../../../../domain/movie/entities/Movies';
-import {errorHandler} from '../../../base/errorHandler';
-import {getNowPlayingUseCase} from '../../../../domain/movie/usecases/GetNowPlayingUseCase';
-import {getTopRatedUseCase} from '../../../../domain/movie/usecases/GeTopRatedUseCase';
-import {getPopularUseCase} from '../../../../domain/movie/usecases/GetPopularUseCase';
-import {userMoviesByGenresUseCase} from '../../../../domain/movie/usecases/UserMoviesByGenresUseCase';
-import {getMovieGenresUseCase} from '../../../../domain/genre/usecases/GetMovieGenresUseCase';
+import { makeAutoObservable, runInAction } from 'mobx';
+import { CustomGenre } from '../../../../data/genre/local/CustomGenres';
+import { Movie, Movies } from '../../../../domain/movie/entities/Movies';
+import { errorHandler } from '../../../base/errorHandler';
+import { getNowPlayingUseCase } from '../../../../domain/movie/usecases/GetNowPlayingUseCase';
+import { getTopRatedUseCase } from '../../../../domain/movie/usecases/GeTopRatedUseCase';
+import { getPopularUseCase } from '../../../../domain/movie/usecases/GetPopularUseCase';
+import { userMoviesByGenresUseCase } from '../../../../domain/movie/usecases/UserMoviesByGenresUseCase';
+import { getMovieGenresUseCase } from '../../../../domain/genre/usecases/GetMovieGenresUseCase';
+import { getUpcomingUseCase } from '@domain/movie/usecases/GeUpcomingUseCase';
 
 class MovieStore {
   isLoading: boolean = true;
@@ -14,6 +15,7 @@ class MovieStore {
   popular: Movie[] = [];
   genres: CustomGenre[] = [];
   topRated: Movie[] = [];
+  upcoming: Movie[] = [];
   byInterest: Movie[] = [];
   error: string = '';
 
@@ -27,24 +29,33 @@ class MovieStore {
     const nowPlayingProm = getNowPlayingUseCase.execute();
     const popularProm = getPopularUseCase.execute();
     const topRatedProm = getTopRatedUseCase.execute();
+    const upcomingProm = getUpcomingUseCase.execute();
     const byInterestProm = userId && userMoviesByGenresUseCase.execute(userId);
     const genresProm = getMovieGenresUseCase.execute();
 
     try {
-      const [nowPlayingRes, popularRes, topRatedRes, byInterestRes, genresRes] =
-        await Promise.all([
-          nowPlayingProm,
-          popularProm,
-          topRatedProm,
-          byInterestProm,
-          genresProm,
-        ]);
+      const [
+        nowPlayingRes,
+        popularRes,
+        topRatedRes,
+        upcomingRes,
+        byInterestRes,
+        genresRes,
+      ] = await Promise.all([
+        nowPlayingProm,
+        popularProm,
+        topRatedProm,
+        upcomingProm,
+        byInterestProm,
+        genresProm,
+      ]);
 
       runInAction(() => {
         this.nowPlaying = nowPlayingRes.results.slice(0, 8);
-        this.popular = popularRes.results;
+        this.popular = popularRes.results.slice(0, 8);
         this.genres = genresRes.slice(0, 8);
-        this.topRated = topRatedRes.results;
+        this.topRated = topRatedRes.results.slice(0, 8);
+        this.upcoming = upcomingRes.results.slice(0, 8);
         if (byInterestRes !== undefined) {
           this.byInterest = (byInterestRes as Movies).results;
         }
@@ -52,7 +63,7 @@ class MovieStore {
         this.error = '';
       });
     } catch (error) {
-      const {message} = errorHandler(error);
+      const { message } = errorHandler(error);
       runInAction(() => {
         this.isLoading = false;
         this.error = message;

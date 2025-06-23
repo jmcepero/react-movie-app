@@ -44,8 +44,8 @@ export class FilterChipsStore {
     makeAutoObservable(this);
   }
 
-  onScreenLoaded() {
-    this.loadData();
+  onScreenLoaded(preselectedGenre?: number) {
+    this.loadData(preselectedGenre);
   }
 
   // Método para inicializar las secciones, útil si los datos vienen de una API
@@ -123,7 +123,7 @@ export class FilterChipsStore {
     return map;
   }
 
-  async loadData() {
+  async loadData(preselectedGenre?: number) {
     this.isLoading = true;
 
     const regionsProm = getWatchRegionsUseCase.execute();
@@ -171,7 +171,7 @@ export class FilterChipsStore {
             chips: genres.map(value => ({
               id: value.id.toString(),
               label: value.name,
-              isSelected: false,
+              isSelected: value.id === preselectedGenre,
             })),
           },
           {

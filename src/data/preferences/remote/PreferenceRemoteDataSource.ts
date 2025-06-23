@@ -1,5 +1,16 @@
-import {get, getDatabase, ref, set} from '@react-native-firebase/database';
-import {CustomGenre} from '../../genre';
+import {
+  get,
+  getDatabase,
+  ref,
+  remove,
+  set,
+  update,
+} from '@react-native-firebase/database';
+import { CustomGenre } from '../../genre';
+import movieDB from '../../api/movieDB';
+import { RequestTokenResponse } from '../entities/RequestTokenResponse';
+import { TMDBSessionResponse } from '../entities/TMDBSessionResponse';
+import { TMDBAccountDetailsResponse } from '../entities/TMDBAccountDetailsResponse';
 
 export interface PreferenceRemoteDataSource {
   saveFavoriteGenres(
@@ -8,6 +19,11 @@ export interface PreferenceRemoteDataSource {
     tvShowGenres: CustomGenre[],
   ): Promise<void>;
   userCompleteOnBoarding(userId: string): Promise<boolean>;
+  getUserTMDBSession(userId: string): Promise<string | null>;
+  saveUserTMDBSession(userId: string, session: string | null): Promise<void>;
+  getTMDBRequestToken(): Promise<string>;
+  createTMDBSession(approvedToken: string): Promise<string>;
+  getTMDBAccountDetails(sessionId: string): Promise<TMDBAccountDetailsResponse>;
 }
 
 export const preferenceRemoteDataSource: PreferenceRemoteDataSource = {
@@ -17,40 +33,27 @@ export const preferenceRemoteDataSource: PreferenceRemoteDataSource = {
     tvShowGenres: CustomGenre[],
   ): Promise<void> {
     const db = getDatabase();
-
-    // Convertir el arreglo de géneros a un objeto
     const movieGenresObject = movieGenres.reduce(
       (acc, genre) => {
-        acc[genre.id] = {name: genre.name, image: genre.image};
+        acc[genre.id] = { name: genre.name, image: genre.image };
         return acc;
       },
-      {} as Record<string, {name: string; image: string | undefined}>,
+      {} as Record<string, { name: string; image: string | undefined }>,
     );
 
     const tvShowGenresObject = tvShowGenres.reduce(
       (acc, genre) => {
-        acc[genre.id] = {name: genre.name, image: genre.image};
+        acc[genre.id] = { name: genre.name, image: genre.image };
         return acc;
       },
-      {} as Record<string, {name: string; image: string | undefined}>,
+      {} as Record<string, { name: string; image: string | undefined }>,
     );
 
-    // Guardar el objeto de géneros en la base de datos
-    try {
-      await set(ref(db, `users/${userId}/preferences/`), {
-        onBoardingComplete: true,
-        movieGenres: movieGenresObject,
-        tvShowGenres: tvShowGenresObject,
-      });
-      console.log(
-        'Preferencias de géneros de películas actualizadas con éxito.',
-      );
-    } catch (error) {
-      console.error(
-        'Error al actualizar preferencias de géneros de películas:',
-        error,
-      );
-    }
+    await set(ref(db, `users/${userId}/preferences/`), {
+      onBoardingComplete: true,
+      movieGenres: movieGenresObject,
+      tvShowGenres: tvShowGenresObject,
+    });
   },
   userCompleteOnBoarding: async function (userId: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -65,7 +68,6 @@ export const preferenceRemoteDataSource: PreferenceRemoteDataSource = {
           if (snapshot.exists()) {
             resolve(snapshot.val());
           } else {
-            // Si no existe el valor, asumimos que el onboarding no está completado
             resolve(false);
           }
         })
@@ -73,5 +75,65 @@ export const preferenceRemoteDataSource: PreferenceRemoteDataSource = {
           reject(error);
         });
     });
+  },
+  getUserTMDBSession: async function (userId: string): Promise<string | null> {
+    return new Promise((resolve, reject) => {
+      const db = getDatabase();
+      const preferenciasRef = ref(
+        db,
+        `users/${userId}/preferences/tmdbSession`,
+      );
+
+      get(preferenciasRef)
+        .then(snapshot => {
+          if (snapshot.exists()) {
+            resolve(snapshot.val());
+          } else {
+            resolve(null);
+          }
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  saveUserTMDBSession: async function (
+    userId: string,
+    session: string | null,
+  ): Promise<void> {
+    const db = getDatabase();
+
+    if (session == null) {
+      await ref(db, `users/${userId}/preferences/tmdbSession`).remove();
+    } else {
+      await update(ref(db, `users/${userId}/preferences/`), {
+        tmdbSession: session,
+      });
+    }
+  },
+  getTMDBRequestToken: async function (): Promise<string> {
+    let url = `authentication/token/new`;
+    const result = await movieDB.get<RequestTokenResponse>(url);
+    return result.data.request_token;
+  },
+  createTMDBSession: async function (approvedToken: string): Promise<string> {
+    let url = `authentication/session/new`;
+    const params = JSON.stringify({ request_token: approvedToken });
+    const result = await movieDB.post<TMDBSessionResponse>(url, params, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return result.data.session_id;
+  },
+  getTMDBAccountDetails: async function (
+    sessionId: string,
+  ): Promise<TMDBAccountDetailsResponse> {
+    const response = await movieDB.get<TMDBAccountDetailsResponse>(`/account`, {
+      params: {
+        session_id: sessionId,
+      },
+    });
+    return response.data;
   },
 };

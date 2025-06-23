@@ -4,7 +4,7 @@ import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import MovieFilterStore from '../store/MovieFilterStore';
 import {Movie} from '../../../../domain/movie/entities/Movies';
 
-export const useMovieFilter = () => {
+export const useMovieFilter = (genre?: number) => {
   const {movieFilterStore} = useContext(MobXProviderContext) as {
     movieFilterStore: MovieFilterStore;
   };
@@ -46,11 +46,11 @@ export const useMovieFilter = () => {
 
   // Cargar datos al montar
   useEffect(() => {
-    movieFilterStore.onScreenLoaded();
+    movieFilterStore.onScreenLoaded(genre);
     return () => {
       movieFilterStore.resetAllStates();
     };
-  }, [movieFilterStore]);
+  }, [movieFilterStore, genre]);
 
   return {
     movieFilterStore,
